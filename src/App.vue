@@ -1,37 +1,80 @@
 <template>
-  <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-toolbar>
+<v-app :dark="isDark">
+  <app-navigation-menu @toggle-drawer="onToggleDrawer" />
+  <v-navigation-drawer v-model="showDrawer" absolute temporary>
+    <v-list>
+      <v-list-tile v-for="item in items" :key="item.title" @click="onClickNavigationItem(item)">
+        <v-list-tile-action>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-divider></v-divider>
+      <v-list-tile>
+        <v-list-tile-action>
+          <v-switch v-model="isDark"></v-switch>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-icon>{{ themeIcon }}</v-icon>
+        </v-list-tile-content>
+      </v-list-tile>
+    </v-list>
+  </v-navigation-drawer>
 
-    <v-content>
-      <HelloWorld/>
-    </v-content>
-  </v-app>
+  <v-content>
+    <app-main-container />
+  </v-content>
+</v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import AppMainContainer from './components/AppMainContainer'
+import AppNavigationMenu from './components/AppNavigationMenu'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    AppMainContainer,
+    AppNavigationMenu
   },
-  data () {
+  data() {
     return {
-      //
+      isDark: true,
+      themeIcon: 'brightness_3',
+      showDrawer: false,
+      items: [{
+          title: 'Tasks',
+          icon: 'view_list'
+        },
+        {
+          title: 'Timer',
+          icon: 'alarm'
+        },
+        {
+          title: 'Stats',
+          icon: 'insert_chart_outlined'
+        },
+        {
+          title: 'Settings',
+          icon: 'settings_applications'
+        }
+      ]
+    }
+  },
+
+  methods: {
+    onToggleDrawer() {
+      this.showDrawer = !this.showDrawer
+    },
+
+    onClickNavigationItem(item) {}
+  },
+
+  watch: {
+    isDark () {
+      this.themeIcon = this.isDark ? 'brightness_3' : 'brightness_5'
     }
   }
 }
