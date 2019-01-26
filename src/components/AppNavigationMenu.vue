@@ -1,6 +1,7 @@
 <template>
   <div class="AppNavigationMenu">
     <v-toolbar app>
+      <v-toolbar-side-icon @click="toggleDrawer"></v-toolbar-side-icon>
       <v-toolbar-title class="headline text-uppercase">
         <span>Focus</span>
         <span class="font-weight-light">MF</span>
@@ -17,7 +18,13 @@
 
 <script>
 export default {
-  name: 'AppNavigationMenu'
+  name: 'AppNavigationMenu',
+
+  methods: {
+    toggleDrawer () {
+      this.$emit('toggle-drawer')
+    }
+  }
 }
 </script>
 
