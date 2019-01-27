@@ -1,80 +1,36 @@
 <template>
 <v-app :dark="isDark">
-  <app-navigation-menu @toggle-drawer="onToggleDrawer" />
-  <v-navigation-drawer v-model="showDrawer" absolute temporary>
-    <v-list>
-      <v-list-tile v-for="item in items" :key="item.title" @click="onClickNavigationItem(item)">
-        <v-list-tile-action>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-      <v-divider></v-divider>
-      <v-list-tile>
-        <v-list-tile-action>
-          <v-switch v-model="isDark"></v-switch>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-icon>{{ themeIcon }}</v-icon>
-        </v-list-tile-content>
-      </v-list-tile>
-    </v-list>
-  </v-navigation-drawer>
-
+  <app-main-toolbar @show-drawer="onShowDrawer" />
+  <app-navigation-drawer @toggle-theme="onToggleTheme" @show-drawer="onShowDrawer" :show-drawer="showDrawer" :is-dark="isDark" />
   <v-content>
-    <app-main-container />
+    <router-view></router-view>
   </v-content>
 </v-app>
 </template>
 
 <script>
-import AppMainContainer from './components/AppMainContainer'
-import AppNavigationMenu from './components/AppNavigationMenu'
+import AppMainToolbar from '@/components/AppMainToolbar'
+import AppNavigationDrawer from '@/components/AppNavigationDrawer'
 
 export default {
-  name: 'App',
   components: {
-    AppMainContainer,
-    AppNavigationMenu
+    AppMainToolbar,
+    AppNavigationDrawer
   },
   data() {
     return {
       isDark: true,
-      themeIcon: 'brightness_3',
-      showDrawer: false,
-      items: [{
-          title: 'Tasks',
-          icon: 'view_list'
-        },
-        {
-          title: 'Timer',
-          icon: 'alarm'
-        },
-        {
-          title: 'Stats',
-          icon: 'insert_chart_outlined'
-        },
-        {
-          title: 'Settings',
-          icon: 'settings_applications'
-        }
-      ]
+      showDrawer: false
     }
   },
 
   methods: {
-    onToggleDrawer() {
-      this.showDrawer = !this.showDrawer
+    onShowDrawer(showDrawer) {
+      this.showDrawer = showDrawer
     },
 
-    onClickNavigationItem(item) {}
-  },
-
-  watch: {
-    isDark () {
-      this.themeIcon = this.isDark ? 'brightness_3' : 'brightness_5'
+    onToggleTheme(isDark) {
+      this.isDark = isDark
     }
   }
 }

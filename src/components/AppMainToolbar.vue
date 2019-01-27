@@ -1,13 +1,13 @@
 <template>
-  <div class="AppNavigationMenu">
+  <div class="AppMainToolbar">
     <v-toolbar app>
-      <v-toolbar-side-icon @click="toggleDrawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click="showDrawer"></v-toolbar-side-icon>
       <v-toolbar-title class="headline text-uppercase">
         <span>Focus</span>
         <span class="font-weight-light">MF</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn flat>
+      <v-btn flat to="/login">
         <span class="mr-2">Login</span>
       </v-btn>
     </v-toolbar>
@@ -16,11 +16,11 @@
 
 <script>
 export default {
-  name: 'AppNavigationMenu',
+  name: 'AppMainToolbar',
 
   methods: {
-    toggleDrawer () {
-      this.$emit('toggle-drawer')
+    showDrawer () {
+      this.$emit('show-drawer', true)
     }
   }
 }
@@ -28,7 +28,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.AppNavigationMenu {
+.AppMainToolbar {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
