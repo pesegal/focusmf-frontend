@@ -44,27 +44,27 @@ export default {
         {
           title: 'Overview',
           icon: 'dashboard',
-          to: '/'
+          to: '/dashboard/overview'
         },
         {
           title: 'Tasks',
           icon: 'view_list',
-          to: '/tasks'
+          to: '/dashboard/tasks'
         },
         {
           title: 'Timer',
           icon: 'alarm',
-          to: '/timer'
+          to: '/dashboard/timer'
         },
         {
           title: 'Stats',
           icon: 'insert_chart_outlined',
-          to: '/stats'
+          to: '/dashboard/stats'
         },
         {
           title: 'Settings',
           icon: 'settings_applications',
-          to: '/settings'
+          to: '/dashboard/settings'
         }
       ]
     }

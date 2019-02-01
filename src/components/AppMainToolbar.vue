@@ -6,10 +6,6 @@
         <span>Focus</span>
         <span class="font-weight-light">MF</span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn flat to="/login">
-        <span class="mr-2">Login</span>
-      </v-btn>
     </v-toolbar>
   </div>
 </template>
