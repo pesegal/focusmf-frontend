@@ -71,9 +71,9 @@ export default class AppNavigationDrawer extends Vue {
   onClickNavigationItem(item: object) {}
 
   @Emit()
-  toggleTheme (): void  {}
+  toggleTheme (isDark: boolean): void  {}
 
   @Emit()
-  updateDrawerDisplayState (): void {}
+  updateDrawerDisplayState (showDrawer: boolean): void {}
 }
 </script>
