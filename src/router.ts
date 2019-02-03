@@ -23,11 +23,10 @@ export default new Router({
     },
     {
       path: '/dashboard',
-      name: 'dashboard',
       component: DashboardView,
       children: [
         {
-          path: 'overview',
+          path: '',
           name: 'overview',
           component: OverviewView
         },

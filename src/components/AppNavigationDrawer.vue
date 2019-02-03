@@ -44,7 +44,7 @@ export default {
         {
           title: 'Overview',
           icon: 'dashboard',
-          to: '/dashboard/overview'
+          to: '/dashboard'
         },
         {
           title: 'Tasks',
