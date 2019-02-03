@@ -69,51 +69,47 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
+import Vue from 'vue';
+import Component from 'vue-class-component';
 
-export default {
-  data() {
-    return {
-      dialog: true,
-      step: 1,
-      account: {
-        email: 'test@example.com',
-        password: '12345678',
-        firstName: 'Test',
-        lastName: 'McTester',
-        dateOfBirth: '2019-02-02'
-      },
-      registeringAccount: false
-    };
-  },
+@Component
+export default class SignUpView extends Vue {
+  dialog: boolean = true
+  step: number = 1
+  account: object = {
+    email: 'test@example.com',
+    password: '12345678',
+    firstName: 'Test',
+    lastName: 'McTester',
+    dateOfBirth: '2019-02-02'
+  }
+  registeringAccount: boolean = false
 
-  computed: {
-    currentTitle() {
-      switch (this.step) {
-        case 1:
-          return "Sign-up";
-        case 2:
-          return "Create a password";
-        case 3:
-          return "Information";
-        default:
-          return "Account created!";
-      }
-    }
-  },
-
-  methods: {
-    async register () {
-      this.registeringAccount = true
-      try {
-        const response = await axios.post('http://localhost:3000/user', this.account);
-      } catch (e) {
-        this.registeringAccount = false;
-        return;
-      }
-      this.step++;
+  get currentTitle() {
+    switch (this.step) {
+      case 1:
+        return "Sign-up";
+      case 2:
+        return "Create a password";
+      case 3:
+        return "Information";
+      default:
+        return "Account created!";
     }
   }
-};
+
+  async register (): Promise<boolean> {
+    this.registeringAccount = true
+    try {
+      const response = await axios.post('http://localhost:3000/user', this.account);
+    } catch (e) {
+      this.registeringAccount = false;
+      return false;
+    }
+    this.step++;
+    return true;
+  }
+}
 </script>

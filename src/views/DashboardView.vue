@@ -8,30 +8,29 @@
 </v-app>
 </template>
 
-<script>
-import AppMainToolbar from '@/components/AppMainToolbar'
-import AppNavigationDrawer from '@/components/AppNavigationDrawer'
+<script lang="ts">
+import AppMainToolbar from '../components/AppMainToolbar.vue'
+import AppNavigationDrawer from '@/components/AppNavigationDrawer.vue'
+import Component from 'vue-class-component';
+import { Vue } from 'vue-property-decorator';
 
-export default {
+@Component({
   components: {
     AppMainToolbar,
     AppNavigationDrawer
-  },
-  data() {
-    return {
-      isDark: false,
-      showDrawer: false
-    }
-  },
+  }
+})
+export default class DashboardView extends Vue {
 
-  methods: {
-    onUpdateDrawerDisplayState(showDrawer) {
-      this.showDrawer = showDrawer
-    },
+  isDark: boolean = false
+  showDrawer: boolean = false
 
-    onToggleTheme(isDark) {
-      this.isDark = isDark
-    }
+  onUpdateDrawerDisplayState(showDrawer: boolean): void {
+    this.showDrawer = showDrawer
+  }
+
+  onToggleTheme(isDark: boolean): void {
+    this.isDark = isDark
   }
 }
 </script>
