@@ -1,7 +1,7 @@
 <template>
 <v-app :dark="isDark">
-  <app-main-toolbar @show-drawer="onShowDrawer" />
-  <app-navigation-drawer @toggle-theme="onToggleTheme" @show-drawer="onShowDrawer" :show-drawer="showDrawer" :is-dark="isDark" />
+  <app-main-toolbar @show-drawer="onUpdateDrawerDisplayState" />
+  <app-navigation-drawer @toggle-theme="onToggleTheme" @update-drawer-display-state="onUpdateDrawerDisplayState" :show-drawer="showDrawer" :is-dark="isDark" />
   <v-content>
     <router-view></router-view>
   </v-content>
@@ -25,7 +25,7 @@ export default {
   },
 
   methods: {
-    onShowDrawer(showDrawer) {
+    onUpdateDrawerDisplayState(showDrawer) {
       this.showDrawer = showDrawer
     },
 
