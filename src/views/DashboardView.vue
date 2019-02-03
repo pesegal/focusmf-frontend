@@ -19,7 +19,7 @@ export default {
   },
   data() {
     return {
-      isDark: true,
+      isDark: false,
       showDrawer: false
     }
   },
