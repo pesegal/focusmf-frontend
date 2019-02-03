@@ -1,7 +1,7 @@
 <template>
   <div class="AppMainToolbar">
     <v-toolbar app>
-      <v-toolbar-side-icon @click="showDrawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click="showDrawer(true)"></v-toolbar-side-icon>
       <v-toolbar-title class="headline text-uppercase">
         <span>Focus</span>
         <span class="font-weight-light">MF</span>
@@ -10,15 +10,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'AppMainToolbar',
+<script lang="ts">
+import { Vue, Component, Emit } from 'vue-property-decorator'
 
-  methods: {
-    showDrawer () {
-      this.$emit('show-drawer', true)
-    }
-  }
+@Component
+export default class AppMainToolbar extends Vue {
+  @Emit()
+  showDrawer (showDrawer: boolean): void {}
 }
 </script>
 
