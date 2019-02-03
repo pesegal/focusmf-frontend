@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer :value="showDrawer" @input="onUpdateShowDrawer" absolute temporary>
     <v-list>
-      <v-list-tile v-for="item in items" :key="item.title" :to="item.to" @click="onClickNavigationItem(item)">
+      <v-list-tile v-for="item in items" :key="item.title" :to="item.to" @click="onClickNavigationItem(item)" exact>
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
