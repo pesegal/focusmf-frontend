@@ -25,7 +25,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch, Emit } from 'vue-property-decorator'
 
-type LinkInterface = {
+type AppNavigationDrawerLinkInterface = {
   title: string,
   icon: string,
   to: string
@@ -36,7 +36,7 @@ export default class AppNavigationDrawer extends Vue {
   @Prop({ default: false }) showDrawer?: boolean
   @Prop({ default: false }) isDark?: boolean
 
-  items: Array<LinkInterface> = [
+  items: Array<AppNavigationDrawerLinkInterface> = [
     {
       title: 'Overview',
       icon: 'dashboard',
