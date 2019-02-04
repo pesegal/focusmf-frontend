@@ -12,7 +12,7 @@
       </v-flex>
     </v-layout>
     <v-layout align-center justify-center row fill-height>
-      <v-btn color="info" to="/sign-up">
+      <v-btn color="primary" to="/sign-up">
         Sign Up
       </v-btn>
       <v-btn flat to="/login">
