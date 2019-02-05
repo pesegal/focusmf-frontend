@@ -5,6 +5,9 @@ import TasksView from '@/views/TasksView.vue'
 import TimerView from '@/views/TimerView.vue'
 import StatsView from '@/views/StatsView.vue'
 import SettingsView from '@/views/SettingsView.vue'
+import SignUpView from '@/views/SignUpView.vue'
+import DashboardView from '@/views/DashboardView.vue'
+import WelcomeView from '@/views/WelcomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 
 Vue.use(Router)
@@ -15,28 +18,44 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: OverviewView
+      name: 'welcome',
+      component: WelcomeView
     },
     {
-      path: '/tasks',
-      name: 'tasks',
-      component: TasksView
+      path: '/dashboard',
+      component: DashboardView,
+      children: [
+        {
+          path: '',
+          name: 'overview',
+          component: OverviewView
+        },
+        {
+          path: 'tasks',
+          name: 'tasks',
+          component: TasksView
+        },
+        {
+          path: 'timer',
+          name: 'timer',
+          component: TimerView
+        },
+        {
+          path: 'stats',
+          name: 'stats',
+          component: StatsView
+        },
+        {
+          path: 'settings',
+          name: 'settings',
+          component: SettingsView
+        }
+      ]
     },
     {
-      path: '/timer',
-      name: 'timer',
-      component: TimerView
-    },
-    {
-      path: '/stats',
-      name: 'stats',
-      component: StatsView
-    },
-    {
-      path: '/settings',
-      name: 'settings',
-      component: SettingsView
+      path: '/sign-up',
+      name: 'sign-up',
+      component: SignUpView
     },
     {
       path: '/login',

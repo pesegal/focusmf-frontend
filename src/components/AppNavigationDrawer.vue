@@ -1,7 +1,7 @@
 <template>
-  <v-navigation-drawer :value="showDrawer" @input="onUpdateShowDrawer" absolute temporary>
+  <v-navigation-drawer :value="showDrawer" @input="updateDrawerDisplayState" absolute temporary>
     <v-list>
-      <v-list-tile v-for="item in items" :key="item.title" :to="item.to" @click="onClickNavigationItem(item)">
+      <v-list-tile v-for="item in items" :key="item.title" :to="item.to" @click="onClickNavigationItem(item)" exact>
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
@@ -12,7 +12,7 @@
       <v-divider></v-divider>
       <v-list-tile>
         <v-list-tile-action>
-          <v-switch :input-value="isDark" @change="onToggleTheme"></v-switch>
+          <v-switch :input-value="isDark" @change="toggleTheme"></v-switch>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-icon>{{ themeIcon }}</v-icon>
@@ -22,76 +22,58 @@
   </v-navigation-drawer>
 </template>
 
-<script>
-export default {
-  props: {
-    showDrawer: {
-      type: Boolean,
-      required: false,
-      default: false
+<script lang="ts">
+import { Vue, Component, Prop, Watch, Emit } from 'vue-property-decorator'
+
+type AppNavigationDrawerLinkInterface = {
+  title: string,
+  icon: string,
+  to: string
+}
+
+@Component
+export default class AppNavigationDrawer extends Vue {
+  @Prop({ default: false }) showDrawer?: boolean
+  @Prop({ default: false }) isDark?: boolean
+
+  items: Array<AppNavigationDrawerLinkInterface> = [
+    {
+      title: 'Overview',
+      icon: 'dashboard',
+      to: '/dashboard'
     },
-
-    isDark: {
-      type: Boolean,
-      required: false,
-      default: true
-    }
-  },
-
-  data () {
-    return {
-      items: [
-        {
-          title: 'Overview',
-          icon: 'dashboard',
-          to: '/'
-        },
-        {
-          title: 'Tasks',
-          icon: 'view_list',
-          to: '/tasks'
-        },
-        {
-          title: 'Timer',
-          icon: 'alarm',
-          to: '/timer'
-        },
-        {
-          title: 'Stats',
-          icon: 'insert_chart_outlined',
-          to: '/stats'
-        },
-        {
-          title: 'Settings',
-          icon: 'settings_applications',
-          to: '/settings'
-        }
-      ]
-    }
-  },
-
-  computed: {
-    themeIcon () {
-      return this.isDark ? 'brightness_3' : 'brightness_5'
-    }
-  },
-
-  methods: {
-    onClickNavigationItem(item) {},
-
-    onToggleTheme (isDark) {
-      this.$emit('toggle-theme', isDark)
+    {
+      title: 'Tasks',
+      icon: 'view_list',
+      to: '/dashboard/tasks'
     },
-
-    onUpdateShowDrawer (showDrawer) {
-      this.$emit('show-drawer', showDrawer)
+    {
+      title: 'Timer',
+      icon: 'alarm',
+      to: '/dashboard/timer'
+    },
+    {
+      title: 'Stats',
+      icon: 'insert_chart_outlined',
+      to: '/dashboard/stats'
+    },
+    {
+      title: 'Settings',
+      icon: 'settings_applications',
+      to: '/dashboard/settings'
     }
-  },
+  ]
 
-  watch: {
-    isDark (newValue) {
-      this.isDarkTheme = newValue
-    }
+  get themeIcon () {
+    return this.isDark ? 'brightness_3' : 'brightness_5'
   }
+
+  onClickNavigationItem(item: object) {}
+
+  @Emit()
+  toggleTheme (isDark: boolean): void  {}
+
+  @Emit()
+  updateDrawerDisplayState (showDrawer: boolean): void {}
 }
 </script>
