@@ -67,69 +67,62 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios'
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import gql from 'graphql-tag'
 
-export default {
-  data () {
-    return {
-      dialog: true,
-      step: 1,
-      account: {
-        email: 'test@example.com',
-        password: '12345678',
-        firstName: 'Test',
-        lastName: 'McTester',
-        dateOfBirth: '2019-02-02'
-      },
-      registeringAccount: false
+@Component
+export default class SignUpView extends Vue {
+  dialog: boolean = true
+  step: number = 1
+  account = {
+    email: 'test@example.com',
+    password: '12345678',
+    firstName: 'Test',
+    lastName: 'McTester',
+    dateOfBirth: '2019-02-02'
+  }
+  registeringAccount: boolean = false
+
+  get currentTitle() {
+    switch (this.step) {
+      case 1:
+        return "Sign-up";
+      case 2:
+        return "Create a password";
+      case 3:
+        return "Information";
+      default:
+        return "Account created!";
     }
-  },
+  }
 
-  computed: {
-    currentTitle() {
-      switch (this.step) {
-        case 1:
-          return "Sign-up";
-        case 2:
-          return "Create a password";
-        case 3:
-          return "Information";
-        default:
-          return "Account created!";
-      }
-    }
-  },
-
-  methods: {
-    async register () {
-      this.registeringAccount = true
-      try {
-        const response = await this.$apollo.mutate({
-          mutation: gql`mutation ($email: String!, $password: String!) {
-            createUser(userData: {
-              email: $email,
-              password: $password
-            }) {
-              email
-            }
-          }`,
-
-          variables: {
-            email: this.account.email,
-            password: this.account.password
+  async register () {
+    this.registeringAccount = true
+    try {
+      const response = await this.$apollo.mutate({
+        mutation: gql`mutation ($email: String!, $password: String!) {
+          createUser(userData: {
+            email: $email,
+            password: $password
+          }) {
+            email
           }
-        })
-      } catch (e) {
-        this.registeringAccount = false;
-        return false;
-      }
-      this.step++;
-      return true;
+        }`,
+
+        variables: {
+          email: this.account.email,
+          password: this.account.password
+        }
+      })
+    } catch (e) {
+      this.registeringAccount = false;
+      return false;
     }
+    this.step++;
+    return true;
   }
 }
 </script>
