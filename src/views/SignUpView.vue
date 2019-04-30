@@ -108,7 +108,7 @@ export default class SignUpView extends Vue {
             email: $email,
             password: $password
           }) {
-            email
+            token
           }
         }`,
 
@@ -117,6 +117,7 @@ export default class SignUpView extends Vue {
           password: this.account.password
         }
       })
+      alert(response.data.createUser.token) //TODO: Placeholder for better logic
     } catch (e) {
       this.registeringAccount = false;
       return false;
