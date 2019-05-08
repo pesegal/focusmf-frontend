@@ -1,69 +1,94 @@
 <template>
   <div class="SignUpView">
-    <v-container>
-      <v-layout align-center justify-center row>
-        <v-flex xs12 sm6>
-          <v-card>
-            <v-card-title class="title font-weight-regular justify-space-between">
-              <span v-show="step !== 4">{{ currentTitle }}</span>
-              <v-avatar
-                v-show="step !== 4"
-                color="primary lighten-2"
-                class="subheading white--text"
-                size="24"
-                v-text="step"
-              ></v-avatar>
-            </v-card-title>
+    <v-form v-model="valid">
+      <v-container>
+        <v-layout align-center justify-center row>
+          <v-flex xs12 sm6>
+            <v-card>
+              <v-card-title class="title font-weight-regular justify-space-between">
+                <span v-show="step !== 4">{{ currentTitle }}</span>
+                <v-avatar
+                  v-show="step !== 4"
+                  color="primary lighten-2"
+                  class="subheading white--text"
+                  size="24"
+                  v-text="step"
+                ></v-avatar>
+              </v-card-title>
 
-            <v-window v-model="step">
-              <v-window-item :value="1">
-                <v-card-text>
-                  <v-text-field label="Email" placeholder="me@example.com" v-model="account.email"></v-text-field>
-                  <span
-                    class="caption grey--text text--darken-1"
-                  >This is the email you will use to login to your FocusMF account.</span>
-                </v-card-text>
-              </v-window-item>
+              <v-window v-model="step">
+                <v-window-item :value="1">
+                  <v-card-text>
+                    <v-text-field
+                      label="Email"
+                      placeholder="me@example.com"
+                      v-model="account.email"
+                      :rules="[rules.required('Email'), rules.email]"
+                    ></v-text-field>
+                    <span
+                      class="caption grey--text text--darken-1"
+                    >This is the email you will use to login to your FocusMF account.</span>
+                  </v-card-text>
+                </v-window-item>
 
-              <v-window-item :value="2">
-                <v-card-text>
-                  <v-text-field label="Password" type="password" v-model="account.password"></v-text-field>
-                  <v-text-field label="Confirm Password" type="password"></v-text-field>
-                  <span
-                    class="caption grey--text text--darken-1"
-                  >Please enter a password for your account</span>
-                </v-card-text>
-              </v-window-item>
+                <v-window-item :value="2">
+                  <v-card-text>
+                    <v-text-field
+                      label="Password"
+                      type="password"
+                      v-model="account.password"
+                      :rules="[rules.password]"
+                    ></v-text-field>
+                    <v-text-field
+                      label="Confirm Password"
+                      type="password"
+                      v-model="account.confirmPassword"
+                      :rules="[rules.matchesPassword]"
+                    ></v-text-field>
+                    <span
+                      class="caption grey--text text--darken-1"
+                    >Please enter a password for your account</span>
+                  </v-card-text>
+                </v-window-item>
 
-              <v-window-item :value="3">
-                <v-card-text>
-                  <v-text-field label="First Name" v-model="account.firstName"></v-text-field>
-                  <v-text-field label="Last Name" v-model="account.lastName"></v-text-field>
-                  <v-text-field label="Birthday" v-model="account.dateOfBirth"></v-text-field>
-                  <span class="caption grey--text text--darken-1">Please enter your information</span>
-                </v-card-text>
-              </v-window-item>
+                <v-window-item :value="3">
+                  <v-card-text>
+                    <v-text-field
+                      label="First Name"
+                      v-model="account.firstName"
+                      :rules="[rules.max(50)]"
+                    ></v-text-field>
+                    <v-text-field
+                      label="Last Name"
+                      v-model="account.lastName"
+                      :rules="[rules.max(50)]"
+                    ></v-text-field>
+                    <v-text-field label="Birthday" v-model="account.dateOfBirth"></v-text-field>
+                    <span class="caption grey--text text--darken-1">Please enter your information</span>
+                  </v-card-text>
+                </v-window-item>
 
-              <v-window-item :value="4">
-                <div class="pa-3 text-xs-center">
-                  <h3 class="title font-weight-medium mb-2">Welcome to FocusMF!</h3>
-                  <v-btn color="info" to="/dashboard">Get Started</v-btn>
-                </div>
-              </v-window-item>
-            </v-window>
+                <v-window-item :value="4">
+                  <div class="pa-3 text-xs-center">
+                    <h3 class="title font-weight-medium mb-2">Welcome to FocusMF!</h3>
+                    <v-btn color="info" to="/dashboard">Get Started</v-btn>
+                  </div>
+                </v-window-item>
+              </v-window>
 
-            <v-divider v-show="step < 4"></v-divider>
+              <v-divider v-show="step < 4"></v-divider>
 
-            <v-card-actions>
-              <v-btn v-show="step > 1 && step < 4" flat @click="step--">Back</v-btn>
-              <v-spacer></v-spacer>
-              <v-btn v-show="step === 3" color="primary" depressed @click="register" :loading="registeringAccount">Register</v-btn>
-              <v-btn v-show="step < 3" color="primary" depressed @click="step++">Next</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
+              <v-card-actions>
+                <v-btn v-show="step > 1 && step < 4" flat @click="step--">Back</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn v-show="step === 3" color="primary" depressed @click="register" :loading="registeringAccount">Register</v-btn>
+                <v-btn v-show="step < 3" color="primary" depressed @click="step++">Next</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-form>
   </div>
 </template>
 
@@ -76,15 +101,39 @@ import gql from 'graphql-tag'
 @Component
 export default class SignUpView extends Vue {
   dialog: boolean = true
-  step: number = 1
+  step: number = 3
   account = {
-    email: 'test@example.com',
-    password: '12345678',
-    firstName: 'Test',
-    lastName: 'McTester',
-    dateOfBirth: '2019-02-02'
+    email: `e${(new Date()).getTime()}@e.co`,
+    password: 'password',
+    confirmPassword: 'password',
+    firstName: `Yet Another ${(new Date()).getTime()}`,
+    lastName: 'Yet Another',
+    dateOfBirth: '1989-02-02'
   }
   registeringAccount: boolean = false
+  rules = {
+    required: (fieldName: string) => {
+      return (value: string) => {
+        return !!value || `${fieldName} is required.`
+      }
+    },
+    email: (value: string) => {
+      const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return pattern.test(value) || 'Hey dude, bad e-mail.'
+    },
+    password: (value: string) => {
+      return (!!value && value.length >= 8) || 'Minimum password length is 8.'
+    },
+    matchesPassword: (value: string) => {
+      return (!!value && value === this.account.password) || 'Passwords don\'t match'
+    },
+    max: (length: number) => {
+      return (value: string) => {
+        return (!!value && value.length <= length) || `Max length is ${length} characters.`
+      }
+    }
+  }
+  valid: boolean = false
 
   get currentTitle() {
     switch (this.step) {
@@ -103,10 +152,13 @@ export default class SignUpView extends Vue {
     this.registeringAccount = true
     try {
       const response = await this.$apollo.mutate({
-        mutation: gql`mutation ($email: String!, $password: String!) {
+        mutation: gql`mutation ($email: String!, $password: String!, $first_name: String, $last_name: String, $dateofbirth: DateTime) {
           createUser(userData: {
             email: $email,
-            password: $password
+            password: $password,
+            first_name: $first_name,
+            last_name: $last_name,
+            dateofbirth: $dateofbirth
           }) {
             token
           }
@@ -114,7 +166,10 @@ export default class SignUpView extends Vue {
 
         variables: {
           email: this.account.email,
-          password: this.account.password
+          password: this.account.password,
+          first_name: this.account.firstName,
+          last_name: this.account.lastName,
+          dateofbirth: (new Date(this.account.dateOfBirth).toISOString())
         }
       })
       alert(response.data.createUser.token) //TODO: Placeholder for better logic
