@@ -135,6 +135,7 @@ import axios from 'axios'
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import gql from 'graphql-tag'
+const createUser = require('@/graphql/createUser.gql')
 
 @Component
 export default class SignUpView extends Vue {
@@ -146,7 +147,7 @@ export default class SignUpView extends Vue {
     confirmPassword: 'password',
     firstName: `Yet Another ${(new Date()).getTime()}`,
     lastName: 'Yet Another',
-    dateOfBirth: '1989-02-02'
+    dateOfBirth: '01-01-1995'
   }
   registeringAccount: boolean = false
   rules = {
@@ -190,18 +191,7 @@ export default class SignUpView extends Vue {
     this.registeringAccount = true
     try {
       const response = await this.$apollo.mutate({
-        mutation: gql`mutation ($email: String!, $password: String!, $first_name: String, $last_name: String, $dateofbirth: DateTime) {
-          createUser(userData: {
-            email: $email,
-            password: $password,
-            first_name: $first_name,
-            last_name: $last_name,
-            dateofbirth: $dateofbirth
-          }) {
-            token
-          }
-        }`,
-
+        mutation: createUser,
         variables: {
           email: this.account.email,
           password: this.account.password,
@@ -210,7 +200,7 @@ export default class SignUpView extends Vue {
           dateofbirth: (new Date(this.account.dateOfBirth).toISOString())
         }
       })
-      alert(response.data.createUser.token) //TODO: Placeholder for better logic
+      alert(response.data.createUser.token)
     } catch (e) {
       this.registeringAccount = false;
       return false;
