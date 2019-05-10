@@ -2,8 +2,15 @@
   <div class="SignUpView">
     <v-form v-model="valid">
       <v-container>
-        <v-layout align-center justify-center row>
-          <v-flex xs12 sm6>
+        <v-layout
+          align-center
+          justify-center
+          row
+        >
+          <v-flex
+            xs12
+            sm6
+          >
             <v-card>
               <v-card-title class="title font-weight-regular justify-space-between">
                 <span v-show="step !== 4">{{ currentTitle }}</span>
@@ -13,18 +20,18 @@
                   class="subheading white--text"
                   size="24"
                   v-text="step"
-                ></v-avatar>
+                />
               </v-card-title>
 
               <v-window v-model="step">
                 <v-window-item :value="1">
                   <v-card-text>
                     <v-text-field
+                      v-model="account.email"
                       label="Email"
                       placeholder="me@example.com"
-                      v-model="account.email"
                       :rules="[rules.required('Email'), rules.email]"
-                    ></v-text-field>
+                    />
                     <span
                       class="caption grey--text text--darken-1"
                     >This is the email you will use to login to your FocusMF account.</span>
@@ -34,17 +41,17 @@
                 <v-window-item :value="2">
                   <v-card-text>
                     <v-text-field
+                      v-model="account.password"
                       label="Password"
                       type="password"
-                      v-model="account.password"
                       :rules="[rules.password]"
-                    ></v-text-field>
+                    />
                     <v-text-field
+                      v-model="account.confirmPassword"
                       label="Confirm Password"
                       type="password"
-                      v-model="account.confirmPassword"
                       :rules="[rules.matchesPassword]"
-                    ></v-text-field>
+                    />
                     <span
                       class="caption grey--text text--darken-1"
                     >Please enter a password for your account</span>
@@ -54,35 +61,66 @@
                 <v-window-item :value="3">
                   <v-card-text>
                     <v-text-field
-                      label="First Name"
                       v-model="account.firstName"
+                      label="First Name"
                       :rules="[rules.max(50)]"
-                    ></v-text-field>
+                    />
                     <v-text-field
-                      label="Last Name"
                       v-model="account.lastName"
+                      label="Last Name"
                       :rules="[rules.max(50)]"
-                    ></v-text-field>
-                    <v-text-field label="Birthday" v-model="account.dateOfBirth"></v-text-field>
+                    />
+                    <v-text-field
+                      v-model="account.dateOfBirth"
+                      label="Birthday"
+                    />
                     <span class="caption grey--text text--darken-1">Please enter your information</span>
                   </v-card-text>
                 </v-window-item>
 
                 <v-window-item :value="4">
                   <div class="pa-3 text-xs-center">
-                    <h3 class="title font-weight-medium mb-2">Welcome to FocusMF!</h3>
-                    <v-btn color="info" to="/dashboard">Get Started</v-btn>
+                    <h3 class="title font-weight-medium mb-2">
+                      Welcome to FocusMF!
+                    </h3>
+                    <v-btn
+                      color="info"
+                      to="/dashboard"
+                    >
+                      Get Started
+                    </v-btn>
                   </div>
                 </v-window-item>
               </v-window>
 
-              <v-divider v-show="step < 4"></v-divider>
+              <v-divider v-show="step < 4" />
 
               <v-card-actions>
-                <v-btn v-show="step > 1 && step < 4" flat @click="step--">Back</v-btn>
-                <v-spacer></v-spacer>
-                <v-btn v-show="step === 3" color="primary" depressed @click="register" :loading="registeringAccount">Register</v-btn>
-                <v-btn v-show="step < 3" color="primary" depressed @click="step++">Next</v-btn>
+                <v-btn
+                  v-show="step > 1 && step < 4"
+                  flat
+                  @click="step--"
+                >
+                  Back
+                </v-btn>
+                <v-spacer />
+                <v-btn
+                  v-show="step === 3"
+                  color="primary"
+                  depressed
+                  :loading="registeringAccount"
+                  @click="register"
+                >
+                  Register
+                </v-btn>
+                <v-btn
+                  v-show="step < 3"
+                  color="primary"
+                  depressed
+                  @click="step++"
+                >
+                  Next
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
