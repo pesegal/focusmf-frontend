@@ -1,7 +1,7 @@
 <template>
   <div class="AppMainToolbar">
     <v-toolbar app>
-      <v-toolbar-side-icon @click="showDrawer(true)"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click="showDrawer(true)" />
       <v-toolbar-title class="headline text-uppercase">
         <span>Focus</span>
         <span class="font-weight-light">MF</span>

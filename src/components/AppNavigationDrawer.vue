@@ -1,7 +1,18 @@
 <template>
-  <v-navigation-drawer :value="showDrawer" @input="updateDrawerDisplayState" absolute temporary>
+  <v-navigation-drawer
+    :value="showDrawer"
+    absolute
+    temporary
+    @input="updateDrawerDisplayState"
+  >
     <v-list>
-      <v-list-tile v-for="item in items" :key="item.title" :to="item.to" @click="onClickNavigationItem(item)" exact>
+      <v-list-tile
+        v-for="item in items"
+        :key="item.title"
+        :to="item.to"
+        exact
+        @click="onClickNavigationItem(item)"
+      >
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
@@ -9,10 +20,13 @@
           <v-list-tile-title>{{ item.title }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-divider></v-divider>
+      <v-divider />
       <v-list-tile>
         <v-list-tile-action>
-          <v-switch :input-value="isDark" @change="toggleTheme"></v-switch>
+          <v-switch
+            :input-value="isDark"
+            @change="toggleTheme"
+          />
         </v-list-tile-action>
         <v-list-tile-content>
           <v-icon>{{ themeIcon }}</v-icon>
