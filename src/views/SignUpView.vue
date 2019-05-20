@@ -27,6 +27,7 @@
                 <v-window-item :value="1">
                   <v-card-text>
                     <v-text-field
+                      id="email-input"
                       v-model="account.email"
                       label="Email"
                       placeholder="me@example.com"
@@ -118,6 +119,7 @@
                   color="primary"
                   depressed
                   @click="step++"
+                  :disabled="!valid"
                 >
                   Next
                 </v-btn>
