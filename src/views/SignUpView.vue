@@ -27,6 +27,7 @@
                 <v-window-item :value="1">
                   <v-card-text>
                     <v-text-field
+                      id="email-input"
                       v-model="account.email"
                       label="Email"
                       placeholder="me@example.com"
@@ -118,6 +119,7 @@
                   color="primary"
                   depressed
                   @click="step++"
+                  :disabled="!valid"
                 >
                   Next
                 </v-btn>
@@ -140,14 +142,14 @@ const createUser = require('@/graphql/createUser.gql')
 @Component
 export default class SignUpView extends Vue {
   dialog: boolean = true
-  step: number = 3
+  step: number = 1
   account = {
-    email: `e${(new Date()).getTime()}@e.co`,
-    password: 'password',
-    confirmPassword: 'password',
-    firstName: `Yet Another ${(new Date()).getTime()}`,
-    lastName: 'Yet Another',
-    dateOfBirth: '01-01-1995'
+    email: '',
+    password: '',
+    confirmPassword: '',
+    firstName: '',
+    lastName: '',
+    dateOfBirth: ''
   }
   registeringAccount: boolean = false
   rules = {

@@ -26,6 +26,7 @@
         fill-height
       >
         <v-btn
+          id="welcome-view-sign-up"
           color="primary"
           to="/sign-up"
         >

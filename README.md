@@ -38,3 +38,18 @@ yarn run test
 ```
 yarn run lint
 ```
+
+## Testing
+## Functional (e2e)
+I setup the Cypress testing framework to work within our application. See the [documentation here](https://docs.cypress.io/guides/overview/why-cypress.html).
+1. Start up the back-end and front-end applications
+2. In a new terminal window, go to the root directory of the front-end project (this project).
+    1. Ensure you have installed the latest dependencies:
+        ```bash
+        yarn install
+        ```
+    2. Open the Cypress application:
+        ```bash
+        yarn test:e2e
+        ```
+5. Click on any test to launch it. You can run tests from the examples folder but that will only run the sample tests pointing at cypress.io. If you want to run our tests, collapse the example folder and you should see a list of tests at the bottom. At the creation of this section, there is only a single test named `sign-up.spec.js`. Click on it to see it run.
