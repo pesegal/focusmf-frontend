@@ -1,30 +1,30 @@
 <template>
   <div class="SignUpView">
-    <v-form v-model="valid">
-      <v-container>
-        <v-layout
-          align-center
-          justify-center
-          row
+    <v-container>
+      <v-layout
+        align-center
+        justify-center
+        row
+      >
+        <v-flex
+          xs12
+          sm6
         >
-          <v-flex
-            xs12
-            sm6
-          >
-            <v-card>
-              <v-card-title class="title font-weight-regular justify-space-between">
-                <span v-show="step !== 4">{{ currentTitle }}</span>
-                <v-avatar
-                  v-show="step !== 4"
-                  color="primary lighten-2"
-                  class="subheading white--text"
-                  size="24"
-                  v-text="step"
-                />
-              </v-card-title>
+          <v-card>
+            <v-card-title class="title font-weight-regular justify-space-between">
+              <span v-show="step !== 4">{{ currentTitle }}</span>
+              <v-avatar
+                v-show="step !== 4"
+                color="primary lighten-2"
+                class="subheading white--text"
+                size="24"
+                v-text="step"
+              />
+            </v-card-title>
 
-              <v-window v-model="step">
-                <v-window-item :value="1">
+            <v-window v-model="step">
+              <v-window-item :value="1">
+                <v-form v-model="emailFormIsValid">
                   <v-card-text>
                     <v-text-field
                       id="email-input"
@@ -37,17 +37,21 @@
                       class="caption grey--text text--darken-1"
                     >This is the email you will use to login to your FocusMF account.</span>
                   </v-card-text>
-                </v-window-item>
+                </v-form>
+              </v-window-item>
 
-                <v-window-item :value="2">
+              <v-window-item :value="2">
+                <v-form v-model="passwordFormIsValid">
                   <v-card-text>
                     <v-text-field
+                      id="account-password"
                       v-model="account.password"
                       label="Password"
                       type="password"
                       :rules="[rules.password]"
                     />
                     <v-text-field
+                      id="account-password-confirm"
                       v-model="account.confirmPassword"
                       label="Confirm Password"
                       type="password"
@@ -57,78 +61,100 @@
                       class="caption grey--text text--darken-1"
                     >Please enter a password for your account</span>
                   </v-card-text>
-                </v-window-item>
+                </v-form>
+              </v-window-item>
 
-                <v-window-item :value="3">
+              <v-window-item :value="3">
+                <v-form v-model="demographicFormIsValid">
                   <v-card-text>
                     <v-text-field
+                      id="account-first-name-text-field"
                       v-model="account.firstName"
                       label="First Name"
                       :rules="[rules.max(50)]"
                     />
                     <v-text-field
+                      id="account-last-name-text-field"
                       v-model="account.lastName"
                       label="Last Name"
                       :rules="[rules.max(50)]"
                     />
                     <v-text-field
+                      id="account-date-of-birth-text-field"
                       v-model="account.dateOfBirth"
                       label="Birthday"
                     />
                     <span class="caption grey--text text--darken-1">Please enter your information</span>
                   </v-card-text>
-                </v-window-item>
+                </v-form>
+              </v-window-item>
 
-                <v-window-item :value="4">
-                  <div class="pa-3 text-xs-center">
-                    <h3 class="title font-weight-medium mb-2">
-                      Welcome to FocusMF!
-                    </h3>
-                    <v-btn
-                      color="info"
-                      to="/dashboard"
-                    >
-                      Get Started
-                    </v-btn>
-                  </div>
-                </v-window-item>
-              </v-window>
+              <v-window-item :value="4">
+                <div class="pa-3 text-xs-center">
+                  <h3 class="title font-weight-medium mb-2">
+                    Welcome to FocusMF!
+                  </h3>
+                  <v-btn
+                    color="info"
+                    to="/dashboard"
+                  >
+                    Get Started
+                  </v-btn>
+                </div>
+              </v-window-item>
 
-              <v-divider v-show="step < 4" />
+              <v-window-item :value="4 && errorWithRegisteringAccount">
+                <div class="pa-3 text-xs-center">
+                  <h3 class="title font-weight-medium mb-2">
+                    Uh oh!
+                  </h3>
+                  <h4>Looks like there was an issue registering your account.</h4>
+                  <v-btn
+                    color="info"
+                    to="/sign-up"
+                  >
+                    Start again
+                  </v-btn>
+                </div>
+              </v-window-item>
+            </v-window>
 
-              <v-card-actions>
-                <v-btn
-                  v-show="step > 1 && step < 4"
-                  flat
-                  @click="step--"
-                >
-                  Back
-                </v-btn>
-                <v-spacer />
-                <v-btn
-                  v-show="step === 3"
-                  color="primary"
-                  depressed
-                  :loading="registeringAccount"
-                  @click="register"
-                >
-                  Register
-                </v-btn>
-                <v-btn
-                  v-show="step < 3"
-                  color="primary"
-                  depressed
-                  @click="step++"
-                  :disabled="!valid"
-                >
-                  Next
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-form>
+            <v-divider v-show="step < 4" />
+
+            <v-card-actions>
+              <v-btn
+                v-show="step > 1 && step < 4"
+                flat
+                @click="step--"
+              >
+                Back
+              </v-btn>
+              <v-spacer />
+              <v-btn
+                id="register-button"
+                v-show="step === 3"
+                color="primary"
+                depressed
+                :loading="registeringAccount"
+                @click="register"
+              >
+                Register
+              </v-btn>
+              <v-btn
+                id="next-step-button"
+                v-show="step < 3"
+                color="primary"
+                depressed
+                @click="step++"
+                :disabled="!isCurrentFormValid"
+              >
+                Next
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
@@ -174,7 +200,10 @@ export default class SignUpView extends Vue {
       }
     }
   }
-  valid: boolean = false
+  emailFormIsValid: boolean = false
+  passwordFormIsValid: boolean = false
+  demographicFormIsValid: boolean = false
+  errorWithRegisteringAccount: boolean = false
 
   get currentTitle() {
     switch (this.step) {
@@ -186,6 +215,19 @@ export default class SignUpView extends Vue {
         return "Information";
       default:
         return "Account created!";
+    }
+  }
+
+  get isCurrentFormValid () {
+    switch (this.step) {
+      case 1:
+        return this.emailFormIsValid
+      case 2:
+        return this.passwordFormIsValid
+      case 3:
+        return this.demographicFormIsValid
+      default:
+        return false
     }
   }
 
@@ -205,6 +247,7 @@ export default class SignUpView extends Vue {
       this.$store.commit('setAuth', response.data.createUser.token)
     } catch (e) {
       this.registeringAccount = false;
+      this.errorWithRegisteringAccount = true
       return false;
     }
     this.step++;
