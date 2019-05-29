@@ -1,16 +1,40 @@
 describe('Sign up process', () => {
   const signup = ({ username, password, confirmPassword, firstName, lastName, dateOfBirth }) => {
+    fillUsernameForm(username)
+    goNext()
+    fillPasswordForm(password, confirmPassword)
+    goNext()
+    fillDemographicForm({ firstName, lastName, dateOfBirth })
+    clickRegister()
+  }
+
+  const fillUsernameForm = (username) => {
     cy.get('#email-input')
+      .clear()
       .type(username)
-      .get('#next-step-button')
+  }
+
+  const goNext = () => {
+    cy.get('#next-step-button')
       .click()
-      .get('#account-password')
+  }
+
+  const clickRegister = () => {
+    cy.get('#register-button')
+      .click()
+  }
+
+  const fillPasswordForm = (password, confirmPassword) => {
+    cy.get('#account-password')
+      .clear()
       .type(password)
       .get('#account-password-confirm')
+      .clear()
       .type(confirmPassword)
-      .get('#next-step-button')
-      .click()
-      .get('#account-first-name-text-field')
+  }
+
+  const fillDemographicForm = ({ firstName, lastName, dateOfBirth }) => {
+    cy.get('#account-first-name-text-field')
       .clear()
       .type(firstName)
       .get('#account-last-name-text-field')
@@ -19,87 +43,103 @@ describe('Sign up process', () => {
       .get('#account-date-of-birth-text-field')
       .clear()
       .type(dateOfBirth)
-      .get('#register-button')
-      .click()
   }
 
   const getTimestampedUsername = () => {
     return `test-at-${new Date().getTime()}@e.co`
   }
 
-  before(() => {
+  const startSignUp = () => {
     cy.visit('http://localhost:8080')
     cy.get('#welcome-view-sign-up').click()
-  })
+  }
 
   beforeEach(() => {
+    startSignUp()
   })
 
-  it('Given I am a user, when I enter an invalid email, then I cannot continue and I am notified', () => {
-    cy.get('#email-input')
-      .type('not.an-email@z')
-    cy.contains('Hey dude, bad e-mail.').should('be.visible')
-    cy.get('#next-step-button')
-      .should('be.disabled')
-    cy.get('#email-input').clear()
+  describe('Email form', () => {
+
+    it('Given I am a user, when I enter an invalid email, then I cannot continue and I am notified', () => {
+      fillUsernameForm('not.an-email@z')
+      cy.contains('Hey dude, bad e-mail.').should('be.visible')
+      cy.get('#next-step-button')
+        .should('be.disabled')
+    })
+
+    it('Given I am a user, when I enter a valid email, then I can continue', () => {
+      fillUsernameForm('test@e.co')
+      cy.contains('Hey dude, bad e-mail.').should('not.be.visible')
+      cy.get('#next-step-button')
+        .should('not.be.disabled')
+    })
   })
 
-  it('Given I am a user, when I enter a valid email, then I can continue', () => {
-    cy.get('#email-input')
-      .type('test@e.co')
-    cy.contains('Hey dude, bad e-mail.').should('not.be.visible')
-    cy.get('#next-step-button')
-      .should('not.be.disabled')
-    cy.get('#email-input').clear()
+
+  describe('Password form', () => {
+
+    beforeEach(() => {
+      fillUsernameForm('test@e.co')
+      goNext()
+    })
+
+    it('Given I am a user, when I enter an invalid password, then I cannot continue and I am notified', () => {
+      cy.get('#account-password')
+        .clear()
+        .type('123')
+      cy.contains('Minimum password length is 8.').should('be.visible')
+    })
+
+    it('Given I am a user, when I enter a valid password, then I see no error message', () => {
+      cy.get('#account-password')
+        .clear()
+        .type('password')
+      cy.contains('Minimum password length is 8.').should('not.be.visible')
+    })
+
+    it('Given I am a user, when I type a password that does not match, I am given an error', () => {
+      cy.get('#account-password')
+        .clear()
+        .type('password')
+      cy.get('#account-password-confirm')
+        .type('123')
+      cy.contains('Passwords don\'t match').should('be.visible')
+      cy.get('#next-step-button').should('be.disabled')
+    })
+
+    it('Given I am a user, when I confirm the password I can go to the next screen', () => {
+      cy.get('#account-password')
+        .clear()
+        .type('password')
+      cy.get('#account-password-confirm')
+        .clear()
+        .type('password')
+      cy.get('#next-step-button').should('not.be.disabled')
+    })
   })
 
-  it('Given I am a user, when I enter an invalid password, then I cannot continue and I am notified', () => {
-    cy.get('#email-input')
-      .type('test@e.co')
-    cy.get('#next-step-button')
-      .click()
-    cy.get('#account-password')
-      .type('123')
-    cy.contains('Minimum password length is 8.').should('be.visible')
+  describe('Demographic form', () => {
+
+    beforeEach(() => {
+      fillUsernameForm('test@e.co')
+      goNext()
+      fillPasswordForm('password', 'password')
+      goNext()
+    })
+
+    it('Given I am a user, when I enter first name, last name and birthday, I can register', () => {
+      cy.get('#account-first-name-text-field').clear().type('John')
+      cy.get('#account-last-name-text-field').clear().type('McTester')
+      cy.get('#account-date-of-birth-text-field').clear().type('01/23/1959')
+      cy.get('#next-step-button').should('not.be.visible')
+      cy.get('#register-button')
+        .should('be.visible')
+        .should('not.be.disabled')
+    })
   })
 
-  it('Given I am a user, when I enter a valid password, then I see no error message', () => {
-    cy.get('#account-password')
-      .clear()
-      .type('password')
-    cy.contains('Minimum password length is 8.').should('not.be.visible')
-  })
 
-  it('Given I am a user, when I type a password that does not match, I am given an error', () => {
-    cy.get('#account-password')
-      .clear()
-      .type('password')
-    cy.get('#account-password-confirm')
-      .type('123')
-    cy.contains('Passwords don\'t match').should('be.visible')
-  })
-
-  it('Given I am a user, when I confirm the password I can go to the next screen', () => {
-    cy.get('#account-password')
-      .clear()
-      .type('password')
-    cy.get('#account-password-confirm')
-      .clear()
-      .type('password')
-    cy.get('#next-step-button').should('not.be.disabled')
-    cy.get('#next-step-button').click()
-  })
-
-  it('Given I am a user, when I enter first name, last name and birthday, I can register', () => {
-    cy.get('#account-first-name-text-field').clear().type('John')
-    cy.get('#account-last-name-text-field').clear().type('McTester')
-    cy.get('#account-date-of-birth-text-field').clear().type('04/23/1959')
-    cy.get('#register-button').should('be.visible')
-    cy.get('#next-step-button').should('not.be.visible')
-    cy.get('#register-button').click()
-  })
-
-  it.only('Given I sign up successfully, I am prompted to continue to the dashboard ', () => {
+  it('Given I sign up successfully, I am prompted to continue to the dashboard ', () => {
     cy.visit('http://localhost:8080')
       .get('#welcome-view-sign-up')
       .click()
