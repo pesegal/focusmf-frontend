@@ -6,6 +6,10 @@
         <span>Focus</span>
         <span class="font-weight-light">MF</span>
       </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-btn @click="logout" flat>Logout</v-btn>
+      </v-toolbar-items>
     </v-toolbar>
   </div>
 </template>
@@ -15,8 +19,18 @@ import { Vue, Component, Emit } from 'vue-property-decorator'
 
 @Component
 export default class AppMainToolbar extends Vue {
+
+  get isLoggedIn () {
+    return !!this.$store.state.authorization
+  }
+
   @Emit()
   showDrawer (showDrawer: boolean): void {}
+
+  logout () {
+    this.$store.commit('setAuth', null)
+    this.$router.push('/login')
+  }
 }
 </script>
 
