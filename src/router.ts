@@ -9,10 +9,11 @@ import SignUpView from '@/views/SignUpView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import WelcomeView from '@/views/WelcomeView.vue'
 import LoginView from '@/views/LoginView.vue'
+import { store } from '@/store'
 
 Vue.use(Router)
 
-export default new Router({
+const router: Router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -50,7 +51,10 @@ export default new Router({
           name: 'settings',
           component: SettingsView
         }
-      ]
+      ],
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/sign-up',
@@ -64,3 +68,15 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(route => route.meta.requiresAuth) && !store.state.authorization) {
+    next({
+        name: 'login',
+        params: { afterLoginTakeTo: to.fullPath }
+    })
+  }
+  return next()
+})
+
+export default router

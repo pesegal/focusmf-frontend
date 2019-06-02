@@ -55,7 +55,9 @@
       "parser": "typescript-eslint-parser"
     }
   },
-  "eslintIgnore": ["*.gql"],
+  "eslintIgnore": [
+    "*.gql"
+  ],
   "postcss": {
     "plugins": {
       "autoprefixer": {}

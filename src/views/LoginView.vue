@@ -8,8 +8,7 @@
     >
       <v-flex
         xs12
-        sm8
-        md6
+        sm6
       >
         <v-form>
           <v-text-field
@@ -23,7 +22,11 @@
             type="password"
             required
           />
-          <v-btn>Login</v-btn>
+          <v-btn
+            color="primary"
+            @click="login"
+            :loading="loading"
+          >Login</v-btn>
         </v-form>
       </v-flex>
     </v-layout>
@@ -31,12 +34,32 @@
 </template>
 
 <script lang="ts">
-import Component from 'vue-class-component';
-import Vue from 'vue';
+import Component from 'vue-class-component'
+import Vue from 'vue'
+const loginUser = require('@/graphql/loginUser.gql')
 
 @Component
 export default class LoginView extends Vue {
   email: string = ''
   password: string = ''
+  loading: boolean = false
+
+  async login () {
+    this.loading = true
+    try {
+      const response = await this.$apollo.query({
+        query: loginUser,
+        variables: {
+          email: this.email,
+          password: this.password
+        }
+      })
+      this.$store.commit('setAuth', response.data.loginUser.token)
+      this.loading = false
+      this.$router.push(this.$route.params.afterLoginTakeTo || '/dashboard')
+    } catch (e) {
+      this.loading = false
+    }
+  }
 }
 </script>
