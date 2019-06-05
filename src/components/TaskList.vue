@@ -9,12 +9,14 @@
             </v-btn>
         </v-toolbar>
         <v-list two-line>
-            <template v-for="(item, index) in items">
-                <v-card :key="index">
-                    <p :key="index">{{ "id " + item.id }}</p>
-                    <v-divider :key="index"></v-divider>
-                </v-card>
-            </template>
+            <TaskListItem
+                v-for="item in items"
+                :key="item.id"
+                :id="item.id"
+                v-bind:name="item.name"
+                :notes="item.notes"
+                :columnPos="item.columnPos"
+            ></TaskListItem>
         </v-list>
     </v-card>
 </template>
@@ -22,16 +24,16 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component';
+import TaskListItem from './TaskListItem.vue'
 
 @Component
 export default class TaskList extends Vue {
     items = [
-
-        // TODO: Replicate mock some basic task data.
-        {id: 1},
-        {id: 2},
-        {id: 3}
+        {id: 1, name: "Task List Name 1", projects: [], columnPos: 1, notes: "notes"},
+        {id: 2, name: "Task List Name 2", projects: [], columnPos: 1, notes: "notes 2"},
+        {id: 3, name: "Task List Name 3", projects: [], columnPos: 1, notes: "notes 3"},
+        {id: 4, name: "Task List Name 4", projects: [], columnPos: 1, notes: "notes 4"},
+        {id: 5, name: "Task List Name 5", projects: [], columnPos: 1, notes: "notes 5"}
     ]
-
 }
 </script>
