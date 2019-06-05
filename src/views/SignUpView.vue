@@ -1,7 +1,7 @@
 <template>
   <div class="SignUpView">
     <v-form v-model="valid">
-      <v-container>
+      <v-container fluid=true>
         <v-layout
           align-center
           justify-center

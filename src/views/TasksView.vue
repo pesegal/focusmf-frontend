@@ -17,6 +17,7 @@ export default {
   data () {
     return {
       greeting: "hello"
+      // TODO: add mock data to display lists.
     }
   }
 }
