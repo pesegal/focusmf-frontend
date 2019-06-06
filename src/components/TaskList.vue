@@ -16,7 +16,7 @@
                 v-bind:name="item.name"
                 :notes="item.notes"
                 :columnPos="item.columnPos"
-            ></TaskListItem>    
+            ></TaskListItem>
         </v-list>
     </v-card>
 </template>
@@ -26,7 +26,11 @@ import Vue from 'vue'
 import Component from 'vue-class-component';
 import TaskListItem from './TaskListItem.vue'
 
-@Component
+@Component({
+    components: {
+        TaskListItem
+    }
+})
 export default class TaskList extends Vue {
     items = [
         {id: 1, name: "Task List Name 1", projects: [], columnPos: 1, notes: "notes"},
