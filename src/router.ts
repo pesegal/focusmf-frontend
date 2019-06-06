@@ -70,7 +70,7 @@ const router: Router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(route => route.meta.requiresAuth) && !store.state.authorization) {
+  if (to.matched.some(route => route.meta.requiresAuth) && !store.state.auth.token) {
     next({
         name: 'login',
         params: { afterLoginTakeTo: to.fullPath }

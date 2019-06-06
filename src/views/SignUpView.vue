@@ -244,7 +244,7 @@ export default class SignUpView extends Vue {
           dateofbirth: (new Date(this.account.dateOfBirth).toISOString())
         }
       })
-      this.$store.commit('setAuth', response.data.createUser.token)
+      this.$store.commit('auth/setAuth', response.data.createUser.token)
     } catch (e) {
       this.registeringAccount = false;
       this.errorWithRegisteringAccount = true
