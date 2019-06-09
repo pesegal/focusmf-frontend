@@ -50,7 +50,7 @@ describe('Sign up process', () => {
   }
 
   const startSignUp = () => {
-    cy.visit('http://localhost:8080')
+    cy.visit('/')
     cy.get('#welcome-view-sign-up').click()
   }
 
@@ -140,7 +140,7 @@ describe('Sign up process', () => {
 
 
   it('Given I sign up successfully, I am prompted to continue to the dashboard ', () => {
-    cy.visit('http://localhost:8080')
+    cy.visit('/')
       .get('#welcome-view-sign-up')
       .click()
 
@@ -158,7 +158,7 @@ describe('Sign up process', () => {
   })
 
   it('Given I use an email that already exists in the database, I cannot create an account', () => {
-    cy.visit('http://localhost:8080')
+    cy.visit('/')
       .get('#welcome-view-sign-up')
       .click()
     const username = getTimestampedUsername()
@@ -170,7 +170,7 @@ describe('Sign up process', () => {
       lastName: 'McTester',
       dateOfBirth: '04/23/1959'
     })
-    cy.visit('http://localhost:8080')
+    cy.visit('/')
     cy.get('#welcome-view-sign-up').click()
     signup({
       username: username,
