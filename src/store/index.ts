@@ -1,21 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { State as RootState } from './state'
+import AuthStore from './auth/index'
+import VuexPersistence from 'vuex-persist'
 
 Vue.use(Vuex)
 
-export const store = new Vuex.Store({
-    state: {
-        authorization: ""
+const vuexLocal = new VuexPersistence({
+    storage: window.localStorage
+  })
+
+export const store = new Vuex.Store<RootState>({
+    strict: process.env.NODE_ENV !== 'production',
+    modules: {
+        auth: new AuthStore()
     },
-    getters: {},
-    mutations: {
-        setAuth (state, token: string) {
-            state.authorization = token
-        },
-        clearAuth (state) {
-            state.authorization = ""
-        }
-    },
-    actions: {},
-    modules: {}
+    plugins: [vuexLocal.plugin]
 })

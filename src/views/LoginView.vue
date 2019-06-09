@@ -12,17 +12,20 @@
       >
         <v-form>
           <v-text-field
+            id="username-input-field"
             v-model="email"
             label="E-mail"
             required
           />
           <v-text-field
+            id="password-input-field"
             v-model="password"
             label="Password"
             type="password"
             required
           />
           <v-btn
+            id="login-button"
             color="primary"
             @click="login"
             :loading="loading"
@@ -54,7 +57,7 @@ export default class LoginView extends Vue {
           password: this.password
         }
       })
-      this.$store.commit('setAuth', response.data.loginUser.token)
+      this.$store.commit('auth/setAuth', response.data.loginUser.token)
       this.loading = false
       this.$router.push(this.$route.params.afterLoginTakeTo || '/dashboard')
     } catch (e) {

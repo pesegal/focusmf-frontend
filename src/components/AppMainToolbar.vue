@@ -28,7 +28,7 @@ export default class AppMainToolbar extends Vue {
   showDrawer (showDrawer: boolean): void {}
 
   logout () {
-    this.$store.commit('setAuth', null)
+    this.$store.commit('auth/setAuth', '')
     this.$router.push('/login')
   }
 }
