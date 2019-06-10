@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card class="TaskListItem">
         <v-card-title primary-title>
             <div>
                 <h3>{{ name }}</h3>
@@ -23,3 +23,9 @@ export default class TaskListItem extends Vue {
     @Prop() columnPos!: number
 }
 </script>
+
+<style>
+.TaskListItem {
+    width: 200px;
+}
+</style>

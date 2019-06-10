@@ -1,5 +1,5 @@
 <template>
-  <v-app :dark="isDark">
+  <v-app :dark="isDark" class="DashboardView">
     <app-main-toolbar @show-drawer="onUpdateDrawerDisplayState" />
     <app-navigation-drawer
       :show-drawer="showDrawer"
@@ -7,7 +7,7 @@
       @toggle-theme="onToggleTheme"
       @update-drawer-display-state="onUpdateDrawerDisplayState"
     />
-    <v-content>
+    <v-content class="DashboardView__content">
       <router-view />
     </v-content>
   </v-app>
@@ -39,3 +39,9 @@ export default class DashboardView extends Vue {
   }
 }
 </script>
+
+<style>
+.DashboardView__content {
+  padding-top: 0 !important;
+}
+</style>

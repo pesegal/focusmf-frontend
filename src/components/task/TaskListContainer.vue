@@ -1,8 +1,8 @@
 <template>
   <v-container>
-    <v-layout row justify-end>
-      <v-flex v-for="(list, index) in lists" :key="index">
-        <task-list :items="list" />
+    <v-layout class="layout-test">
+      <v-flex class="flex-test" v-for="(list, index) in lists" :key="index">
+        <task-list :items="list" class="test" />
       </v-flex>
     </v-layout>
   </v-container>
@@ -54,3 +54,15 @@ export default class TaskListContainer extends Vue {
   ]
 }
 </script>
+
+<style>
+.layout-test {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.flex-test {
+  display: inline-block;
+}
+</style>
