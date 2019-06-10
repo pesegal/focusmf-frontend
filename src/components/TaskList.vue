@@ -1,24 +1,14 @@
 <template>
-    <v-card>
-        <v-toolbar color="brown" dark>
-            <v-toolbar-side-icon></v-toolbar-side-icon>
-            <v-toolbar-title>Example List</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn icon>
-                <v-icon>search</v-icon>
-            </v-btn>
-        </v-toolbar>
-        <v-list two-line>
-            <TaskListItem
-                v-for="item in items"
-                :key="item.id"
-                :id="item.id"
-                v-bind:name="item.name"
-                :notes="item.notes"
-                :columnPos="item.columnPos"
-            ></TaskListItem>
-        </v-list>
-    </v-card>
+    <v-list>
+        <TaskListItem
+            v-for="(item, index) in items"
+            :key="index"
+            :id="item.id"
+            v-bind:name="item.name"
+            :notes="item.notes"
+            :columnPos="item.columnPos"
+        ></TaskListItem>
+    </v-list>
 </template>
 
 <script lang="ts">
@@ -26,14 +16,18 @@ import Vue from 'vue'
 import Component from 'vue-class-component';
 import TaskListItem from './TaskListItem.vue'
 
-@Component
+@Component({
+    components: {
+        TaskListItem
+    },
+    props: {
+        items: {
+            type: Array,
+            default: []
+        }
+    }
+})
 export default class TaskList extends Vue {
-    items = [
-        {id: 1, name: "Task List Name 1", projects: [], columnPos: 1, notes: "notes"},
-        {id: 2, name: "Task List Name 2", projects: [], columnPos: 1, notes: "notes 2"},
-        {id: 3, name: "Task List Name 3", projects: [], columnPos: 1, notes: "notes 3"},
-        {id: 4, name: "Task List Name 4", projects: [], columnPos: 1, notes: "notes 4"},
-        {id: 5, name: "Task List Name 5", projects: [], columnPos: 1, notes: "notes 5"}
-    ]
+
 }
 </script>

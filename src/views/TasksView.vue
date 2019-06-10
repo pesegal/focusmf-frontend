@@ -1,24 +1,16 @@
 <template>
   <div class="TasksView">
-    <v-container>
-      <TaskList/>
-    </v-container>
+    <task-list-container/>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import TaskList from '../components/TaskList.vue'
+import TaskListContainer from '../components/task/TaskListContainer.vue'
 
 export default {
   components: {
-    TaskList
-  },
-  data () {
-    return {
-      greeting: "hello"
-      // TODO: add mock data to display lists.
-    }
+    TaskListContainer
   }
 }
 </script>
