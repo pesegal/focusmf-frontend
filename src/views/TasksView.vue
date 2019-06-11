@@ -25,10 +25,8 @@ export default {
 .board {
   user-select: none;
   white-space: nowrap;
-  margin-bottom: 8px;
   overflow-x: auto;
   overflow-y: hidden;
-  padding-bottom: 8px;
   position: absolute;
   top: 0;
   right: 0;

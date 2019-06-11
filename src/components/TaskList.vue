@@ -68,7 +68,7 @@ export default class TaskList extends Vue {
     flex: 1 1 auto;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 15px;
+    padding: 0 15px;
     z-index: 1;
     min-height: 0;
     background-color: transparent;

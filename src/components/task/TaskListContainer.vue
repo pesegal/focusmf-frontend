@@ -56,5 +56,11 @@ export default class TaskListContainer extends Vue {
 </script>
 
 <style>
+.TaskListContainer {
+  height: 100%;
+}
 
+.TaskListContainer .row.layout {
+  height: 100%;
+}
 </style>
