@@ -9,14 +9,16 @@
             </v-btn>
         </v-toolbar>
         <v-list two-line>
-            <TaskListItem
-                v-for="item in items"
-                :key="item.id"
-                :id="item.id"
-                v-bind:name="item.name"
-                :notes="item.notes"
-                :columnPos="item.columnPos"
-            ></TaskListItem>    
+            <v-layout align-space-around justify-center column>
+                <TaskListItem
+                    v-for="item in items"
+                    :key="item.id"
+                    :id="item.id"
+                    :name="item.name"
+                    :notes="item.notes"
+                    :columnPos="item.columnPos"
+                ></TaskListItem>
+            </v-layout>
         </v-list>
     </v-card>
 </template>
@@ -26,8 +28,13 @@ import Vue from 'vue'
 import Component from 'vue-class-component';
 import TaskListItem from './TaskListItem.vue'
 
-@Component
+@Component({
+    components: {
+        TaskListItem
+    }
+})
 export default class TaskList extends Vue {
+    // TODO: Figure out how data gets queried from the backend
     items = [
         {id: 1, name: "Task List Name 1", projects: [], columnPos: 1, notes: "notes"},
         {id: 2, name: "Task List Name 2", projects: [], columnPos: 1, notes: "notes 2"},
