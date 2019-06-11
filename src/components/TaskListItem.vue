@@ -26,6 +26,6 @@ export default class TaskListItem extends Vue {
 
 <style>
 .TaskListItem {
-    width: 200px;
+    cursor: pointer;
 }
 </style>

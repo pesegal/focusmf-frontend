@@ -1,15 +1,23 @@
 <template>
   <v-app :dark="isDark" class="DashboardView">
-    <app-main-toolbar @show-drawer="onUpdateDrawerDisplayState" />
-    <app-navigation-drawer
-      :show-drawer="showDrawer"
-      :is-dark="isDark"
-      @toggle-theme="onToggleTheme"
-      @update-drawer-display-state="onUpdateDrawerDisplayState"
-    />
-    <v-content class="DashboardView__content">
-      <router-view />
-    </v-content>
+    <div class="chrome-container">
+      <div class="surface">
+        <div class="content">
+          <div class="board-wrapper">
+            <div class="board-main-content">
+              <app-main-toolbar @show-drawer="onUpdateDrawerDisplayState" />
+              <app-navigation-drawer
+                :show-drawer="showDrawer"
+                :is-dark="isDark"
+                @toggle-theme="onToggleTheme"
+                @update-drawer-display-state="onUpdateDrawerDisplayState"
+              />
+              <router-view />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </v-app>
 </template>
 
@@ -41,7 +49,44 @@ export default class DashboardView extends Vue {
 </script>
 
 <style>
-.DashboardView__content {
-  padding-top: 0 !important;
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.chrome-container {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.surface {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.content {
+  flex-grow: 1;
+  overflow-y: scroll;
+  outline: none;
+  position: relative;
+}
+.board-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.board-main-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-right: 0;
 }
 </style>
