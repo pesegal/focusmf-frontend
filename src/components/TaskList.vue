@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card class="TaskList">
         <v-toolbar color="brown" dark>
             <v-toolbar-side-icon></v-toolbar-side-icon>
             <v-toolbar-title>Example List</v-toolbar-title>
@@ -8,11 +8,11 @@
                 <v-icon>search</v-icon>
             </v-btn>
         </v-toolbar>
-        <v-list two-line>
+        <v-list class="TaskList__v-list">
             <v-layout align-space-around justify-center column>
                 <TaskListItem
-                    v-for="item in items"
-                    :key="item.id"
+                    v-for="(item, index) in items"
+                    :key="index"
                     :id="item.id"
                     :name="item.name"
                     :notes="item.notes"
@@ -31,16 +31,54 @@ import TaskListItem from './TaskListItem.vue'
 @Component({
     components: {
         TaskListItem
+    },
+    props: {
+        items: {
+            type: Array,
+            default: []
+        }
     }
 })
 export default class TaskList extends Vue {
-    // TODO: Figure out how data gets queried from the backend
-    items = [
-        {id: 1, name: "Task List Name 1", projects: [], columnPos: 1, notes: "notes"},
-        {id: 2, name: "Task List Name 2", projects: [], columnPos: 1, notes: "notes 2"},
-        {id: 3, name: "Task List Name 3", projects: [], columnPos: 1, notes: "notes 3"},
-        {id: 4, name: "Task List Name 4", projects: [], columnPos: 1, notes: "notes 4"},
-        {id: 5, name: "Task List Name 5", projects: [], columnPos: 1, notes: "notes 5"}
-    ]
+
 }
 </script>
+
+<style>
+.TaskList {
+    width: 272px;
+    margin: 0 4px;
+    height: 100%;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.TaskList:first-child {
+    margin-left: 8px;
+}
+.TaskList:last-child {
+    margin-right: 8px;
+}
+
+.TaskList__container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  position: relative;
+  white-space: normal;
+  background-color: transparent;
+}
+
+.TaskList__v-list.v-list {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 15px;
+    z-index: 1;
+    min-height: 0;
+    background-color: transparent;
+}
+</style>
