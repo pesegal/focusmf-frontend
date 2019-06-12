@@ -1,7 +1,7 @@
 <template>
   <div class="board-canvas">
     <div class="board">
-      <task-list-container/>
+      <task-list-container />
     </div>
   </div>
 </template>

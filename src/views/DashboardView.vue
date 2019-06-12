@@ -1,5 +1,8 @@
 <template>
-  <v-app :dark="isDark" class="DashboardView">
+  <v-app 
+    :dark="isDark" 
+    class="DashboardView"
+  >
     <div class="chrome-container">
       <div class="surface">
         <div class="content">

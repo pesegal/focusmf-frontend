@@ -1,7 +1,10 @@
 <template>
   <v-container class="TaskListContainer">
     <v-layout row>
-      <v-flex v-for="(list, index) in lists" :key="index">
+      <v-flex
+        v-for="(list, index) in lists"
+        :key="index"
+      >
         <task-list :items="list" />
       </v-flex>
     </v-layout>
