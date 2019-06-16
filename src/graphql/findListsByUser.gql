@@ -1,0 +1,13 @@
+query findListsByUser {
+  findListsByUser {
+    id
+    name
+    tasks {
+      id
+     	columnPos
+      name
+      notes
+    }
+  }
+}
+

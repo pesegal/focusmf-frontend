@@ -6,13 +6,16 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
 import TaskListContainer from '../components/task/TaskListContainer.vue'
 
 export default {
   components: {
     TaskListContainer
+  },
+  mounted() {
+    this.$store.dispatch('taskList/loadLists')
   }
 }
 </script>
