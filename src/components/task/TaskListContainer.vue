@@ -5,24 +5,30 @@
         v-for="(list, index) in lists"
         :key="index"
       >
-        <task-list :items="list" />
+        <task-list @task-list-deleted="onTaskListDeleted" :list="list" :delete-disabled="lists.length == 1" />
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
+<script>
 import TaskList from '../TaskList.vue'
-import Component from 'vue-class-component';
 
-@Component({
+export default {
   components: {
     TaskList
+  },
+  props: {
+    lists: {
+      default: [],
+      type: Array
+    }
+  },
+  methods: {
+    onTaskListDeleted (id) {
+      this.$emit('task-list-deleted', id)
+    }
   }
-})
-export default class TaskListContainer extends Vue {
-  lists = this.$store.state.taskList.tasks
 }
 </script>
 

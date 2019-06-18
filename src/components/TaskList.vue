@@ -1,14 +1,14 @@
 <template>
   <v-card class="TaskList">
     <v-toolbar
-      color="brown"
+      color="blue"
       dark
     >
       <v-toolbar-side-icon />
-      <v-toolbar-title>Example List</v-toolbar-title>
+      <v-toolbar-title>{{ name }}</v-toolbar-title>
       <v-spacer />
-      <v-btn icon>
-        <v-icon>search</v-icon>
+      <v-btn v-if="!deleteDisabled" icon @click="onDeleteList">
+        <v-icon>delete</v-icon>
       </v-btn>
     </v-toolbar>
     <v-list class="TaskList__v-list">
@@ -18,35 +18,50 @@
         column
       >
         <TaskListItem
-          v-for="(item, index) in items"
-          :id="item.id"
+          v-for="(task, index) in tasks"
+          :id="task.id"
           :key="index"
-          :name="item.name"
-          :notes="item.notes"
-          :column-pos="item.columnPos"
+          :name="task.name"
+          :notes="task.notes"
+          :column-pos="task.columnPos"
         />
       </v-layout>
     </v-list>
   </v-card>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import TaskListItem from "./TaskListItem.vue";
+<script>
+import Component from "vue-class-component"
+import TaskListItem from "./TaskListItem.vue"
 
-@Component({
+export default {
   components: {
     TaskListItem
   },
   props: {
-    items: {
-      type: Array,
-      default: []
+    list: {
+      type: Object,
+      required: true
+    },
+    deleteDisabled: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    name () {
+      return this.list.name
+    },
+    tasks () {
+      return this.list.tasks
+    }
+  },
+  methods: {
+    onDeleteList () {
+      this.$emit('task-list-deleted', this.list.id)
     }
   }
-})
-export default class TaskList extends Vue {}
+}
 </script>
 
 <style>

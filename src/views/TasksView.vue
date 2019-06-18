@@ -1,7 +1,8 @@
 <template>
   <div class="board-canvas">
     <div class="board">
-      <task-list-container />
+      <v-btn @click="onCreateTaskList">Create Task List</v-btn>
+      <task-list-container :lists="lists" @task-list-deleted="onTaskListDeleted" />
     </div>
   </div>
 </template>
@@ -14,8 +15,34 @@ export default {
   components: {
     TaskListContainer
   },
-  mounted() {
-    this.$store.dispatch('taskList/loadLists')
+  data () {
+    return {
+      lists: [],
+      loadingTaskLists: false,
+      creatingTaskList: false
+    }
+  },
+  async mounted () {
+    this.loadTaskLists()
+  },
+  methods: {
+    async onCreateTaskList () {
+      this.creatingTaskList = true
+      await this.$store.dispatch('taskList/createTaskList')
+      this.creatingTaskList = false
+      this.loadTaskLists()
+    },
+
+    async loadTaskLists () {
+      this.loadingTaskLists = true
+      this.lists = await this.$store.dispatch('taskList/loadLists')
+      this.loadingTaskLists = false
+    },
+
+    async onTaskListDeleted (taskListId) {
+      await this.$store.dispatch('taskList/deleteTaskList', taskListId)
+      this.loadTaskLists()
+    }
   }
 }
 </script>
