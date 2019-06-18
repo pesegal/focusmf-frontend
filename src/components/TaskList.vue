@@ -4,7 +4,6 @@
       color="blue"
       dark
     >
-      <v-toolbar-side-icon />
       <v-toolbar-title>{{ name }}</v-toolbar-title>
       <v-spacer />
       <v-btn v-if="!deleteDisabled" icon @click="onDeleteList">
