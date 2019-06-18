@@ -4,7 +4,6 @@ import { State as RootState } from '../state'
 import { apolloClient } from '../../plugins/vue-apollo'
 const findListsByUser = require('@/graphql/findListsByUser.gql')
 
-
 export default class TaskListStore implements Module<TaskListState, RootState> {
   namespaced: boolean = true
   state: TaskListState = {

@@ -4,7 +4,7 @@ query findListsByUser {
     name
     tasks {
       id
-     	columnPos
+      columnPos
       name
       notes
     }
