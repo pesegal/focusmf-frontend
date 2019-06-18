@@ -18,11 +18,10 @@ export default class TaskListStore implements Module<TaskListState, RootState> {
 
   actions: ActionTree<TaskListState, RootState> = {
     async loadLists ({ commit }) {
-      const tasks = await apolloClient.query({
-        query: findListsByUser,
-
+      const response = await apolloClient.query({
+        query: findListsByUser
       })
-      commit('setTasks', tasks)
+      commit('setTasks', response.data.findListsByUser)
     }
   }
 }
