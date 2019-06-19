@@ -131,8 +131,8 @@
               </v-btn>
               <v-spacer />
               <v-btn
-                id="register-button"
                 v-show="step === 3"
+                id="register-button"
                 color="primary"
                 depressed
                 :loading="registeringAccount"
@@ -141,12 +141,12 @@
                 Register
               </v-btn>
               <v-btn
-                id="next-step-button"
                 v-show="step < 3"
+                id="next-step-button"
                 color="primary"
                 depressed
-                @click="step++"
                 :disabled="!isCurrentFormValid"
+                @click="step++"
               >
                 Next
               </v-btn>

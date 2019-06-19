@@ -2,11 +2,23 @@
   <div class="WelcomeView">
     <v-container>
       <brand-display />
-      <v-layout align-center justify-center row fill-height>
-        <v-btn id="welcome-view-sign-up" color="primary" to="/sign-up">
+      <v-layout
+        align-center
+        justify-center
+        row
+        fill-height
+      >
+        <v-btn
+          id="welcome-view-sign-up"
+          color="primary"
+          to="/sign-up"
+        >
           Sign Up
         </v-btn>
-        <v-btn flat to="/login">
+        <v-btn
+          flat
+          to="/login"
+        >
           Login
         </v-btn>
       </v-layout>

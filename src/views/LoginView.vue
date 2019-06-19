@@ -27,9 +27,11 @@
           <v-btn
             id="login-button"
             color="primary"
-            @click="login"
             :loading="loading"
-          >Login</v-btn>
+            @click="login"
+          >
+            Login
+          </v-btn>
         </v-form>
       </v-flex>
     </v-layout>

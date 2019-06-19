@@ -1,0 +1,9 @@
+mutation createList ($name: String!) {
+  createList(name: $name) {
+    id
+    name
+    tasks {
+      name
+    }
+  }
+}

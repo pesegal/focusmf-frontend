@@ -6,9 +6,14 @@
         <span>Focus</span>
         <span class="font-weight-light">MF</span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-spacer />
       <v-toolbar-items>
-        <v-btn @click="logout" flat>Logout</v-btn>
+        <v-btn
+          flat
+          @click="logout"
+        >
+          Logout
+        </v-btn>
       </v-toolbar-items>
     </v-toolbar>
   </div>
