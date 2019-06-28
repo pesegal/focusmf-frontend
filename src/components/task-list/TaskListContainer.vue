@@ -6,10 +6,15 @@
     >
       <v-flex
         shrink
-        v-for="(list, index) in lists"
-        :key="index"
+        v-for="list in lists"
+        :key="list.id"
       >
-        <task-list @task-list-deleted="onTaskListDeleted" :list="list" :delete-disabled="lists.length == 1" />
+        <task-list
+          @task-list-name-change="onTaskListNameChange"
+          @task-list-deleted="onTaskListDeleted"
+          :list="list"
+          :delete-disabled="lists.length == 1"
+        />
       </v-flex>
       <v-flex shrink>
         <div class="TaskListContainer__add-list-button-container">
@@ -21,7 +26,7 @@
 </template>
 
 <script>
-import TaskList from '../TaskList.vue'
+import TaskList from './TaskList.vue'
 
 export default {
   components: {
@@ -40,6 +45,10 @@ export default {
 
     createTaskList () {
       this.$emit('task-list-created')
+    },
+
+    onTaskListNameChange (taskList) {
+      this.$emit('task-list-name-change', taskList)
     }
   }
 }
