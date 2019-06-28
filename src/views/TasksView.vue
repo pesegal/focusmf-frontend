@@ -5,6 +5,7 @@
         :lists="lists"
         @task-list-deleted="onTaskListDeleted"
         @task-list-created="onTaskListCreated"
+        @task-list-name-change="onTaskListNameChange"
       />
     </div>
   </div>
@@ -12,7 +13,7 @@
 
 <script>
 import Vue from 'vue'
-import TaskListContainer from '../components/task/TaskListContainer.vue'
+import TaskListContainer from '@/components/task-list/TaskListContainer.vue'
 
 export default {
   components: {
@@ -45,6 +46,10 @@ export default {
     async onTaskListDeleted (taskListId) {
       await this.$store.dispatch('taskList/deleteTaskList', taskListId)
       this.loadTaskLists()
+    },
+
+    async onTaskListNameChange (taskList) {
+      await this.$store.dispatch('taskList/updateTaskList', taskList)
     }
   }
 }

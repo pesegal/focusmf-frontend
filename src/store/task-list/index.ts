@@ -5,6 +5,7 @@ import { apolloClient } from '../../plugins/vue-apollo'
 const findListsByUser = require('@/graphql/findListsByUser.gql')
 const createList = require('@/graphql/createList.gql')
 const deleteList = require('@/graphql/deleteList.gql')
+const updateList = require('@/graphql/updateList.gql')
 
 export default class TaskListStore implements Module<TaskListState, RootState> {
   namespaced: boolean = true
@@ -48,6 +49,17 @@ export default class TaskListStore implements Module<TaskListState, RootState> {
         fetchPolicy: 'no-cache'
       })
       return response.data.createList
+    },
+
+    async updateTaskList (context, taskList) {
+      const response = await apolloClient.mutate({
+        mutation: updateList,
+        variables: {
+          ...taskList
+        },
+        fetchPolicy: 'no-cache'
+      })
+      return response.data.updateList
     }
   }
 }
