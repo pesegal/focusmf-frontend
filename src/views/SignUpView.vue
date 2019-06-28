@@ -96,7 +96,7 @@
                   </h3>
                   <v-btn
                     color="info"
-                    to="/dashboard"
+                    to="/dashboard/tasks"
                   >
                     Get Started
                   </v-btn>
