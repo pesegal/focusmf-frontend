@@ -66,19 +66,12 @@ export default {
 <style>
 .TaskList {
   width: 272px;
-  margin: 0 4px;
+  margin: 0 15px;
   height: 100%;
   box-sizing: border-box;
   display: inline-block;
   vertical-align: top;
   white-space: nowrap;
-}
-
-.TaskList:first-child {
-  margin-left: 8px;
-}
-.TaskList:last-child {
-  margin-right: 8px;
 }
 
 .TaskList__container {

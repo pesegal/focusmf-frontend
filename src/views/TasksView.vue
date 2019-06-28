@@ -1,8 +1,11 @@
 <template>
   <div class="board-canvas">
     <div class="board">
-      <v-btn @click="onCreateTaskList">Create Task List</v-btn>
-      <task-list-container :lists="lists" @task-list-deleted="onTaskListDeleted" />
+      <task-list-container
+        :lists="lists"
+        @task-list-deleted="onTaskListDeleted"
+        @task-list-created="onTaskListCreated"
+      />
     </div>
   </div>
 </template>
@@ -26,9 +29,9 @@ export default {
     this.loadTaskLists()
   },
   methods: {
-    async onCreateTaskList () {
+    async onTaskListCreated () {
       this.creatingTaskList = true
-      await this.$store.dispatch('taskList/createTaskList')
+      await this.$store.dispatch('taskList/createTaskList', 'New List')
       this.creatingTaskList = false
       this.loadTaskLists()
     },

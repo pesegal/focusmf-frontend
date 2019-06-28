@@ -28,11 +28,11 @@ export default class TaskListStore implements Module<TaskListState, RootState> {
       return tasks
     },
 
-    async createTaskList () {
+    async createTaskList ({}, listName: String) {
       const response = await apolloClient.mutate({
         mutation: createList,
         variables: {
-          name: 'testing'
+          name: listName
         },
         fetchPolicy: 'no-cache'
       })
