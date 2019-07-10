@@ -1,24 +1,26 @@
 <template>
   <v-container class="TaskListContainer">
-    <v-layout class="TaskListContainer__layout"
+    <v-layout
+      class="TaskListContainer__layout"
       row
       fill-height
     >
       <v-flex
+        v-for="(list, index) in lists"
+        :key="index"
         shrink
-        v-for="list in lists"
-        :key="list.id"
       >
         <task-list
-          @task-list-name-change="onTaskListNameChange"
-          @task-list-deleted="onTaskListDeleted"
           :list="list"
           :delete-disabled="lists.length == 1"
+          @task-list-deleted="onTaskListDeleted"
         />
       </v-flex>
       <v-flex shrink>
         <div class="TaskListContainer__add-list-button-container">
-          <v-btn @click="createTaskList">+ Add list</v-btn>
+          <v-btn @click="createTaskList">
+            + Add list
+          </v-btn>
         </div>
       </v-flex>
     </v-layout>
@@ -34,7 +36,7 @@ export default {
   },
   props: {
     lists: {
-      default: [],
+      default () { return [] },
       type: Array
     }
   },
