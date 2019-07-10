@@ -3,6 +3,7 @@
     <v-toolbar
       color="blue"
       dark
+      flat
     >
       <v-toolbar-title>
         <v-text-field
@@ -145,6 +146,14 @@ export default {
   z-index: 1;
   min-height: 0;
   background-color: transparent;
+  padding-top: 15px;
+}
+
+.TaskList__card-actions {
+  padding: 20px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 }
 
 .TaskList__name-text-field.v-text-field
