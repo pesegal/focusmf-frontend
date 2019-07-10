@@ -53,16 +53,21 @@
         />
       </v-layout>
     </v-list>
+    <v-card-actions class="TaskList__card-actions justify-center">
+      <task-list-create-task-dialog :list-id="this.list.id" />
+    </v-card-actions>
   </v-card>
 </template>
 
 <script>
 import Component from "vue-class-component"
 import TaskListItem from "./TaskListItem.vue"
+import TaskListCreateTaskDialog from './TaskListCreateTaskDialog.vue'
 
 export default {
   components: {
-    TaskListItem
+    TaskListItem,
+    TaskListCreateTaskDialog
   },
   props: {
     list: {
@@ -84,7 +89,9 @@ export default {
             this.$emit('task-list-deleted', this.list.id)
           }
         }
-      ]
+      ],
+      isCreatingNewTask: false,
+      newTask: null
     }
   },
   computed: {
