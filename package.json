@@ -52,7 +52,9 @@
       "eslint:recommended",
       "@vue/typescript"
     ],
-    "rules": {},
+    "rules": {
+      "indent": ["error", 2]
+    },
     "parserOptions": {
       "parser": "typescript-eslint-parser"
     }
