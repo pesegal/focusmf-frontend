@@ -52,11 +52,6 @@ export default class AppNavigationDrawer extends Vue {
 
   items: Array<AppNavigationDrawerLinkInterface> = [
     {
-      title: 'Overview',
-      icon: 'dashboard',
-      to: '/dashboard'
-    },
-    {
       title: 'Tasks',
       icon: 'view_list',
       to: '/dashboard/tasks'

@@ -61,7 +61,7 @@ export default class LoginView extends Vue {
       })
       this.$store.commit('auth/setAuth', response.data.loginUser.token)
       this.loading = false
-      this.$router.push(this.$route.params.afterLoginTakeTo || '/dashboard')
+      this.$router.push(this.$route.params.afterLoginTakeTo || '/dashboard/tasks')
     } catch (e) {
       this.loading = false
     }

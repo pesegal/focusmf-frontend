@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import OverviewView from '@/views/OverviewView.vue'
 import TasksView from '@/views/TasksView.vue'
 import TimerView from '@/views/TimerView.vue'
 import StatsView from '@/views/StatsView.vue'
@@ -24,13 +23,9 @@ const router: Router = new Router({
     },
     {
       path: '/dashboard',
+      redirect: { name: 'tasks' },
       component: DashboardView,
       children: [
-        {
-          path: '',
-          name: 'overview',
-          component: OverviewView
-        },
         {
           path: 'tasks',
           name: 'tasks',
@@ -76,6 +71,7 @@ router.beforeEach((to, from, next) => {
         params: { afterLoginTakeTo: to.fullPath }
     })
   }
+
   return next()
 })
 
