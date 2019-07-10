@@ -10,7 +10,7 @@
         xs12
         sm6
       >
-        <v-form>
+        <v-form @submit.prevent="login">
           <v-text-field
             id="username-input-field"
             v-model="email"
@@ -28,7 +28,7 @@
             id="login-button"
             color="primary"
             :loading="loading"
-            @click="login"
+            type="submit"
           >
             Login
           </v-btn>
