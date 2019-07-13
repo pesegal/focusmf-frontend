@@ -7,16 +7,19 @@
     >
       <v-toolbar-title>
         <v-text-field
-          class="TaskList__name-text-field"
           v-model="taskListName"
+          class="TaskList__name-text-field"
           color="white"
           hide-details
           full-width
           @input="onTaskListNameChange"
-        ></v-text-field>
+        />
       </v-toolbar-title>
       <v-spacer />
-      <v-menu bottom offset-y>
+      <v-menu
+        bottom
+        offset-y
+      >
         <template v-slot:activator="{ on }">
           <v-btn
             dark
@@ -55,7 +58,7 @@
       </v-layout>
     </v-list>
     <v-card-actions class="TaskList__card-actions justify-center">
-      <task-list-create-task-dialog :list-id="this.list.id" />
+      <task-list-create-task-dialog :list-id="list.id" />
     </v-card-actions>
   </v-card>
 </template>

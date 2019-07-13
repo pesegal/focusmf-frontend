@@ -1,7 +1,16 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="600px">
+  <v-dialog
+    v-model="dialog"
+    persistent
+    max-width="600px"
+  >
     <template v-slot:activator="{ on }">
-      <v-btn block v-on="on">+ Add Task</v-btn>
+      <v-btn
+        block
+        v-on="on"
+      >
+        + Add Task
+      </v-btn>
     </template>
     <v-card>
       <v-card-title>
@@ -11,12 +20,21 @@
         <v-container grid-list-md>
           <v-layout wrap>
             <v-flex xs12>
-              <v-text-field v-model="task.name" label="Title"></v-text-field>
+              <v-text-field
+                v-model="task.name"
+                label="Title"
+              />
             </v-flex>
             <v-flex xs12>
-              <v-text-field v-model="task.description" label="Description"></v-text-field>
+              <v-text-field
+                v-model="task.description"
+                label="Description"
+              />
             </v-flex>
-            <v-flex xs12 sm6>
+            <v-flex
+              xs12
+              sm6
+            >
               <!-- <v-combobox
                 v-model="chips"
                 :items="items"
@@ -42,9 +60,21 @@
         </v-container>
       </v-card-text>
       <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" flat @click="cancel">Cancel</v-btn>
-        <v-btn color="blue darken-1" flat @click="dialog = false">Save</v-btn>
+        <v-spacer />
+        <v-btn
+          color="blue darken-1"
+          flat
+          @click="cancel"
+        >
+          Cancel
+        </v-btn>
+        <v-btn
+          color="blue darken-1"
+          flat
+          @click="dialog = false"
+        >
+          Save
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
