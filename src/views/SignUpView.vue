@@ -207,27 +207,27 @@ export default class SignUpView extends Vue {
 
   get currentTitle() {
     switch (this.step) {
-      case 1:
-        return "Sign-up";
-      case 2:
-        return "Create a password";
-      case 3:
-        return "Information";
-      default:
-        return "Account created!";
+    case 1:
+      return "Sign-up";
+    case 2:
+      return "Create a password";
+    case 3:
+      return "Information";
+    default:
+      return "Account created!";
     }
   }
 
   get isCurrentFormValid () {
     switch (this.step) {
-      case 1:
-        return this.emailFormIsValid
-      case 2:
-        return this.passwordFormIsValid
-      case 3:
-        return this.demographicFormIsValid
-      default:
-        return false
+    case 1:
+      return this.emailFormIsValid
+    case 2:
+      return this.passwordFormIsValid
+    case 3:
+      return this.demographicFormIsValid
+    default:
+      return false
     }
   }
 

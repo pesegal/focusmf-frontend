@@ -10,11 +10,11 @@ const updateList = require('@/graphql/updateList.gql')
 export default class TaskListStore implements Module<TaskListState, RootState> {
   namespaced: boolean = true
   state: TaskListState = {
-      tasks: []
+    tasks: []
   }
   mutations: MutationTree<TaskListState> = {
     setTasks (state: TaskListState, tasks: []) {
-        state.tasks = tasks
+      state.tasks = tasks
     }
   }
 
@@ -29,7 +29,7 @@ export default class TaskListStore implements Module<TaskListState, RootState> {
       return tasks
     },
 
-    async createTaskList ({}, listName: String) {
+    async createTaskList (context, listName: String) {
       const response = await apolloClient.mutate({
         mutation: createList,
         variables: {
