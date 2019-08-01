@@ -37,9 +37,10 @@
               <v-combobox
                 v-model="selectedProjects"
                 :items="availableProjects"
-                item-text="name"
                 :search-input.sync="projectSearchTerm"
-                @change="onChange"
+                return-object
+                item-text="name"
+                item-value="id"
                 label="Projects"
                 full-width
                 chips
@@ -50,8 +51,6 @@
                 <template v-slot:selection="data">
                   <v-chip
                     :selected="data.selected"
-                    close
-                    @input="remove(data.project)"
                   >
                     <span>{{ data.item.name }}</span>
                   </v-chip>
@@ -66,14 +65,14 @@
         <v-btn
           color="blue darken-1"
           flat
-          @click="cancel"
+          @click="onCancel"
         >
           Cancel
         </v-btn>
         <v-btn
           color="blue darken-1"
           flat
-          @click="dialog = false"
+          @click="onSave"
         >
           Save
         </v-btn>
@@ -107,46 +106,48 @@ export default {
       return this.$store.state.project.projects
     }
   },
-  mounted () {
-    this.$store.dispatch('project/getProjects')
-  },
   watch: {
-    selectedProjects (newValue, previousValue) {
+    async selectedProjects (newValue, previousValue) {
       if (newValue.length == previousValue.length) {
         return
       }
 
-      this.selectedProjects = newValue.map(selection => {
-        if (typeof selection === 'string') {
-          selection = {
-            name: selection,
-            colorName: 'red'
-          }
+      const unsavedProjects = this.selectedProjects.filter(project => typeof project === 'string')
+      this.selectedProjects = this.selectedProjects.filter(project => project.id)
+      const newProjects = await Promise.all(unsavedProjects.map(project => {
+        return this.$store.dispatch('project/createProject', {
+          name: project,
+          colorName: 'blue'
+        })
+      }))
+      this.selectedProjects = this.selectedProjects.concat(newProjects)
 
-          this.$store.commit('project/addProject', selection)
-        }
-
-        return selection
-      })
+      this.task.projects = this.selectedProjects.map(project => project.id)
     }
   },
+  mounted () {
+    this.$store.dispatch('project/getProjects')
+  },
   methods: {
-    cancel () {
+    onCancel () {
       this.dialog = false
     },
 
-    save () {
-      this.$store.dispatch('task/createTask')
-    },
-
-    remove (project) {
-    },
-
-    async onChange (list) {
-      // await this.$store.dispatch('project/createProject', {
-      //   name: list[list.length - 1],
-      //   colorName: 'red'
-      // })
+    async onSave () {
+      await this.$store.dispatch('task/createTask', {
+        name: this.task.name,
+        notes: this.task.description,
+        listId: this.listId,
+        columnPos: 0,
+        projectIds: this.task.projects
+      })
+      this.task.name = ''
+      this.task.description = ''
+      this.task.projects = []
+      this.selectedProjects = []
+      this.projectSearchTerm = null
+      await this.$store.dispatch('taskList/loadLists')
+      this.dialog = false
     }
   }
 }

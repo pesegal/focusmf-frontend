@@ -21,9 +21,13 @@ export default {
   },
   data () {
     return {
-      lists: [],
       loadingTaskLists: false,
       creatingTaskList: false
+    }
+  },
+  computed: {
+    lists () {
+      return this.$store.state.taskList.tasks
     }
   },
   async mounted () {
@@ -39,7 +43,7 @@ export default {
 
     async loadTaskLists () {
       this.loadingTaskLists = true
-      this.lists = await this.$store.dispatch('taskList/loadLists')
+      await this.$store.dispatch('taskList/loadLists')
       this.loadingTaskLists = false
     },
 
@@ -50,6 +54,7 @@ export default {
 
     async onTaskListNameChange (taskList) {
       await this.$store.dispatch('taskList/updateTaskList', taskList)
+      this.loadTaskLists()
     }
   }
 }

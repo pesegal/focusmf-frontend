@@ -12,7 +12,7 @@
           color="white"
           hide-details
           full-width
-          @input="onTaskListNameChange"
+          @blur="onTaskListNameChange"
         />
       </v-toolbar-title>
       <v-spacer />
@@ -110,6 +110,7 @@ export default {
     onTaskActionSelected (taskListAction) {
       taskListAction.action()
     },
+
     onTaskListNameChange () {
       this.$emit('task-list-name-change', {
         id: this.list.id,

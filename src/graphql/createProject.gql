@@ -1,4 +1,4 @@
-mutation createProject ($name: String, $colorName: String) {
+mutation createProject ($name: String!, $colorName: String!) {
   createProject(name: $name, colorName: $colorName) {
     id,
     name

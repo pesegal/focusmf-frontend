@@ -28,17 +28,21 @@ export default class TaskListStore implements Module<ProjectState, RootState> {
         fetchPolicy: 'no-cache'
       })
       const projects = response.data.getProjects
-      console.log(projects)
       commit('setProjects', projects)
       return projects
     },
 
-    async createProject ({ commit }) {
+    async createProject ({ commit }, project) {
       const response = await apolloClient.mutate({
         mutation: createProject,
+        variables: {
+          name: project.name,
+          colorName: project.colorName
+        },
         fetchPolicy: 'no-cache'
       })
-      commit('setProjects')
+      commit('addProject', response.data.createProject)
+      return response.data.createProject
     }
   }
 }
