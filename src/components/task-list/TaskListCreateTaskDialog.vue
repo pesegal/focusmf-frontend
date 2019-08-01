@@ -33,15 +33,17 @@
             </v-flex>
             <v-flex
               xs12
-              sm6
             >
-              <!-- <v-combobox
-                v-model="chips"
-                :items="items"
-                label="Your favorite hobbies"
+              <v-combobox
+                v-model="selectedProjects"
+                :items="availableProjects"
+                item-text="name"
+                :search-input.sync="projectSearchTerm"
+                @change="onChange"
+                label="Projects"
+                full-width
                 chips
                 clearable
-                prepend-icon="filter_list"
                 solo
                 multiple
               >
@@ -51,10 +53,10 @@
                     close
                     @input="remove(data.project)"
                   >
-                    <span>{{ data.item }}</span>
+                    <span>{{ data.item.name }}</span>
                   </v-chip>
                 </template>
-              </v-combobox> -->
+              </v-combobox>
             </v-flex>
           </v-layout>
         </v-container>
@@ -94,9 +96,38 @@ export default {
       task: {
         name: '',
         description: '',
-        projectIds: []
+        projects: []
       },
-      availableProjects: []
+      selectedProjects: [],
+      projectSearchTerm: null
+    }
+  },
+  computed: {
+    availableProjects () {
+      return this.$store.state.project.projects
+    }
+  },
+  mounted () {
+    this.$store.dispatch('project/getProjects')
+  },
+  watch: {
+    selectedProjects (newValue, previousValue) {
+      if (newValue.length == previousValue.length) {
+        return
+      }
+
+      this.selectedProjects = newValue.map(selection => {
+        if (typeof selection === 'string') {
+          selection = {
+            name: selection,
+            colorName: 'red'
+          }
+
+          this.$store.commit('project/addProject', selection)
+        }
+
+        return selection
+      })
     }
   },
   methods: {
@@ -106,6 +137,16 @@ export default {
 
     save () {
       this.$store.dispatch('task/createTask')
+    },
+
+    remove (project) {
+    },
+
+    async onChange (list) {
+      // await this.$store.dispatch('project/createProject', {
+      //   name: list[list.length - 1],
+      //   colorName: 'red'
+      // })
     }
   }
 }
