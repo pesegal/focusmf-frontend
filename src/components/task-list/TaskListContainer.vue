@@ -14,6 +14,7 @@
           :list="list"
           :delete-disabled="lists.length == 1"
           @task-list-deleted="onTaskListDeleted"
+          @task-list-name-change="onTaskListNameChange"
         />
       </v-flex>
       <v-flex shrink>

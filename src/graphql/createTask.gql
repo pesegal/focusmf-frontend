@@ -1,0 +1,25 @@
+mutation createTask ($name: String!,$notes: String!,$listId: String!,$columnPos: Float!,$projectIds: [ID!]) {
+  createTask(createInput: {
+    name: $name,
+    notes: $notes,
+    listId: $listId,
+    columnPos: $columnPos,
+    projectIds: $projectIds
+  }) {
+    id,
+    projects {
+      id,
+      name,
+      color {
+        hex
+      }
+    },
+    list {
+      id,
+      name
+    },
+    columnPos,
+    name,
+    notes
+  }
+}

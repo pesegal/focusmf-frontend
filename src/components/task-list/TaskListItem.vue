@@ -23,7 +23,6 @@ export default class TaskListItem extends Vue {
   @Prop() id!: string;
   @Prop() name!: string;
   @Prop() notes?: string;
-  // TODO: Add project type
   @Prop() columnPos!: number;
 }
 </script>

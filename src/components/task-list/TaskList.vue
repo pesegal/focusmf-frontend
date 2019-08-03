@@ -3,19 +3,23 @@
     <v-toolbar
       color="blue"
       dark
+      flat
     >
       <v-toolbar-title>
         <v-text-field
-          class="TaskList__name-text-field"
           v-model="taskListName"
+          class="TaskList__name-text-field"
           color="white"
           hide-details
           full-width
-          @input="onTaskListNameChange"
-        ></v-text-field>
+          @blur="onTaskListNameChange"
+        />
       </v-toolbar-title>
       <v-spacer />
-      <v-menu bottom offset-y>
+      <v-menu
+        bottom
+        offset-y
+      >
         <template v-slot:activator="{ on }">
           <v-btn
             dark
@@ -53,16 +57,21 @@
         />
       </v-layout>
     </v-list>
+    <v-card-actions class="TaskList__card-actions justify-center">
+      <task-list-create-task-dialog :list-id="list.id" />
+    </v-card-actions>
   </v-card>
 </template>
 
 <script>
 import Component from "vue-class-component"
 import TaskListItem from "./TaskListItem.vue"
+import TaskListCreateTaskDialog from './TaskListCreateTaskDialog.vue'
 
 export default {
   components: {
-    TaskListItem
+    TaskListItem,
+    TaskListCreateTaskDialog
   },
   props: {
     list: {
@@ -84,7 +93,9 @@ export default {
             this.$emit('task-list-deleted', this.list.id)
           }
         }
-      ]
+      ],
+      isCreatingNewTask: false,
+      newTask: null
     }
   },
   computed: {
@@ -99,6 +110,7 @@ export default {
     onTaskActionSelected (taskListAction) {
       taskListAction.action()
     },
+
     onTaskListNameChange () {
       this.$emit('task-list-name-change', {
         id: this.list.id,
@@ -138,6 +150,14 @@ export default {
   z-index: 1;
   min-height: 0;
   background-color: transparent;
+  padding-top: 15px;
+}
+
+.TaskList__card-actions {
+  padding: 20px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 }
 
 .TaskList__name-text-field.v-text-field
