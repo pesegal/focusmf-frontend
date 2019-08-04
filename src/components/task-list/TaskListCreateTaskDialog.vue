@@ -23,6 +23,7 @@
               <v-text-field
                 v-model="task.name"
                 label="Title"
+                autofocus
               />
             </v-flex>
             <v-flex xs12>
