@@ -171,5 +171,13 @@ export default {
   > .v-input__slot
   input {
   margin-top: 15px;
+  cursor: pointer;
+}
+
+.TaskList__name-text-field.v-text-field
+  > .v-input__control
+  > .v-input__slot
+  > .v-text-field__slot {
+    cursor: pointer;
 }
 </style>
