@@ -26,7 +26,7 @@
               />
             </v-flex>
             <v-flex xs12>
-              <v-text-field
+              <v-textarea
                 v-model="task.description"
                 label="Description"
               />
