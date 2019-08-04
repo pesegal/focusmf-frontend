@@ -2,10 +2,16 @@
   <v-flex class="pb-1 mx-1">
     <!-- TODO: Placeholder for projects. -->
     <v-card>
-      <v-card-title primary-title>
-        <div>
-          <h3>{{ name }}</h3>
-          <div>{{ notes }}</div>
+      <v-card-title
+        primary-title
+      >
+        <div class="text-truncate">
+          <h3 class="text-truncate pb-2">
+            {{ name }}
+          </h3>
+          <div class="text-truncate body-1">
+            {{ notes }}
+          </div>
         </div>
       </v-card-title>
     </v-card>
