@@ -73,8 +73,8 @@ export default {
       })
     },
 
-    onListDeleted (taskListAction) {
-      this.$emit('list-deleted')
+    onListDeleted () {
+      this.$emit('list-deleted', this.list.id)
     }
   }
 }

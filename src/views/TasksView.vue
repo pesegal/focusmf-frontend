@@ -3,8 +3,8 @@
     <div class="board">
       <task-list-container
         :lists="lists"
-        @task-list-deleted="onTaskListDeleted"
-        @task-list-created="onTaskListCreated"
+        @list-deleted="onListDeleted"
+        @list-created="onListCreated"
         @list-name-change="onListNameChange"
       />
     </div>
@@ -31,30 +31,30 @@ export default {
     }
   },
   async mounted () {
-    this.loadTaskLists()
+    this.loadLists()
   },
   methods: {
-    async onTaskListCreated () {
+    async onListCreated () {
       this.creatingList = true
       await this.$store.dispatch('list/createList', 'New List')
       this.creatingList = false
-      this.loadTaskLists()
+      this.loadLists()
     },
 
-    async loadTaskLists () {
+    async loadLists () {
       this.loadingLists = true
       await this.$store.dispatch('list/loadLists')
       this.loadingLists = false
     },
 
-    async onTaskListDeleted (taskListId) {
+    async onListDeleted (taskListId) {
       await this.$store.dispatch('list/deleteList', taskListId)
-      this.loadTaskLists()
+      this.loadLists()
     },
 
     async onListNameChange (list) {
       await this.$store.dispatch('list/updateList', list)
-      this.loadTaskLists()
+      this.loadLists()
     }
   }
 }

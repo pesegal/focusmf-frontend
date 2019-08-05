@@ -131,6 +131,11 @@ export default {
   },
   methods: {
     onCancel () {
+      this.task.name = ''
+      this.task.description = ''
+      this.task.projects = []
+      this.selectedProjects = []
+      this.projectSearchTerm = null
       this.dialog = false
     },
 
@@ -142,13 +147,17 @@ export default {
         columnPos: 0,
         projectIds: this.task.projects
       })
+      this.resetFields()
+      await this.$store.dispatch('list/loadLists')
+      this.dialog = false
+    },
+
+    resetFields () {
       this.task.name = ''
       this.task.description = ''
       this.task.projects = []
       this.selectedProjects = []
       this.projectSearchTerm = null
-      await this.$store.dispatch('taskList/loadLists')
-      this.dialog = false
     }
   }
 }
