@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { State as RootState } from './state'
 import AuthStore from './auth/index'
-import TaskListStore from './task-list/index'
+import ListStore from './list/index'
 import TaskStore from './task/index'
 import ProjectStore from './project/index'
 import VuexPersistence from 'vuex-persist'
@@ -17,7 +17,7 @@ export const store = new Vuex.Store<RootState>({
   strict: process.env.NODE_ENV !== 'production',
   modules: {
     auth: new AuthStore(),
-    taskList: new TaskListStore(),
+    list: new ListStore(),
     task: new TaskStore(),
     project: new ProjectStore()
   },

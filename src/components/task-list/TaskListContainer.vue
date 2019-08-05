@@ -6,20 +6,20 @@
       fill-height
     >
       <v-flex
-        v-for="(list, index) in lists"
-        :key="index"
+        v-for="list in lists"
+        :key="list.id"
         shrink
       >
         <task-list
           :list="list"
           :delete-disabled="lists.length == 1"
-          @task-list-deleted="onTaskListDeleted"
-          @task-list-name-change="onTaskListNameChange"
+          @list-name-change="onListNameChange"
+          @list-deleted="onListDeleted"
         />
       </v-flex>
       <v-flex shrink>
         <div class="TaskListContainer__add-list-button-container">
-          <v-btn @click="createTaskList">
+          <v-btn @click="createList">
             + Add list
           </v-btn>
         </div>
@@ -42,16 +42,16 @@ export default {
     }
   },
   methods: {
-    onTaskListDeleted (id) {
-      this.$emit('task-list-deleted', id)
+    onListDeleted (id) {
+      this.$emit('list-deleted', id)
     },
 
-    createTaskList () {
-      this.$emit('task-list-created')
+    createList () {
+      this.$emit('list-created')
     },
 
-    onTaskListNameChange (taskList) {
-      this.$emit('task-list-name-change', taskList)
+    onListNameChange (list) {
+      this.$emit('list-name-change', list)
     }
   }
 }

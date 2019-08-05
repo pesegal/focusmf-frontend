@@ -1,6 +1,5 @@
 <template>
-  <v-flex class="pb-1 mx-1">
-    <!-- TODO: Placeholder for projects. -->
+  <v-flex class="ml-3 mr-3 mt-2 mb-2">
     <v-card>
       <v-card-title
         primary-title

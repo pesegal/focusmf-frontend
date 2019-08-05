@@ -5,7 +5,7 @@
         :lists="lists"
         @task-list-deleted="onTaskListDeleted"
         @task-list-created="onTaskListCreated"
-        @task-list-name-change="onTaskListNameChange"
+        @list-name-change="onListNameChange"
       />
     </div>
   </div>
@@ -21,13 +21,13 @@ export default {
   },
   data () {
     return {
-      loadingTaskLists: false,
-      creatingTaskList: false
+      loadingLists: false,
+      creatingList: false
     }
   },
   computed: {
     lists () {
-      return this.$store.state.taskList.tasks
+      return this.$store.state.list.lists
     }
   },
   async mounted () {
@@ -35,25 +35,25 @@ export default {
   },
   methods: {
     async onTaskListCreated () {
-      this.creatingTaskList = true
-      await this.$store.dispatch('taskList/createTaskList', 'New List')
-      this.creatingTaskList = false
+      this.creatingList = true
+      await this.$store.dispatch('list/createList', 'New List')
+      this.creatingList = false
       this.loadTaskLists()
     },
 
     async loadTaskLists () {
-      this.loadingTaskLists = true
-      await this.$store.dispatch('taskList/loadLists')
-      this.loadingTaskLists = false
+      this.loadingLists = true
+      await this.$store.dispatch('list/loadLists')
+      this.loadingLists = false
     },
 
     async onTaskListDeleted (taskListId) {
-      await this.$store.dispatch('taskList/deleteTaskList', taskListId)
+      await this.$store.dispatch('list/deleteList', taskListId)
       this.loadTaskLists()
     },
 
-    async onTaskListNameChange (taskList) {
-      await this.$store.dispatch('taskList/updateTaskList', taskList)
+    async onListNameChange (list) {
+      await this.$store.dispatch('list/updateList', list)
       this.loadTaskLists()
     }
   }

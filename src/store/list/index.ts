@@ -1,5 +1,5 @@
 import { Module, MutationTree, ActionTree } from 'vuex'
-import { TaskListState } from './state'
+import { ListState } from './state'
 import { State as RootState } from '../state'
 import { apolloClient } from '../../plugins/vue-apollo'
 const findListsByUser = require('@/graphql/findListsByUser.gql')
@@ -7,29 +7,29 @@ const createList = require('@/graphql/createList.gql')
 const deleteList = require('@/graphql/deleteList.gql')
 const updateList = require('@/graphql/updateList.gql')
 
-export default class TaskListStore implements Module<TaskListState, RootState> {
+export default class TaskListStore implements Module<ListState, RootState> {
   namespaced: boolean = true
-  state: TaskListState = {
-    tasks: []
+  state: ListState = {
+    lists: []
   }
-  mutations: MutationTree<TaskListState> = {
-    setTasks (state: TaskListState, tasks: []) {
-      state.tasks = tasks
+  mutations: MutationTree<ListState> = {
+    setLists (state: ListState, lists: []) {
+      state.lists = lists
     }
   }
 
-  actions: ActionTree<TaskListState, RootState> = {
+  actions: ActionTree<ListState, RootState> = {
     async loadLists ({ commit }) {
       const response = await apolloClient.query({
         query: findListsByUser,
         fetchPolicy: 'no-cache'
       })
-      const tasks = response.data.findListsByUser
-      commit('setTasks', tasks)
-      return tasks
+      const lists = response.data.findListsByUser
+      commit('setLists', lists)
+      return lists
     },
 
-    async createTaskList (context, listName: String) {
+    async createList (context, listName: String) {
       const response = await apolloClient.mutate({
         mutation: createList,
         variables: {
@@ -40,22 +40,22 @@ export default class TaskListStore implements Module<TaskListState, RootState> {
       return response.data.createList
     },
 
-    async deleteTaskList (context, taskListId) {
+    async deleteList (context, listId) {
       const response = await apolloClient.mutate({
         mutation: deleteList,
         variables: {
-          id: taskListId
+          id: listId
         },
         fetchPolicy: 'no-cache'
       })
       return response.data.createList
     },
 
-    async updateTaskList (context, taskList) {
+    async updateList (context, list) {
       const response = await apolloClient.mutate({
         mutation: updateList,
         variables: {
-          ...taskList
+          ...list
         },
         fetchPolicy: 'no-cache'
       })
