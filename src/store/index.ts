@@ -10,7 +10,8 @@ import VuexPersistence from 'vuex-persist'
 Vue.use(Vuex)
 
 const vuexLocal = new VuexPersistence<RootState>({
-  storage: window.localStorage
+  storage: window.localStorage,
+  modules: ['auth']
 })
 
 export const store = new Vuex.Store<RootState>({
