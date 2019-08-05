@@ -21,7 +21,7 @@ describe('Sign up process', () => {
         .type('password')
       cy.get('#login-button')
         .click()
-      cy.url().should('be.equal', `${baseUrl}/dashboard`)
+      cy.url().should('be.equal', `${baseUrl}/dashboard/tasks`)
     })
   })
 
@@ -42,7 +42,7 @@ describe('Sign up process', () => {
         .type('password')
       cy.get('#login-button')
         .click()
-      cy.url().should('be.equal', `${baseUrl}/dashboard`)
+      cy.url().should('be.equal', `${baseUrl}/dashboard/tasks`)
     })
   })
 })
