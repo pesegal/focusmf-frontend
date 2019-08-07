@@ -1,27 +1,22 @@
 <template>
-  <v-app 
-    :dark="isDark" 
-    class="DashboardView"
-  >
-    <div class="chrome-container">
-      <div class="surface">
-        <div class="content">
-          <div class="board-wrapper">
-            <div class="board-main-content">
-              <app-main-toolbar @show-drawer="onUpdateDrawerDisplayState" />
-              <app-navigation-drawer
-                :show-drawer="showDrawer"
-                :is-dark="isDark"
-                @toggle-theme="onToggleTheme"
-                @update-drawer-display-state="onUpdateDrawerDisplayState"
-              />
-              <router-view />
-            </div>
+  <div class="chrome-container">
+    <div class="surface">
+      <div class="content">
+        <div class="board-wrapper">
+          <div class="board-main-content">
+            <app-main-toolbar @show-drawer="onUpdateDrawerDisplayState" />
+            <app-navigation-drawer
+              :show-drawer="showDrawer"
+              :is-dark="isDark"
+              @toggle-theme="onToggleTheme"
+              @update-drawer-display-state="onUpdateDrawerDisplayState"
+            />
+            <router-view />
           </div>
         </div>
       </div>
     </div>
-  </v-app>
+  </div>
 </template>
 
 <script lang="ts">
