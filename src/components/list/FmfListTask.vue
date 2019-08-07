@@ -1,21 +1,19 @@
 <template>
-  <v-flex class="FmfListItem ml-3 mr-3 mt-2 mb-2">
-    <v-card flat outlined>
-      <v-card-title
-        class="text-truncate"
-      >
-        {{ name }}
-      </v-card-title>
-      <v-card-text class="text-truncate">
-        {{ notes }}
-      </v-card-text>
-      <v-card-actions>
-        <v-btn text>
-          Edit
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-flex>
+  <v-card class="FmfListItem ml-3 mr-3 mt-2 mb-2">
+    <v-card-title
+      class="text-truncate"
+    >
+      {{ name }}
+    </v-card-title>
+    <v-card-text class="text-truncate" color="secondary">
+      {{ notes }}
+    </v-card-text>
+    <v-card-actions>
+      <v-btn text small>
+        Edit
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script lang="ts">
