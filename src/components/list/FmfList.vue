@@ -11,7 +11,7 @@
       <v-flex class="FmfList__task-flex-container">
         <v-layout column>
           <v-flex v-for="task in tasks" :key="task.id">
-            <fmf-list-item
+            <fmf-list-task
               :id="task.id"
               :name="task.name"
               :notes="task.notes"
@@ -31,13 +31,13 @@
 
 <script>
 import Component from "vue-class-component"
-import FmfListItem from "./FmfListItem.vue"
+import FmfListTask from "./FmfListTask.vue"
 import FmfListCreateTaskDialog from './FmfListCreateTaskDialog.vue'
 import FmfListHeaderToolbar from './FmfListHeaderToolbar.vue'
 
 export default {
   components: {
-    FmfListItem,
+    FmfListTask,
     FmfListCreateTaskDialog,
     FmfListHeaderToolbar
   },

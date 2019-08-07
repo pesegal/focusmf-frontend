@@ -1,20 +1,20 @@
 <template>
   <v-flex class="FmfListItem ml-3 mr-3 mt-2 mb-2">
-    <v-card>
+    <v-card flat outlined>
       <v-card-title
-        primary-title
+        class="text-truncate"
       >
-        <div class="text-truncate">
-          <h3 class="text-truncate pb-2">
-            {{ name }}
-          </h3>
-          <div class="text-truncate body-1">
-            {{ notes }}
-          </div>
-        </div>
+        {{ name }}
       </v-card-title>
+      <v-card-text class="text-truncate">
+        {{ notes }}
+      </v-card-text>
+      <v-card-actions>
+        <v-btn text>
+          Edit
+        </v-btn>
+      </v-card-actions>
     </v-card>
-    <v-spacer />
   </v-flex>
 </template>
 
@@ -33,7 +33,7 @@ export default class TaskListItem extends Vue {
 </script>
 
 <style>
-.TaskListItem {
+.FmfListItem {
   cursor: pointer;
 }
 </style>

@@ -3,7 +3,7 @@
     <v-toolbar-title>
       <v-text-field
         v-model="listNameModel"
-        class="TaskList__name-text-field"
+        class="FmfList__name-text-field"
         color="white"
         hide-details
         full-width
