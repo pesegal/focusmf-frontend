@@ -1,5 +1,5 @@
 <template>
-  <v-flex class="ml-3 mr-3 mt-2 mb-2">
+  <v-flex class="FmfListItem ml-3 mr-3 mt-2 mb-2">
     <v-card>
       <v-card-title
         primary-title

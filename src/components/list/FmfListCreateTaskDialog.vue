@@ -3,6 +3,7 @@
     v-model="dialog"
     persistent
     max-width="600px"
+    class="FmfListCreateTaskDialog"
   >
     <template v-slot:activator="{ on }">
       <v-btn

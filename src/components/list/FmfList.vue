@@ -1,5 +1,5 @@
 <template>
-  <v-card class="TaskList">
+  <v-card class="FmfList">
     <v-layout column fill-height>
       <v-flex shrink>
         <fmf-list-header-toolbar
@@ -8,10 +8,10 @@
           @list-deleted="onListDeleted"
         />
       </v-flex>
-      <v-flex class="TaskList__task-flex-container">
+      <v-flex class="FmfList__task-flex-container">
         <v-layout column>
           <v-flex v-for="task in tasks" :key="task.id">
-            <TaskListItem
+            <fmf-list-item
               :id="task.id"
               :name="task.name"
               :notes="task.notes"
@@ -21,8 +21,8 @@
         </v-layout>
       </v-flex>
       <v-flex shrink>
-        <v-card-actions class="TaskList__card-actions justify-center">
-          <task-list-create-task-dialog :list-id="list.id" />
+        <v-card-actions class="FmfList__card-actions justify-center">
+          <fmf-list-create-task-dialog :list-id="list.id" />
         </v-card-actions>
       </v-flex>
     </v-layout>
@@ -31,14 +31,14 @@
 
 <script>
 import Component from "vue-class-component"
-import TaskListItem from "./TaskListItem.vue"
-import TaskListCreateTaskDialog from './TaskListCreateTaskDialog.vue'
+import FmfListItem from "./FmfListItem.vue"
+import FmfListCreateTaskDialog from './FmfListCreateTaskDialog.vue'
 import FmfListHeaderToolbar from './FmfListHeaderToolbar.vue'
 
 export default {
   components: {
-    TaskListItem,
-    TaskListCreateTaskDialog,
+    FmfListItem,
+    FmfListCreateTaskDialog,
     FmfListHeaderToolbar
   },
   props: {
@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style lang="scss">
-.TaskList {
+.FmfList {
   width: 272px;
   margin: 0 15px;
   height: 100%;

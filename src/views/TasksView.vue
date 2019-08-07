@@ -1,7 +1,7 @@
 <template>
   <div class="board-canvas">
     <div class="board">
-      <task-list-container
+      <fmf-list-container
         :lists="lists"
         @list-deleted="onListDeleted"
         @list-created="onListCreated"
@@ -13,11 +13,11 @@
 
 <script>
 import Vue from 'vue'
-import TaskListContainer from '@/components/task-list/TaskListContainer.vue'
+import FmfListContainer from '@/components/list/FmfListContainer.vue'
 
 export default {
   components: {
-    TaskListContainer
+    FmfListContainer
   },
   data () {
     return {
