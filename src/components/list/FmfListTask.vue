@@ -1,16 +1,23 @@
 <template>
-  <v-card class="FmfListItem ml-3 mr-3 mt-2 mb-2">
+  <v-card class="FmfListItem ma-3" flat>
     <v-card-title
+      primary-title
       class="text-truncate"
     >
-      {{ name }}
+      <div>
+        <div class="headline text-truncate mb-2">
+          {{ name }}
+        </div>
+        <span class="grey--text text-truncate">{{ notes }}</span>
+      </div>
     </v-card-title>
-    <v-card-text class="text-truncate" color="secondary">
-      {{ notes }}
-    </v-card-text>
+
     <v-card-actions>
-      <v-btn text small>
+      <v-btn flat>
         Edit
+      </v-btn>
+      <v-btn flat>
+        <v-icon>delete</v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>

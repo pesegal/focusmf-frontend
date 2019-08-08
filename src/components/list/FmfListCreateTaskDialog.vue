@@ -65,14 +65,13 @@
       <v-card-actions>
         <v-spacer />
         <v-btn
-          color="blue darken-1"
           flat
           @click="onCancel"
         >
           Cancel
         </v-btn>
         <v-btn
-          color="blue darken-1"
+          color="accent"
           flat
           @click="onSave"
         >

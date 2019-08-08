@@ -1,13 +1,11 @@
+import colors from 'vuetify/lib/util/colors'
+
 export default {
   iconfont: 'md',
   theme: {
-    themes: {
-      light: {
-        primary: '#d22121',
-        secondary: '#d22121',
-        accent: '#8c9eff',
-        error: '#b71c1c',
-      },
-    },
+    primary: colors.teal,
+    secondary: colors.deepOrange,
+    accent: colors.lightBlue,
+    error: colors.red.lighten3
   }
 }

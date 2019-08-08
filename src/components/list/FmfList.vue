@@ -91,6 +91,7 @@ export default {
   white-space: nowrap;
 
   &__task-flex-container {
+    background-color: #f5f5f5;
     height: 100%;
     overflow: scroll;
   }

@@ -1,12 +1,12 @@
 <template>
-  <v-toolbar class="FmfListHeaderToolbar" color="blue" dark flat>
+  <v-toolbar class="FmfListHeaderToolbar" color="primary" flat dark>
     <v-toolbar-title>
       <v-text-field
         v-model="listNameModel"
         class="FmfList__name-text-field"
-        color="white"
         hide-details
         full-width
+        color="white"
         @blur="onListNameChange"
       />
     </v-toolbar-title>
@@ -22,7 +22,12 @@
         <v-list-tile
           @click="onListDelete"
         >
-          <v-list-tile-title>Delete</v-list-tile-title>
+          <v-list-tile-title>
+            <v-icon>
+              delete
+            </v-icon>
+            <span>Delete</span>
+          </v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>
