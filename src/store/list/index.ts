@@ -55,7 +55,8 @@ export default class TaskListStore implements Module<ListState, RootState> {
       const response = await apolloClient.mutate({
         mutation: updateList,
         variables: {
-          ...list
+          id: list.id,
+          name: list.name
         },
         fetchPolicy: 'no-cache'
       })

@@ -6,7 +6,11 @@ query findListsByUser {
       id
       columnPos
       name
-      notes
+      notes,
+      projects {
+        id,
+        name
+      }
     }
   }
 }
