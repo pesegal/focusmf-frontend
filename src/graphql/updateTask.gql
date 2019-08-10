@@ -2,7 +2,7 @@ mutation updateTask (
   $id: String!,
   $name: String!,
   $notes: String!,
-  $projectIds: Array!
+  $projectIds: [ID!]
 ) {
   updateTask(updateInput: {
     id: $id,

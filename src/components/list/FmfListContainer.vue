@@ -67,7 +67,7 @@ export default {
     width: 150px;
   }
 
-  .row.layout {
+  .FmfListContainer__layout.row.layout {
     height: 100%;
     padding-bottom: 60px;
   }

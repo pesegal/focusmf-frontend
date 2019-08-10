@@ -23,10 +23,7 @@
           @click="onListDelete"
         >
           <v-list-tile-title>
-            <v-icon>
-              delete
-            </v-icon>
-            <span>Delete</span>
+            <span>Remove</span>
           </v-list-tile-title>
         </v-list-tile>
       </v-list>

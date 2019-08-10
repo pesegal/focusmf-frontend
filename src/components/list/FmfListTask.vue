@@ -43,16 +43,22 @@
           </v-layout>
         </v-card-title>
       </v-flex>
-      <v-flex shrink align-end>
+      <v-flex shrink>
         <v-card-actions>
-          <v-btn flat small>
-            Edit
-          </v-btn>
-          <v-btn flat small>
-            <v-icon small>
-              delete
-            </v-icon>
-          </v-btn>
+          <v-layout row>
+            <v-flex>
+              <fmf-list-update-task-dialog
+                :task-to-edit="taskValues"
+              />
+            </v-flex>
+            <v-flex>
+              <v-btn flat small @click="onClickDelete">
+                <v-icon small>
+                  delete
+                </v-icon>
+              </v-btn>
+            </v-flex>
+          </v-layout>
         </v-card-actions>
       </v-flex>
     </v-layout>
@@ -60,7 +66,12 @@
 </template>
 
 <script>
+import FmfListUpdateTaskDialog from '@/components/list/FmfListUpdateTaskDialog.vue'
+
 export default {
+  components: {
+    FmfListUpdateTaskDialog
+  },
   props: {
     id: {
       type: String,
@@ -90,6 +101,23 @@ export default {
   computed: {
     displayableProjects () {
       return this.projects.slice(0, 2)
+    },
+
+    taskValues () {
+      return {
+        id: this.id,
+        name: this.name,
+        notes: this.notes,
+        columnPos: this.columnPos,
+        projects: this.projects,
+        listId: this.listId
+      }
+    }
+  },
+  methods: {
+    async onClickDelete () {
+      await this.$store.dispatch('task/deleteTask', this.id)
+      await this.$store.dispatch('list/loadLists')
     }
   }
 }

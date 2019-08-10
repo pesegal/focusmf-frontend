@@ -8,15 +8,17 @@
     <template v-slot:activator="{ on }">
       <v-btn
         flat
-        block
+        small
         v-on="on"
       >
-        + Add Task
+        <v-icon small>
+          edit
+        </v-icon>
       </v-btn>
     </template>
     <v-card>
       <v-card-title>
-        <span class="headline">Add Task</span>
+        <span class="headline">Edit Task</span>
       </v-card-title>
       <v-card-text>
         <v-container grid-list-md>
@@ -86,8 +88,8 @@
 <script>
 export default {
   props: {
-    listId: {
-      type: String,
+    taskToEdit: {
+      type: Object,
       required: true
     }
   },
@@ -95,11 +97,11 @@ export default {
     return {
       dialog: false,
       task: {
-        name: '',
-        notes: '',
-        projectIds: []
+        name: this.taskToEdit.name || '',
+        notes: this.taskToEdit.notes || '',
+        projectIds: (this.taskToEdit.projects || []).map(project => project.id)
       },
-      selectedProjects: [],
+      selectedProjects: this.taskToEdit.projects || [],
       projectSearchTerm: null
     }
   },
@@ -137,11 +139,12 @@ export default {
     },
 
     async onSave () {
-      await this.$store.dispatch('task/createTask', {
+      await this.$store.dispatch('task/updateTask', {
+        id: this.taskToEdit.id,
+        listId: this.taskToEdit.listId,
+        columnPos: this.taskToEdit.columnPos,
         name: this.task.name,
         notes: this.task.notes,
-        listId: this.listId,
-        columnPos: 0,
         projectIds: this.task.projectIds
       })
       this.resetFields()
