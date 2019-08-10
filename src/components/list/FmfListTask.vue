@@ -81,6 +81,10 @@ export default {
     projects: {
       type: Array,
       required: true
+    },
+    listId: {
+      type: String,
+      required: true
     }
   },
   computed: {

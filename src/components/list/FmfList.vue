@@ -17,6 +17,7 @@
               :notes="task.notes"
               :column-pos="task.columnPos"
               :projects="task.projects"
+              :list-id="list.id"
             />
           </v-flex>
         </v-layout>
