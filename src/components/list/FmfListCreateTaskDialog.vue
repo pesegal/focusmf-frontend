@@ -71,7 +71,7 @@
           Cancel
         </v-btn>
         <v-btn
-          color="accent"
+          color="primary"
           flat
           @click="onSave"
         >
