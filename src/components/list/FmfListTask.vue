@@ -94,9 +94,6 @@ export default {
 <style lang="scss">
 .FmfListItem {
   cursor: pointer;
-  &.theme--light.v-sheet {
-    // border: 1px solid black;
-  }
 
   &__container-layout {
     min-height: 180px;
