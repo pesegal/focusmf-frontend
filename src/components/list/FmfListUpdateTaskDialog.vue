@@ -134,7 +134,10 @@ export default {
   },
   methods: {
     onCancel () {
-      this.resetFields()
+      this.task.name = this.taskToEdit.name
+      this.task.notes = this.taskToEdit.notes
+      this.task.projectIds = (this.taskToEdit.projects || []).map(project => project.id)
+      this.selectedProjects = this.taskToEdit.projects
       this.dialog = false
     },
 
@@ -147,17 +150,8 @@ export default {
         notes: this.task.notes,
         projectIds: this.task.projectIds
       })
-      this.resetFields()
       await this.$store.dispatch('list/loadLists')
       this.dialog = false
-    },
-
-    resetFields () {
-      this.task.name = ''
-      this.task.notes = ''
-      this.task.projectIds = []
-      this.selectedProjects = []
-      this.projectSearchTerm = null
     }
   }
 }
