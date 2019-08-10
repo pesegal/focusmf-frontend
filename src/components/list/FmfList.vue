@@ -112,7 +112,7 @@ export default {
   &__card-actions {
     padding: 20px;
     width: 100%;
-    height: 80px;
+    height: 55px;
   }
 
   &__name-text-field.v-text-field {
