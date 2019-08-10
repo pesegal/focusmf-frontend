@@ -29,8 +29,8 @@
             </v-flex>
             <v-flex xs12>
               <v-textarea
-                v-model="task.description"
-                label="Description"
+                v-model="task.notes"
+                label="Notes"
               />
             </v-flex>
             <v-flex
@@ -95,8 +95,8 @@ export default {
       dialog: false,
       task: {
         name: '',
-        description: '',
-        projects: []
+        notes: '',
+        projectIds: []
       },
       selectedProjects: [],
       projectSearchTerm: null
@@ -123,7 +123,7 @@ export default {
       }))
       this.selectedProjects = this.selectedProjects.concat(newProjects)
 
-      this.task.projects = this.selectedProjects.map(project => project.id)
+      this.task.projectIds = this.selectedProjects.map(project => project.id)
     }
   },
   mounted () {
@@ -131,11 +131,7 @@ export default {
   },
   methods: {
     onCancel () {
-      this.task.name = ''
-      this.task.description = ''
-      this.task.projects = []
-      this.selectedProjects = []
-      this.projectSearchTerm = null
+      this.resetFields()
       this.dialog = false
     },
 
@@ -145,7 +141,7 @@ export default {
         notes: this.task.description,
         listId: this.listId,
         columnPos: 0,
-        projectIds: this.task.projects
+        projectIds: this.task.projectIds
       })
       this.resetFields()
       await this.$store.dispatch('list/loadLists')
@@ -154,8 +150,8 @@ export default {
 
     resetFields () {
       this.task.name = ''
-      this.task.description = ''
-      this.task.projects = []
+      this.task.notes = ''
+      this.task.projectIds = []
       this.selectedProjects = []
       this.projectSearchTerm = null
     }
