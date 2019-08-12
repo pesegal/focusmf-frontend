@@ -1,11 +1,11 @@
 <template>
   <div class="board-canvas">
     <div class="board">
-      <task-list-container
+      <fmf-list-container
         :lists="lists"
-        @task-list-deleted="onTaskListDeleted"
-        @task-list-created="onTaskListCreated"
-        @task-list-name-change="onTaskListNameChange"
+        @list-deleted="onListDeleted"
+        @list-created="onListCreated"
+        @list-name-change="onListNameChange"
       />
     </div>
   </div>
@@ -13,48 +13,48 @@
 
 <script>
 import Vue from 'vue'
-import TaskListContainer from '@/components/task-list/TaskListContainer.vue'
+import FmfListContainer from '@/components/list/FmfListContainer.vue'
 
 export default {
   components: {
-    TaskListContainer
+    FmfListContainer
   },
   data () {
     return {
-      loadingTaskLists: false,
-      creatingTaskList: false
+      loadingLists: false,
+      creatingList: false
     }
   },
   computed: {
     lists () {
-      return this.$store.state.taskList.tasks
+      return this.$store.state.list.lists
     }
   },
   async mounted () {
-    this.loadTaskLists()
+    this.loadLists()
   },
   methods: {
-    async onTaskListCreated () {
-      this.creatingTaskList = true
-      await this.$store.dispatch('taskList/createTaskList', 'New List')
-      this.creatingTaskList = false
-      this.loadTaskLists()
+    async onListCreated () {
+      this.creatingList = true
+      await this.$store.dispatch('list/createList', 'New List')
+      this.creatingList = false
+      this.loadLists()
     },
 
-    async loadTaskLists () {
-      this.loadingTaskLists = true
-      await this.$store.dispatch('taskList/loadLists')
-      this.loadingTaskLists = false
+    async loadLists () {
+      this.loadingLists = true
+      await this.$store.dispatch('list/loadLists')
+      this.loadingLists = false
     },
 
-    async onTaskListDeleted (taskListId) {
-      await this.$store.dispatch('taskList/deleteTaskList', taskListId)
-      this.loadTaskLists()
+    async onListDeleted (taskListId) {
+      await this.$store.dispatch('list/deleteList', taskListId)
+      this.loadLists()
     },
 
-    async onTaskListNameChange (taskList) {
-      await this.$store.dispatch('taskList/updateTaskList', taskList)
-      this.loadTaskLists()
+    async onListNameChange (list) {
+      await this.$store.dispatch('list/updateList', list)
+      this.loadLists()
     }
   }
 }

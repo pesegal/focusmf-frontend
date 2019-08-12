@@ -10,7 +10,8 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "types": [
-      "webpack-env"
+      "webpack-env",
+      "vuetify"
     ],
     "moduleResolution": "node",
     "baseUrl": ".",

@@ -3,18 +3,22 @@
     v-model="dialog"
     persistent
     max-width="600px"
+    class="FmfListCreateTaskDialog"
   >
     <template v-slot:activator="{ on }">
       <v-btn
-        block
+        flat
+        small
         v-on="on"
       >
-        + Add Task
+        <v-icon small>
+          edit
+        </v-icon>
       </v-btn>
     </template>
     <v-card>
       <v-card-title>
-        <span class="headline">Add Task</span>
+        <span class="headline">Edit Task</span>
       </v-card-title>
       <v-card-text>
         <v-container grid-list-md>
@@ -23,12 +27,13 @@
               <v-text-field
                 v-model="task.name"
                 label="Title"
+                autofocus
               />
             </v-flex>
             <v-flex xs12>
-              <v-text-field
-                v-model="task.description"
-                label="Description"
+              <v-textarea
+                v-model="task.notes"
+                label="Notes"
               />
             </v-flex>
             <v-flex
@@ -63,14 +68,13 @@
       <v-card-actions>
         <v-spacer />
         <v-btn
-          color="blue darken-1"
           flat
           @click="onCancel"
         >
           Cancel
         </v-btn>
         <v-btn
-          color="blue darken-1"
+          color="primary"
           flat
           @click="onSave"
         >
@@ -84,8 +88,8 @@
 <script>
 export default {
   props: {
-    listId: {
-      type: String,
+    taskToEdit: {
+      type: Object,
       required: true
     }
   },
@@ -93,11 +97,11 @@ export default {
     return {
       dialog: false,
       task: {
-        name: '',
-        description: '',
-        projects: []
+        name: this.taskToEdit.name || '',
+        notes: this.taskToEdit.notes || '',
+        projectIds: (this.taskToEdit.projects || []).map(project => project.id)
       },
-      selectedProjects: [],
+      selectedProjects: this.taskToEdit.projects || [],
       projectSearchTerm: null
     }
   },
@@ -122,7 +126,7 @@ export default {
       }))
       this.selectedProjects = this.selectedProjects.concat(newProjects)
 
-      this.task.projects = this.selectedProjects.map(project => project.id)
+      this.task.projectIds = this.selectedProjects.map(project => project.id)
     }
   },
   mounted () {
@@ -130,23 +134,23 @@ export default {
   },
   methods: {
     onCancel () {
+      this.task.name = this.taskToEdit.name
+      this.task.notes = this.taskToEdit.notes
+      this.task.projectIds = (this.taskToEdit.projects || []).map(project => project.id)
+      this.selectedProjects = this.taskToEdit.projects
       this.dialog = false
     },
 
     async onSave () {
-      await this.$store.dispatch('task/createTask', {
+      await this.$store.dispatch('task/updateTask', {
+        id: this.taskToEdit.id,
+        listId: this.taskToEdit.listId,
+        columnPos: this.taskToEdit.columnPos,
         name: this.task.name,
-        notes: this.task.description,
-        listId: this.listId,
-        columnPos: 0,
-        projectIds: this.task.projects
+        notes: this.task.notes,
+        projectIds: this.task.projectIds
       })
-      this.task.name = ''
-      this.task.description = ''
-      this.task.projects = []
-      this.selectedProjects = []
-      this.projectSearchTerm = null
-      await this.$store.dispatch('taskList/loadLists')
+      await this.$store.dispatch('list/loadLists')
       this.dialog = false
     }
   }
