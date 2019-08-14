@@ -78,7 +78,7 @@
           flat
           @click="onSave"
         >
-          Save
+          Update
         </v-btn>
       </v-card-actions>
     </v-card>

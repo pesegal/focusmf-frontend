@@ -1,6 +1,7 @@
-mutation updateList ($id:String!, $name: String!) {
-  updateList(id: $id, name: $name) {
+mutation updateList ($id:String!, $name: String!, $position: Float!) {
+  updateList(id: $id, name: $name, position: $position) {
     id
-    name
+    name,
+    position
   }
 }

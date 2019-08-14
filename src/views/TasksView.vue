@@ -36,7 +36,10 @@ export default {
   methods: {
     async onListCreated () {
       this.creatingList = true
-      await this.$store.dispatch('list/createList', 'New List')
+      await this.$store.dispatch('list/createList', {
+        name: 'New List',
+        position: this.lists.length
+      })
       this.creatingList = false
       this.loadLists()
     },
@@ -47,8 +50,25 @@ export default {
       this.loadingLists = false
     },
 
-    async onListDeleted (taskListId) {
-      await this.$store.dispatch('list/deleteList', taskListId)
+    async onListDeleted (listId) {
+      await this.$store.dispatch('list/deleteList', listId)
+
+      let lists = [].concat(this.lists)
+      const index = this.lists.findIndex(list => list.id == listId);
+      lists.splice(index, 1)
+
+      let updateAllLists = []
+      lists.forEach((list, index) => {
+        updateAllLists.push(
+          this.$store.dispatch('list/updateList', {
+            id: list.id,
+            name: list.name,
+            position: index
+          })
+        )
+      })
+      await Promise.all(updateAllLists)
+
       this.loadLists()
     },
 

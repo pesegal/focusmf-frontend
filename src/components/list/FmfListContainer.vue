@@ -6,15 +6,19 @@
       fill-height
     >
       <v-flex
-        v-for="list in lists"
+        v-for="(list, index) in lists"
         :key="list.id"
         shrink
       >
         <fmf-list
           :list="list"
           :delete-disabled="lists.length == 1"
+          :is-first-position="index == 0"
+          :is-last-position="index == (lists.length - 1)"
           @list-name-change="onListNameChange"
           @list-deleted="onListDeleted"
+          @list-move-left="onListMoveLeft"
+          @list-move-right="onListMoveRight"
         />
       </v-flex>
       <v-flex shrink>
@@ -52,6 +56,44 @@ export default {
 
     onListNameChange (list) {
       this.$emit('list-name-change', list)
+    },
+
+    async onListMoveLeft (id) {
+      let lists = [].concat(this.lists)
+      const index = this.lists.findIndex(list => list.id == id);
+      [lists[index], lists[index - 1]] = [lists[index - 1], lists[index]]
+
+      let updateAllLists = []
+      lists.forEach((list, index) => {
+        updateAllLists.push(
+          this.$store.dispatch('list/updateList', {
+            id: list.id,
+            name: list.name,
+            position: index
+          })
+        )
+      })
+      await Promise.all(updateAllLists)
+      await this.$store.dispatch('list/loadLists')
+    },
+
+    async onListMoveRight (id) {
+      let lists = [].concat(this.lists)
+      const index = this.lists.findIndex(list => list.id == id);
+      [lists[index], lists[index + 1]] = [lists[index + 1], lists[index]]
+
+      let updateAllLists = []
+      lists.forEach((list, index) => {
+        updateAllLists.push(
+          this.$store.dispatch('list/updateList', {
+            id: list.id,
+            name: list.name,
+            position: index
+          })
+        )
+      })
+      await Promise.all(updateAllLists)
+      await this.$store.dispatch('list/loadLists')
     }
   }
 }

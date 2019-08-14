@@ -1,9 +1,10 @@
-mutation createList ($name: String!) {
-  createList(name: $name) {
+mutation createList ($name: String!, $position: Float!) {
+  createList(name: $name, position: $position) {
     id
     name
     tasks {
       name
     }
+    position
   }
 }
