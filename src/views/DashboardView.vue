@@ -49,6 +49,7 @@ export default class DashboardView extends Vue {
 <style>
 html {
   height: 100%;
+  overflow: auto !important;
 }
 
 body {
@@ -70,7 +71,7 @@ body {
 }
 .content {
   flex-grow: 1;
-  overflow-y: scroll;
+  overflow: auto !important;
   outline: none;
   position: relative;
 }

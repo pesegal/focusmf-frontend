@@ -1,21 +1,10 @@
 <template>
   <v-dialog
-    v-model="dialog"
+    v-model="dialogOpen"
     persistent
     max-width="600px"
     class="FmfListCreateTaskDialog"
   >
-    <template v-slot:activator="{ on }">
-      <v-btn
-        flat
-        small
-        v-on="on"
-      >
-        <v-icon small>
-          edit
-        </v-icon>
-      </v-btn>
-    </template>
     <v-card>
       <v-card-title>
         <span class="headline">Edit Task</span>
@@ -91,11 +80,14 @@ export default {
     taskToEdit: {
       type: Object,
       required: true
+    },
+    dialogOpen: {
+      type: Boolean,
+      required: true
     }
   },
   data () {
     return {
-      dialog: false,
       task: {
         name: this.taskToEdit.name || '',
         notes: this.taskToEdit.notes || '',
@@ -138,7 +130,7 @@ export default {
       this.task.notes = this.taskToEdit.notes
       this.task.projectIds = (this.taskToEdit.projects || []).map(project => project.id)
       this.selectedProjects = this.taskToEdit.projects
-      this.dialog = false
+      this.$emit('close-dialog')
     },
 
     async onSave () {
@@ -151,7 +143,7 @@ export default {
         projectIds: this.task.projectIds
       })
       await this.$store.dispatch('list/loadLists')
-      this.dialog = false
+      this.$emit('close-dialog')
     }
   }
 }

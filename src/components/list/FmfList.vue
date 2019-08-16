@@ -116,7 +116,8 @@ export default {
   &__task-flex-container {
     background-color: #f5f5f5;
     height: 100%;
-    overflow: scroll;
+    overflow: auto !important;
+    position: relative !important;
   }
 
   &__v-list.v-list {
