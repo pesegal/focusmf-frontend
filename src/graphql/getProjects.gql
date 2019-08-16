@@ -1,6 +1,11 @@
 query getProjects {
   getProjects {
-    id,
+    id
     name
+    color {
+      id
+      name
+      hex
+    }
   }
 }
