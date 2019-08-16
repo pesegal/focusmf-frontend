@@ -19,12 +19,14 @@
       </template>
 
       <v-list>
-        <v-list-tile
-          @click="onListDelete"
-        >
-          <v-list-tile-title>
-            <span>Remove</span>
-          </v-list-tile-title>
+        <v-list-tile @click="onListDelete">
+          <v-list-tile-title><v-icon>delete</v-icon>Delete</v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile v-show="!disableMoveLeft" @click="onListMoveLeft">
+          <v-list-tile-title><v-icon>chevron_left</v-icon>Move Left</v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile v-show="!disableMoveRight" @click="onListMoveRight">
+          <v-list-tile-title>Move Right<v-icon>chevron_right</v-icon></v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>
@@ -37,6 +39,14 @@ export default {
     listName: {
       type: String,
       required: true
+    },
+    disableMoveLeft: {
+      type: Boolean,
+      default: false
+    },
+    disableMoveRight: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -52,6 +62,14 @@ export default {
 
     onListNameChange () {
       this.$emit('list-name-change', this.listNameModel)
+    },
+
+    onListMoveLeft () {
+      this.$emit('list-move-left')
+    },
+
+    onListMoveRight () {
+      this.$emit('list-move-right')
     }
   }
 }

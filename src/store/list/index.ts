@@ -29,11 +29,12 @@ export default class TaskListStore implements Module<ListState, RootState> {
       return lists
     },
 
-    async createList (context, listName: String) {
+    async createList (context, { name, position }) {
       const response = await apolloClient.mutate({
         mutation: createList,
         variables: {
-          name: listName
+          name,
+          position
         },
         fetchPolicy: 'no-cache'
       })
@@ -51,12 +52,13 @@ export default class TaskListStore implements Module<ListState, RootState> {
       return response.data.createList
     },
 
-    async updateList (context, list) {
+    async updateList (context, { id, name, position }) {
       const response = await apolloClient.mutate({
         mutation: updateList,
         variables: {
-          id: list.id,
-          name: list.name
+          id,
+          name,
+          position
         },
         fetchPolicy: 'no-cache'
       })

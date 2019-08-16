@@ -4,8 +4,12 @@
       <v-flex shrink>
         <fmf-list-header-toolbar
           :list-name="list.name"
+          :disable-move-left="isFirstPosition"
+          :disable-move-right="isLastPosition"
           @list-name-change="onListNameChange"
           @list-deleted="onListDeleted"
+          @list-move-left="onListMoveLeft"
+          @list-move-right="onListMoveRight"
         />
       </v-flex>
       <v-flex class="FmfList__task-flex-container">
@@ -51,6 +55,14 @@ export default {
     deleteDisabled: {
       type: Boolean,
       default: false
+    },
+    isFirstPosition: {
+      type: Boolean,
+      default: false
+    },
+    isLastPosition: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -71,12 +83,21 @@ export default {
     onListNameChange (name) {
       this.$emit('list-name-change', {
         id: this.list.id,
-        name: name
+        name: name,
+        position: this.list.position
       })
     },
 
     onListDeleted () {
       this.$emit('list-deleted', this.list.id)
+    },
+
+    onListMoveLeft () {
+      this.$emit('list-move-left', this.list.id)
+    },
+
+    onListMoveRight () {
+      this.$emit('list-move-right', this.list.id)
     }
   }
 }

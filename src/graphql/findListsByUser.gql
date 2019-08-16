@@ -2,6 +2,7 @@ query findListsByUser {
   findListsByUser {
     id
     name
+    position
     tasks {
       id
       columnPos
