@@ -7,10 +7,15 @@ query findListsByUser {
       id
       columnPos
       name
-      notes,
+      notes
       projects {
-        id,
+        id
         name
+        color {
+          id
+          name
+          hex
+        }
       }
     }
   }

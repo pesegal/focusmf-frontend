@@ -54,6 +54,8 @@
                 <template v-slot:selection="data">
                   <v-chip
                     :selected="data.selected"
+                    :color="`#${data.item.color.hex}`"
+                    text-color="white"
                   >
                     <span>{{ data.item.name }}</span>
                   </v-chip>

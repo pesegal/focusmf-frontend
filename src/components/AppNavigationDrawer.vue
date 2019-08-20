@@ -29,7 +29,7 @@
           />
         </v-list-tile-action>
         <v-list-tile-content>
-          <v-icon>{{ themeIcon }}</v-icon>
+          <v-icon>brightness_3</v-icon>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
@@ -72,10 +72,6 @@ export default class AppNavigationDrawer extends Vue {
       to: '/dashboard/settings'
     }
   ]
-
-  get themeIcon () {
-    return this.isDark ? 'brightness_3' : 'brightness_5'
-  }
 
   onClickNavigationItem(item: object) {}
 

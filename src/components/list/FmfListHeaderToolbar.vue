@@ -19,14 +19,14 @@
       </template>
 
       <v-list>
-        <v-list-tile @click="onListDelete">
-          <v-list-tile-title><v-icon>delete</v-icon>Delete</v-list-tile-title>
-        </v-list-tile>
         <v-list-tile v-show="!disableMoveLeft" @click="onListMoveLeft">
-          <v-list-tile-title><v-icon>chevron_left</v-icon>Move Left</v-list-tile-title>
+          <v-list-tile-title><v-icon>chevron_left</v-icon></v-list-tile-title>
         </v-list-tile>
         <v-list-tile v-show="!disableMoveRight" @click="onListMoveRight">
-          <v-list-tile-title>Move Right<v-icon>chevron_right</v-icon></v-list-tile-title>
+          <v-list-tile-title><v-icon>chevron_right</v-icon></v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile @click="onListDelete">
+          <v-list-tile-title><v-icon>delete</v-icon></v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>

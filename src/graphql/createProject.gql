@@ -1,6 +1,11 @@
 mutation createProject ($name: String!, $colorName: String!) {
   createProject(name: $name, colorName: $colorName) {
-    id,
+    id
     name
+    color {
+      id
+      name
+      hex
+    }
   }
 }
