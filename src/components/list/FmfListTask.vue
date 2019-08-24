@@ -2,43 +2,25 @@
   <v-card class="FmfListItem mr-3 ml-3 mt-2 mb-1">
     <v-layout class="FmfListItem__container-layout" column align-content-space-between>
       <v-flex shrink>
-        <v-card-title
-          primary-title
-          class="text-truncate"
-        >
+        <v-card-title primary-title class="text-truncate">
           <v-layout column>
             <v-flex>
               <v-layout row>
                 <v-flex align-self-center>
-                  <div class="subheading text-truncate ml-1 FmfListItem__name">
-                    {{ name }}
-                  </div>
+                  <div class="subheading text-truncate ml-1 FmfListItem__name">{{ name }}</div>
                 </v-flex>
                 <v-flex shrink align-content-end>
-                  <v-menu
-                    v-model="contextMenuIsOpen"
-                    bottom
-                    left
-                    offset-y
-                  >
+                  <v-menu v-model="contextMenuIsOpen" bottom left offset-y>
                     <template v-slot:activator="{ on }">
-                      <v-btn
-                        icon
-                        class="mr-0 mb-0 mt-1"
-                        v-on="on"
-                      >
-                        <v-icon small>
-                          more_vert
-                        </v-icon>
+                      <v-btn icon class="mr-0 mb-0 mt-1" v-on="on">
+                        <v-icon small>more_vert</v-icon>
                       </v-btn>
                     </template>
 
                     <v-list>
                       <v-list-tile @click.stop="editDialogIsOpen = true; contextMenuIsOpen = false">
                         <v-list-tile-title>
-                          <v-icon small>
-                            edit
-                          </v-icon>
+                          <v-icon small>edit</v-icon>
                           <fmf-list-update-task-dialog
                             :dialog-open="editDialogIsOpen"
                             :task-to-edit="taskValues"
@@ -48,9 +30,7 @@
                       </v-list-tile>
                       <v-list-tile @click="onClickDelete">
                         <v-list-tile-title>
-                          <v-icon small>
-                            delete
-                          </v-icon>
+                          <v-icon small>delete</v-icon>
                         </v-list-tile-title>
                       </v-list-tile>
                     </v-list>
@@ -61,22 +41,50 @@
             <v-flex>
               <v-layout column>
                 <v-flex>
-                  <div class="FmfListItem__note grey--text font-weight-regular text-truncate ml-1 mb-1">
-                    {{ notes }}
-                  </div>
+                  <div
+                    class="FmfListItem__note grey--text font-weight-regular text-truncate ml-1 mb-1"
+                  >{{ notes }}</div>
                 </v-flex>
                 <v-flex class="FmfListItem__project-chip-container" shrink>
-                  <v-chip
+                  <template
                     v-for="project in displayableProjects"
-                    :key="project.id"
-                    :color="`#${project.color.hex}`"
-                    text-color="white"
-                    disabled
-                    small
-                    class="caption font-weight-medium FmfListItem__project-chip text-truncate"
                   >
-                    <span class="text-truncate FmfListItem__project-chip__text">{{ project.name }}</span>
-                  </v-chip>
+                    <v-dialog
+                      :key="project.id"
+                      max-width="300"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-chip
+                          :color="`#${project.color.hex}`"
+                          text-color="white"
+                          small
+                          class="caption font-weight-medium FmfListItem__project-chip text-truncate"
+                          v-on="on"
+                        >
+                          <span
+                            class="text-truncate FmfListItem__project-chip__text"
+                          >{{ project.name }}</span>
+                        </v-chip>
+                      </template>
+                      <v-card>
+                        <v-card-title>
+                          <span class="headline">Edit Project</span>
+                        </v-card-title>
+                        <v-card-text>
+                          <v-container grid-list-md>
+                            <v-layout wrap>
+                              <v-flex xs12>{{ project.name }}</v-flex>
+                            </v-layout>
+                          </v-container>
+                        </v-card-text>
+                        <v-card-actions>
+                          <v-spacer />
+                          <v-btn flat>Cancel</v-btn>
+                          <v-btn color="primary" flat>Save</v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+                  </template>
                   <v-tooltip bottom light>
                     <template v-slot:activator="{ on }">
                       <v-chip
@@ -87,9 +95,7 @@
                         small
                         class="caption font-weight-medium FmfListItem__project-chip-more text-truncate"
                         v-on="on"
-                      >
-                        +{{ projects.length - 2 }}
-                      </v-chip>
+                      >+{{ projects.length - 2 }}</v-chip>
                     </template>
                     <v-chip
                       v-for="project in overflowProjects"
@@ -99,9 +105,7 @@
                       text-color="white"
                       disabled
                       small
-                    >
-                      {{ project.name }}
-                    </v-chip>
+                    >{{ project.name }}</v-chip>
                   </v-tooltip>
                 </v-flex>
               </v-layout>
@@ -114,7 +118,7 @@
 </template>
 
 <script>
-import FmfListUpdateTaskDialog from '@/components/list/FmfListUpdateTaskDialog.vue'
+import FmfListUpdateTaskDialog from "@/components/list/FmfListUpdateTaskDialog.vue"
 
 export default {
   components: {
@@ -146,22 +150,22 @@ export default {
       required: true
     }
   },
-  data () {
+  data() {
     return {
       editDialogIsOpen: false,
       contextMenuIsOpen: false
     }
   },
   computed: {
-    displayableProjects () {
+    displayableProjects() {
       return this.projects.slice(0, 2)
     },
 
-    overflowProjects () {
+    overflowProjects() {
       return this.projects.slice(2)
     },
 
-    taskValues () {
+    taskValues() {
       return {
         id: this.id,
         name: this.name,
@@ -173,9 +177,9 @@ export default {
     }
   },
   methods: {
-    async onClickDelete () {
-      await this.$store.dispatch('task/deleteTask', this.id)
-      await this.$store.dispatch('list/loadLists')
+    async onClickDelete() {
+      await this.$store.dispatch("task/deleteTask", this.id)
+      await this.$store.dispatch("list/loadLists")
     }
   }
 }
@@ -183,7 +187,6 @@ export default {
 
 <style lang="scss">
 .FmfListItem {
-
   &__name {
     max-width: 150px;
   }
