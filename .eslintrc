@@ -18,7 +18,8 @@
         {
           "singleline": 4
         }
-      ]
+      ],
+      "semi": ["error", "never"]
     },
     "parserOptions": {
       "parser": "typescript-eslint-parser"
