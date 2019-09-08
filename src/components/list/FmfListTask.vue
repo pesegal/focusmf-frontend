@@ -133,7 +133,7 @@
 </template>
 
 <script>
-import FmfListUpdateTaskDialog from "@/components/list/FmfListUpdateTaskDialog.vue"
+import FmfListUpdateTaskDialog from '@/components/list/FmfListUpdateTaskDialog.vue'
 
 export default {
   components: {
@@ -193,8 +193,8 @@ export default {
   },
   methods: {
     async onClickDelete() {
-      await this.$store.dispatch("task/deleteTask", this.id)
-      await this.$store.dispatch("list/loadLists")
+      await this.$store.dispatch('task/deleteTask', this.id)
+      await this.$store.dispatch('list/loadLists')
     }
   }
 }

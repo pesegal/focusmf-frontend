@@ -19,7 +19,8 @@
           "singleline": 4
         }
       ],
-      "semi": ["error", "never"]
+      "semi": ["error", "never"],
+      "quotes": ["error", "single"]
     },
     "parserOptions": {
       "parser": "typescript-eslint-parser"
