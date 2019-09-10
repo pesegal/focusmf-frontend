@@ -208,13 +208,13 @@ export default class SignUpView extends Vue {
   get currentTitle() {
     switch (this.step) {
     case 1:
-      return "Sign-up";
+      return 'Sign-up'
     case 2:
-      return "Create a password";
+      return 'Create a password'
     case 3:
-      return "Information";
+      return 'Information'
     default:
-      return "Account created!";
+      return 'Account created!'
     }
   }
 
@@ -246,12 +246,12 @@ export default class SignUpView extends Vue {
       })
       this.$store.commit('auth/setAuth', response.data.createUser.token)
     } catch (e) {
-      this.registeringAccount = false;
+      this.registeringAccount = false
       this.errorWithRegisteringAccount = true
-      return false;
+      return false
     }
-    this.step++;
-    return true;
+    this.step++
+    return true
   }
 }
 </script>

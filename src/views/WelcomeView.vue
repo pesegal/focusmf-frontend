@@ -27,11 +27,11 @@
 </template>
 
 <script>
-import BrandDisplay from "@/components/BrandDisplay";
+import BrandDisplay from '@/components/BrandDisplay'
 
 export default {
   components: {
     BrandDisplay
   }
-};
+}
 </script>
