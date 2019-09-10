@@ -57,44 +57,12 @@
                 </v-flex>
                 <v-flex class="FmfListItem__project-chip-container" shrink>
                   <template v-for="project in displayableProjects">
-                    <v-dialog :key="project.id" max-width="300">
-                      <template v-slot:activator="{ on }">
-                        <v-chip
-                          :color="`#${project.color.hex}`"
-                          text-color="white"
-                          small
-                          class="caption font-weight-medium FmfListItem__project-chip text-truncate"
-                          v-on="on"
-                        >
-                          <span
-                            class="text-truncate FmfListItem__project-chip__text"
-                          >{{ project.name }}</span>
-                        </v-chip>
-                      </template>
-                      <v-card>
-                        <v-card-title>
-                          <span class="headline">Edit Project</span>
-                        </v-card-title>
-                        <v-card-text>
-                          <v-container grid-list-md>
-                            <v-layout wrap>
-                              <v-flex xs12>
-                                {{ project.name }}
-                              </v-flex>
-                            </v-layout>
-                          </v-container>
-                        </v-card-text>
-                        <v-card-actions>
-                          <v-spacer />
-                          <v-btn flat>
-                            Cancel
-                          </v-btn>
-                          <v-btn color="primary" flat>
-                            Save
-                          </v-btn>
-                        </v-card-actions>
-                      </v-card>
-                    </v-dialog>
+                    <fmf-project-chip
+                      :key="project.id"
+                      :project-name="project.name"
+                      :project-color="project.color.hex"
+                      @project:updated="onProjectUpdated(project, $event)"
+                    />
                   </template>
                   <v-tooltip bottom light>
                     <template v-slot:activator="{ on }">
@@ -134,10 +102,12 @@
 
 <script>
 import FmfListUpdateTaskDialog from '@/components/list/FmfListUpdateTaskDialog.vue'
+import FmfProjectChip from '@/components/project/FmfProjectChip'
 
 export default {
   components: {
-    FmfListUpdateTaskDialog
+    FmfListUpdateTaskDialog,
+    FmfProjectChip
   },
   props: {
     id: {
@@ -195,6 +165,10 @@ export default {
     async onClickDelete() {
       await this.$store.dispatch('task/deleteTask', this.id)
       await this.$store.dispatch('list/loadLists')
+    },
+
+    onProjectUpdated (project, updatedProject) {
+      project.name = updatedProject.name
     }
   }
 }

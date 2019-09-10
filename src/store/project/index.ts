@@ -43,6 +43,9 @@ export default class TaskListStore implements Module<ProjectState, RootState> {
       })
       commit('addProject', response.data.createProject)
       return response.data.createProject
+    },
+
+    async updateProject ({ commit }, project) {
     }
   }
 }
