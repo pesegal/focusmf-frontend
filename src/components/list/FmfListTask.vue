@@ -167,8 +167,13 @@ export default {
       await this.$store.dispatch('list/loadLists')
     },
 
-    onProjectUpdated (project, updatedProject) {
-      project.name = updatedProject.name
+    async onProjectUpdated (project, updatedProject) {
+      await this.$store.dispatch('project/updateProject', {
+        id: project.id,
+        name: updatedProject.name
+      })
+      await this.$store.dispatch('list/loadLists')
+      await this.$store.dispatch('project/getProjects')
     }
   }
 }

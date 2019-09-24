@@ -67,6 +67,16 @@ export default {
     }
   },
 
+  watch: {
+    projectName (newValue) {
+      this.project.name = newValue
+    },
+
+    projectColor (newValue) {
+      this.project.color = newValue
+    }
+  },
+
   methods: {
     onSave () {
       this.showDialog = false
