@@ -44,7 +44,7 @@
               >
                 <template v-slot:selection="data">
                   <v-chip
-                    :selected="data.selected"
+                    :input-value="data.selected"
                     :color="`#${data.item.color.hex}`"
                     text-color="white"
                   >
@@ -59,14 +59,14 @@
       <v-card-actions>
         <v-spacer />
         <v-btn
-          flat
+          text
           @click="onCancel"
         >
           Cancel
         </v-btn>
         <v-btn
           color="primary"
-          flat
+          text
           @click="onSave"
         >
           Update

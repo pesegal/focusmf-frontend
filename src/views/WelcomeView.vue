@@ -16,7 +16,7 @@
           Sign Up
         </v-btn>
         <v-btn
-          flat
+          text
           to="/login"
         >
           Login

@@ -10,7 +10,7 @@
         xs12
         sm6
       >
-        <v-form @submit.prevent="login">
+        <v-form ref="loginForm" @submit.prevent="login">
           <v-text-field
             id="username-input-field"
             v-model="email"

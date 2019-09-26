@@ -22,8 +22,8 @@
                     </template>
 
                     <v-list>
-                      <v-list-tile @click.stop="editDialogIsOpen = true; contextMenuIsOpen = false">
-                        <v-list-tile-title>
+                      <v-list-item @click.stop="editDialogIsOpen = true; contextMenuIsOpen = false">
+                        <v-list-item-title>
                           <v-icon small>
                             edit
                           </v-icon>
@@ -32,15 +32,15 @@
                             :task-to-edit="taskValues"
                             @close-dialog="editDialogIsOpen = false"
                           />
-                        </v-list-tile-title>
-                      </v-list-tile>
-                      <v-list-tile @click="onClickDelete">
-                        <v-list-tile-title>
+                        </v-list-item-title>
+                      </v-list-item>
+                      <v-list-item @click="onClickDelete">
+                        <v-list-item-title>
                           <v-icon small>
                             delete
                           </v-icon>
-                        </v-list-tile-title>
-                      </v-list-tile>
+                        </v-list-item-title>
+                      </v-list-item>
                     </v-list>
                   </v-menu>
                 </v-flex>
@@ -68,7 +68,7 @@
                     <template v-slot:activator="{ on }">
                       <v-chip
                         v-if="projects.length > 2"
-                        outline
+                        outlined
                         color="accent"
                         disabled
                         small

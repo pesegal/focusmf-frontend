@@ -124,7 +124,7 @@
             <v-card-actions>
               <v-btn
                 v-show="step > 1 && step < 4"
-                flat
+                text
                 @click="step--"
               >
                 Back
