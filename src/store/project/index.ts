@@ -5,6 +5,7 @@ import { State as RootState } from '../state'
 import { apolloClient } from '../../plugins/vue-apollo'
 const getProjects = require('@/graphql/getProjects.gql')
 const createProject = require('@/graphql/createProject.gql')
+const updateProject = require('@/graphql/updateProject.gql')
 
 export default class TaskListStore implements Module<ProjectState, RootState> {
   namespaced: boolean = true
@@ -43,6 +44,17 @@ export default class TaskListStore implements Module<ProjectState, RootState> {
       })
       commit('addProject', response.data.createProject)
       return response.data.createProject
+    },
+
+    updateProject (context, project) {
+      return apolloClient.mutate({
+        mutation: updateProject,
+        variables: {
+          id: project.id,
+          name: project.name
+        },
+        fetchPolicy: 'no-cache'
+      })
     }
   }
 }

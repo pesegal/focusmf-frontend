@@ -5,33 +5,36 @@
     temporary
     @input="updateDrawerDisplayState"
   >
-    <v-list>
-      <v-list-tile
+    <v-list dense nav>
+      <v-list-item
         v-for="item in items"
         :key="item.title"
         :to="item.to"
         exact
+        link
         @click="onClickNavigationItem(item)"
       >
-        <v-list-tile-action>
+        <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
       <v-divider />
-      <v-list-tile>
-        <v-list-tile-action>
+      <v-list-item>
+        <v-list-item-action>
+          <v-icon>brightness_2</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
           <v-switch
             :input-value="isDark"
             @change="toggleTheme"
+            class="ml-3"
           />
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-icon>brightness_3</v-icon>
-        </v-list-tile-content>
-      </v-list-tile>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>

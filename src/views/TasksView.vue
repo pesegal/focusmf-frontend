@@ -54,7 +54,7 @@ export default {
       await this.$store.dispatch('list/deleteList', listId)
 
       let lists = [].concat(this.lists)
-      const index = this.lists.findIndex(list => list.id == listId);
+      const index = this.lists.findIndex(list => list.id == listId)
       lists.splice(index, 1)
 
       let updateAllLists = []

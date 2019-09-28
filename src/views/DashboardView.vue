@@ -22,8 +22,8 @@
 <script lang="ts">
 import AppMainToolbar from '@/components/AppMainToolbar.vue'
 import AppNavigationDrawer from '@/components/AppNavigationDrawer.vue'
-import Component from 'vue-class-component';
-import { Vue } from 'vue-property-decorator';
+import Component from 'vue-class-component'
+import { Vue } from 'vue-property-decorator'
 
 @Component({
   components: {

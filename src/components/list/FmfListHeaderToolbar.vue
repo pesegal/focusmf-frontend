@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar class="FmfListHeaderToolbar" color="primary" flat dark>
+  <v-toolbar class="FmfListHeaderToolbar" color="primary" text dark>
     <v-toolbar-title>
       <v-text-field
         v-model="listNameModel"
@@ -19,15 +19,15 @@
       </template>
 
       <v-list>
-        <v-list-tile v-show="!disableMoveLeft" @click="onListMoveLeft">
-          <v-list-tile-title><v-icon>chevron_left</v-icon></v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile v-show="!disableMoveRight" @click="onListMoveRight">
-          <v-list-tile-title><v-icon>chevron_right</v-icon></v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile @click="onListDelete">
-          <v-list-tile-title><v-icon>delete</v-icon></v-list-tile-title>
-        </v-list-tile>
+        <v-list-item v-show="!disableMoveLeft" @click="onListMoveLeft">
+          <v-list-item-title><v-icon>chevron_left</v-icon></v-list-item-title>
+        </v-list-item>
+        <v-list-item v-show="!disableMoveRight" @click="onListMoveRight">
+          <v-list-item-title><v-icon>chevron_right</v-icon></v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="onListDelete">
+          <v-list-item-title><v-icon>delete</v-icon></v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-menu>
   </v-toolbar>

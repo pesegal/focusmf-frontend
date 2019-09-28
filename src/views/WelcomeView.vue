@@ -16,7 +16,7 @@
           Sign Up
         </v-btn>
         <v-btn
-          flat
+          text
           to="/login"
         >
           Login
@@ -27,11 +27,11 @@
 </template>
 
 <script>
-import BrandDisplay from "@/components/BrandDisplay";
+import BrandDisplay from '@/components/BrandDisplay'
 
 export default {
   components: {
     BrandDisplay
   }
-};
+}
 </script>
