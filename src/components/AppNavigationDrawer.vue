@@ -29,9 +29,9 @@
         </v-list-item-action>
         <v-list-item-content>
           <v-switch
+            class="ml-3"
             :input-value="isDark"
             @change="toggleTheme"
-            class="ml-3"
           />
         </v-list-item-content>
       </v-list-item>
