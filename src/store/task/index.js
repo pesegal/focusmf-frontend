@@ -1,16 +1,12 @@
-import { Module, MutationTree, ActionTree } from 'vuex'
-import { TaskState } from './state'
-import { State as RootState } from '../state'
 import { apolloClient } from '../../plugins/vue-apollo'
 const createTask = require('@/graphql/createTask.gql')
 const updateTask = require('@/graphql/updateTask.gql')
 const deleteTask = require('@/graphql/deleteTask.gql')
 
-export default class TaskStore implements Module<TaskState, RootState> {
-  namespaced: boolean = true
-  state: TaskState = {}
-  mutations: MutationTree<TaskState> = {}
-  actions: ActionTree<TaskState, RootState> = {
+export default {
+  namespaced: true,
+  state: {},
+  actions: {
     async createTask ({ dispatch }, task) {
       const response = await apolloClient.mutate({
         mutation: createTask,

@@ -158,100 +158,107 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import axios from 'axios'
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import gql from 'graphql-tag'
 const createUser = require('@/graphql/createUser.gql')
 
-@Component
-export default class SignUpView extends Vue {
-  dialog: boolean = true
-  step: number = 1
-  account = {
-    email: '',
-    password: '',
-    confirmPassword: '',
-    firstName: '',
-    lastName: '',
-    dateOfBirth: ''
-  }
-  registeringAccount: boolean = false
-  rules = {
-    required: (fieldName: string) => {
-      return (value: string) => {
-        return !!value || `${fieldName} is required.`
-      }
-    },
-    email: (value: string) => {
-      const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      return pattern.test(value) || 'Hey dude, bad e-mail.'
-    },
-    password: (value: string) => {
-      return (!!value && value.length >= 8) || 'Minimum password length is 8.'
-    },
-    matchesPassword: (value: string) => {
-      return (!!value && value === this.account.password) || 'Passwords don\'t match'
-    },
-    max: (length: number) => {
-      return (value: string) => {
-        return (!!value && value.length <= length) || `Max length is ${length} characters.`
-      }
-    }
-  }
-  emailFormIsValid: boolean = false
-  passwordFormIsValid: boolean = false
-  demographicFormIsValid: boolean = false
-  errorWithRegisteringAccount: boolean = false
-
-  get currentTitle() {
-    switch (this.step) {
-    case 1:
-      return "Sign-up";
-    case 2:
-      return "Create a password";
-    case 3:
-      return "Information";
-    default:
-      return "Account created!";
-    }
-  }
-
-  get isCurrentFormValid () {
-    switch (this.step) {
-    case 1:
-      return this.emailFormIsValid
-    case 2:
-      return this.passwordFormIsValid
-    case 3:
-      return this.demographicFormIsValid
-    default:
-      return false
-    }
-  }
-
-  async register () {
-    this.registeringAccount = true
-    try {
-      const response = await this.$apollo.mutate({
-        mutation: createUser,
-        variables: {
-          email: this.account.email,
-          password: this.account.password,
-          first_name: this.account.firstName,
-          last_name: this.account.lastName,
-          dateofbirth: (new Date(this.account.dateOfBirth).toISOString())
+export default {
+  data () {
+    return {
+      dialog: true,
+      step: 1,
+      account: {
+        email: '',
+        password: '',
+        confirmPassword: '',
+        firstName: '',
+        lastName: '',
+        dateOfBirth: ''
+      },
+      registeringAccount: false,
+      rules: {
+        required: (fieldName) => {
+          return (value) => {
+            return !!value || `${fieldName} is required.`
+          }
+        },
+        email: (value) => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || 'Hey dude, bad e-mail.'
+        },
+        password: (value) => {
+          return (!!value && value.length >= 8) || 'Minimum password length is 8.'
+        },
+        matchesPassword: (value) => {
+          return (!!value && value === this.account.password) || 'Passwords don\'t match'
+        },
+        max: (length) => {
+          return (value) => {
+            return (!!value && value.length <= length) || `Max length is ${length} characters.`
+          }
         }
-      })
-      this.$store.commit('auth/setAuth', response.data.createUser.token)
-    } catch (e) {
-      this.registeringAccount = false;
-      this.errorWithRegisteringAccount = true
-      return false;
+      },
+      emailFormIsValid: false,
+      passwordFormIsValid: false,
+      demographicFormIsValid: false,
+      errorWithRegisteringAccount: false
     }
-    this.step++;
-    return true;
+  },
+
+  computed: {
+    currentTitle() {
+      switch (this.step) {
+      case 1:
+        return "Sign-up";
+      case 2:
+        return "Create a password";
+      case 3:
+        return "Information";
+      default:
+        return "Account created!";
+      }
+    },
+
+    isCurrentFormValid () {
+      switch (this.step) {
+      case 1:
+        return this.emailFormIsValid
+      case 2:
+        return this.passwordFormIsValid
+      case 3:
+        return this.demographicFormIsValid
+      default:
+        return false
+      }
+    }
+  },
+
+  methods: {
+    async register () {
+      this.registeringAccount = true
+      try {
+        const response = await this.$apollo.mutate({
+          mutation: createUser,
+          variables: {
+            email: this.account.email,
+            password: this.account.password,
+            first_name: this.account.firstName,
+            last_name: this.account.lastName,
+            dateofbirth: (new Date(this.account.dateOfBirth).toISOString())
+          }
+        })
+        this.$store.commit('auth/setAuth', response.data.createUser.token)
+      } catch (e) {
+        this.registeringAccount = false;
+        this.errorWithRegisteringAccount = true
+        return false;
+      }
+      this.step++;
+      return true;
+    }
   }
 }
 </script>
