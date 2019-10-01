@@ -1,0 +1,46 @@
+version: 2.1
+jobs:
+    build:
+      docker:
+        - image: circleci/node:10
+      steps:
+        - checkout
+        - run:
+            name: Install Dependencies
+            command: |
+              yarn install
+        - run:
+            name: Build Project
+            command: yarn build
+        - save_cache:
+            key: source-v1-{{ .Branch }}-{{ .Revision }}
+            paths:
+              - "dist"
+
+    deploy:
+        machine:
+            image: ubuntu-1604:201903-01
+        steps:
+          - add_ssh_keys:
+              fingerprints:
+                - "ba:49:ef:05:35:f2:d1:f2:22:13:76:d9:ac:16:cb:d0"
+          - restore_cache:
+              keys:
+                - source-v1-{{ .Branch }}-{{ .Revision }}
+          - run:
+              name: Create deployment directory on remote server if it doesn't exist
+              command: ssh focusmf@focusmf.club -t mkdir -p focusmf/frontend
+          - run:
+              name: Copy files to the deployment server
+              command: rsync -va . focusmf@focusmf.club:~/focusmf/frontend
+
+workflows:
+    build_and_deploy:
+        jobs:
+            - build
+            - deploy:
+                requires:
+                  - build
+                filters:
+                    branches:
+                        only: master
