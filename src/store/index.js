@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { State as RootState } from './state'
 import AuthStore from './auth/index'
 import ListStore from './list/index'
 import TaskStore from './task/index'
@@ -9,18 +8,18 @@ import VuexPersistence from 'vuex-persist'
 
 Vue.use(Vuex)
 
-const vuexLocal = new VuexPersistence<RootState>({
+const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
   modules: ['auth']
 })
 
-export const store = new Vuex.Store<RootState>({
+export const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   modules: {
-    auth: new AuthStore(),
-    list: new ListStore(),
-    task: new TaskStore(),
-    project: new ProjectStore()
+    auth: AuthStore,
+    list: ListStore,
+    task: TaskStore,
+    project: ProjectStore
   },
   plugins: [vuexLocal.plugin]
 })

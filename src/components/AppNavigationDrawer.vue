@@ -11,8 +11,6 @@
         :key="item.title"
         :to="item.to"
         exact
-        link
-        @click="onClickNavigationItem(item)"
       >
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
@@ -39,49 +37,54 @@
   </v-navigation-drawer>
 </template>
 
-<script lang="ts">
-import { Vue, Component, Prop, Watch, Emit } from 'vue-property-decorator'
-
-type AppNavigationDrawerLinkInterface = {
-  title: string,
-  icon: string,
-  to: string
-}
-
-@Component
-export default class AppNavigationDrawer extends Vue {
-  @Prop({ default: false }) showDrawer?: boolean
-  @Prop({ default: false }) isDark?: boolean
-
-  items: Array<AppNavigationDrawerLinkInterface> = [
-    {
-      title: 'Tasks',
-      icon: 'view_list',
-      to: '/dashboard/tasks'
+<script>
+export default {
+  props: {
+    showDrawer: {
+      type: Boolean,
+      default: false
     },
-    {
-      title: 'Timer',
-      icon: 'alarm',
-      to: '/dashboard/timer'
-    },
-    {
-      title: 'Stats',
-      icon: 'insert_chart_outlined',
-      to: '/dashboard/stats'
-    },
-    {
-      title: 'Settings',
-      icon: 'settings_applications',
-      to: '/dashboard/settings'
+    isDark: {
+      type: Boolean,
+      default: false
     }
-  ]
+  },
 
-  onClickNavigationItem(item: object) {}
+  data () {
+    return {
+      items: [
+        {
+          title: 'Tasks',
+          icon: 'view_list',
+          to: '/dashboard/tasks'
+        },
+        {
+          title: 'Timer',
+          icon: 'alarm',
+          to: '/dashboard/timer'
+        },
+        {
+          title: 'Stats',
+          icon: 'insert_chart_outlined',
+          to: '/dashboard/stats'
+        },
+        {
+          title: 'Settings',
+          icon: 'settings_applications',
+          to: '/dashboard/settings'
+        }
+      ]
+    }
+  },
 
-  @Emit()
-  toggleTheme (isDark: boolean): void  {}
+  methods: {
+    toggleTheme (isDark) {
+      this.$emit('toggle-theme', isDark)
+    },
 
-  @Emit()
-  updateDrawerDisplayState (showDrawer: boolean): void {}
+    updateDrawerDisplayState (showDrawer) {
+      this.$emit('update-drawer-display-state', showDrawer)
+    }
+  }
 }
 </script>

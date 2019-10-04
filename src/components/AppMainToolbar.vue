@@ -17,22 +17,22 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Vue, Component, Emit } from 'vue-property-decorator'
+<script>
+export default {
+  computed: {
+    isLoggedIn () {
+      return !!this.$store.state.authorization
+    }
+  },
 
-@Component
-export default class AppMainToolbar extends Vue {
-
-  get isLoggedIn () {
-    return !!this.$store.state.authorization
-  }
-
-  @Emit()
-  showDrawer (showDrawer: boolean): void {}
-
-  logout () {
-    this.$store.commit('auth/setAuth', '')
-    this.$router.push('/login')
+  methods: {
+    logout () {
+      this.$store.commit('auth/setAuth', '')
+      this.$router.push('/login')
+    },
+    showDrawer(showDrawer) {
+      this.$emit('show-drawer', showDrawer)
+    }
   }
 }
 </script>
