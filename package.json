@@ -1,6 +1,6 @@
 {
   "name": "focusmf-frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,13 +10,13 @@
     "test:e2e": "cypress open"
   },
   "dependencies": {
-    "apollo-boost": "^0.3.1",
+    "apollo-boost": "^0.4.4",
     "axios": "^0.18.0",
-    "graphql": "^14.2.1",
+    "graphql": "^14.5.8",
     "vue": "^2.5.17",
-    "vue-apollo": "^3.0.0-beta.28",
+    "vue-apollo": "2.1.0-rc.5",
     "vue-router": "^3.0.1",
-    "vuetify": "^1.0.0",
+    "vuetify": "^2.0.19",
     "vuex": "^3.1.1",
     "vuex-persist": "^2.0.1"
   },
@@ -38,41 +38,12 @@
     "stylus-loader": "^3.0.1",
     "typescript": "~3.1.1",
     "vue-class-component": "^7.0.2",
-    "vue-cli-plugin-apollo": "^0.20.0",
-    "vue-cli-plugin-vuetify": "^0.4.6",
+    "vue-cli-plugin-apollo": "^0.21.0",
+    "vue-cli-plugin-vuetify": "^0.6.3",
     "vue-property-decorator": "^8.1.0",
     "vue-template-compiler": "^2.5.17",
-    "vuetify-loader": "^1.0.5"
+    "vuetify-loader": "^1.2.2"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/recommended",
-      "eslint:recommended",
-      "@vue/typescript"
-    ],
-    "rules": {
-      "indent": [
-        "error",
-        2
-      ],
-      "vue/max-attributes-per-line": [
-        "error",
-        {
-          "singleline": 4
-        }
-      ]
-    },
-    "parserOptions": {
-      "parser": "typescript-eslint-parser"
-    }
-  },
-  "eslintIgnore": [
-    "*.gql"
-  ],
   "postcss": {
     "plugins": {
       "autoprefixer": {}

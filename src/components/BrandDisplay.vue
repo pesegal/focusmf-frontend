@@ -1,7 +1,7 @@
 <template>
   <div class="BrandDisplay">
     <v-layout
-      text-xs-center
+      text-center
       wrap
     >
       <v-flex xs12>

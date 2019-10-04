@@ -1,21 +1,19 @@
 <template>
   <div class="AppMainToolbar">
-    <v-toolbar app>
-      <v-toolbar-side-icon @click="showDrawer(true)" />
+    <v-app-bar app>
+      <v-app-bar-nav-icon @click="showDrawer(true)" />
       <v-toolbar-title class="headline text-uppercase">
         <span>Focus</span>
         <span class="font-weight-light">MF</span>
       </v-toolbar-title>
       <v-spacer />
-      <v-toolbar-items>
-        <v-btn
-          flat
-          @click="logout"
-        >
-          Logout
-        </v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
+      <v-btn
+        text
+        @click="logout"
+      >
+        Logout
+      </v-btn>
+    </v-app-bar>
   </div>
 </template>
 

@@ -8,6 +8,7 @@ import SignUpView from '@/views/SignUpView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import WelcomeView from '@/views/WelcomeView.vue'
 import LoginView from '@/views/LoginView.vue'
+import NotFoundComponent from '@/views/NotFoundComponent.vue'
 import { store } from '@/store'
 
 Vue.use(Router)
@@ -60,7 +61,8 @@ const router: Router = new Router({
       path: '/login',
       name: 'login',
       component: LoginView
-    }
+    },
+    { path: '*', component: NotFoundComponent }
   ]
 })
 
