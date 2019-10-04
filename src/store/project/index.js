@@ -1,28 +1,23 @@
-import { Module, MutationTree, ActionTree } from 'vuex'
-import { ProjectState } from './state'
-import { Project } from './project'
-import { State as RootState } from '../state'
 import { apolloClient } from '../../plugins/vue-apollo'
 const getProjects = require('@/graphql/getProjects.gql')
 const createProject = require('@/graphql/createProject.gql')
 const updateProject = require('@/graphql/updateProject.gql')
 
-export default class TaskListStore implements Module<ProjectState, RootState> {
-  namespaced: boolean = true
-  state: ProjectState = {
+export default {
+  namespaced: true,
+  state: {
     projects: []
-  }
-  mutations: MutationTree<ProjectState> = {
-    setProjects (state: ProjectState, projects: []) {
+  },
+  mutations: {
+    setProjects (state, projects) {
       state.projects = projects
     },
 
-    addProject (state: ProjectState, project: Project) {
+    addProject (state, project) {
       state.projects.push(project)
     }
-  }
-
-  actions: ActionTree<ProjectState, RootState> = {
+  },
+  actions: {
     async getProjects ({ commit }) {
       const response = await apolloClient.query({
         query: getProjects,

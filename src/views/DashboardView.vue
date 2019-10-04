@@ -19,29 +19,31 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import AppMainToolbar from '@/components/AppMainToolbar.vue'
 import AppNavigationDrawer from '@/components/AppNavigationDrawer.vue'
-import Component from 'vue-class-component'
-import { Vue } from 'vue-property-decorator'
 
-@Component({
+export default {
   components: {
     AppMainToolbar,
     AppNavigationDrawer
-  }
-})
-export default class DashboardView extends Vue {
+  },
 
-  isDark: boolean = false
-  showDrawer: boolean = false
+  data () {
+    return {
+      isDark: false,
+      showDrawer: false
+    }
+  },
 
-  onUpdateDrawerDisplayState(showDrawer: boolean): void {
-    this.showDrawer = showDrawer
-  }
+  methods: {
+    onUpdateDrawerDisplayState(showDrawer) {
+      this.showDrawer = showDrawer
+    },
 
-  onToggleTheme(isDark: boolean): void {
-    this.isDark = isDark
+    onToggleTheme(isDark) {
+      this.isDark = isDark
+    }
   }
 }
 </script>

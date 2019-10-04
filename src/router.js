@@ -13,7 +13,7 @@ import { store } from '@/store'
 
 Vue.use(Router)
 
-const router: Router = new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [

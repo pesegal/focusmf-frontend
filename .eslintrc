@@ -5,8 +5,7 @@
     },
     "extends": [
       "plugin:vue/recommended",
-      "eslint:recommended",
-      "@vue/typescript"
+      "eslint:recommended"
     ],
     "rules": {
       "indent": [
@@ -21,8 +20,5 @@
       ],
       "semi": ["error", "never"],
       "quotes": ["error", "single"]
-    },
-    "parserOptions": {
-      "parser": "typescript-eslint-parser"
     }
 }
