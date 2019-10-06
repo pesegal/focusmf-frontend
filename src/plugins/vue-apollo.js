@@ -6,7 +6,7 @@ import { store } from '../store/index'
 Vue.use(VueApollo)
 
 export const apolloClient = new ApolloClient({
-  uri: process.env.FMF_APOLLO_CLIENT_BASE_URL || 'http://localhost:3000',
+  uri: '/graphql',
   request: async operation => {
     operation.setContext({
       headers: {
