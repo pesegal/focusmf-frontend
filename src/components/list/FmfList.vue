@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import Component from 'vue-class-component'
 import FmfListTask from './FmfListTask.vue'
 import FmfListCreateTaskDialog from './FmfListCreateTaskDialog.vue'
 import FmfListHeaderToolbar from './FmfListHeaderToolbar.vue'

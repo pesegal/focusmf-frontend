@@ -2,15 +2,14 @@
   <v-dialog v-model="showDialog" max-width="300" persistent>
     <template v-slot:activator="{ on }">
       <v-chip
-        :color="`#${projectColor}`"
-        text-color="white"
         small
-        class="caption font-weight-medium FmfListItem__project-chip text-truncate"
+        class="caption font-weight-regular FmfProjectChip__chip text-truncate mr-1 mt-1"
+        :color="`#${projectColor}`"
         v-on="on"
       >
         <span
-          class="text-truncate FmfListItem__project-chip__text"
-        >{{ projectName }}</span>
+          class="text-truncate FmfProjectChip__chip-text white--text"
+        >{{ projectName.charAt(0) }}</span>
       </v-chip>
     </template>
     <v-card>
