@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import FmfListContainer from '@/components/list/FmfListContainer.vue'
 
 export default {

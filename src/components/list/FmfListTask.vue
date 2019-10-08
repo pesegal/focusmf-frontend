@@ -1,13 +1,13 @@
 <template>
-  <v-card class="FmfListItem mr-3 ml-3 mt-2 mb-1">
-    <v-layout class="FmfListItem__container-layout" column align-content-space-between>
+  <v-card class="FmfListTask mr-3 ml-3 mt-2 mb-1">
+    <v-layout class="FmfListTask__container-layout" column align-content-space-between>
       <v-flex shrink>
         <v-card-title primary-title class="text-truncate">
           <v-layout column>
             <v-flex>
               <v-layout row>
                 <v-flex align-self-center>
-                  <div class="subheading text-truncate ml-1 FmfListItem__name">
+                  <div class="title text-truncate ml-1 FmfListTask__name">
                     {{ name }}
                   </div>
                 </v-flex>
@@ -50,12 +50,12 @@
               <v-layout column>
                 <v-flex>
                   <div
-                    class="FmfListItem__note grey--text font-weight-regular text-truncate ml-1 mb-1"
+                    class="FmfListTask__note grey--text subtitle-2 text-truncate ml-1 mb-1"
                   >
                     {{ notes }}
                   </div>
                 </v-flex>
-                <v-flex class="FmfListItem__project-chip-container" shrink>
+                <v-flex class="FmfListTask__project-chip-container" shrink>
                   <template v-for="project in displayableProjects">
                     <fmf-project-chip
                       :key="project.id"
@@ -72,7 +72,7 @@
                         color="accent"
                         disabled
                         small
-                        class="caption font-weight-medium FmfListItem__project-chip-more text-truncate"
+                        class="caption font-weight-medium FmfListTask__project-chip-more text-truncate"
                         v-on="on"
                       >
                         +{{ projects.length - 2 }}
@@ -81,7 +81,7 @@
                     <v-chip
                       v-for="project in overflowProjects"
                       :key="project.id"
-                      class="caption font-weight-medium FmfListItem__project-chip text-truncate"
+                      class="caption font-weight-medium FmfListTask__project-chip text-truncate"
                       :color="`#${project.color.hex}`"
                       text-color="white"
                       disabled
@@ -180,7 +180,7 @@ export default {
 </script>
 
 <style lang="scss">
-.FmfListItem {
+.FmfListTask {
   &__name {
     max-width: 150px;
   }
