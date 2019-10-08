@@ -159,10 +159,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import gql from 'graphql-tag'
 const createUser = require('@/graphql/createUser.gql')
 
 export default {
