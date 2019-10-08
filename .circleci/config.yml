@@ -7,8 +7,10 @@ jobs:
         - checkout
         - run:
             name: Install Dependencies
-            command: |
-              yarn install
+            command: yarn install
+        - run:
+            name: Lint
+            command: yarn lint
         - run:
             name: Build Project
             command: yarn build
