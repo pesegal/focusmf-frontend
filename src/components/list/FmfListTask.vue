@@ -14,6 +14,7 @@
                 :project-name="project.name"
                 :project-color="project.color.hex"
                 @project:updated="onProjectUpdated(project, $event)"
+                @project:deleted="onProjectDeleted(project, $event)"
               />
             </template>
           </v-list-item-subtitle>
@@ -41,7 +42,7 @@
                   </v-icon>
                   <fmf-list-update-task-dialog
                     :dialog-open="editDialogIsOpen"
-                    :task-to-edit="taskValues"
+                    :task-to-edit="getTaskValues()"
                     @close-dialog="editDialogIsOpen = false"
                   />
                 </v-list-item-title>
@@ -109,9 +110,10 @@ export default {
 
     overflowProjects() {
       return this.projects.slice(2)
-    },
-
-    taskValues() {
+    }
+  },
+  methods: {
+    getTaskValues() {
       return {
         id: this.id,
         name: this.name,
@@ -120,9 +122,8 @@ export default {
         projects: this.projects,
         listId: this.listId
       }
-    }
-  },
-  methods: {
+    },
+
     async onClickDelete() {
       await this.$store.dispatch('task/deleteTask', this.id)
       await this.$store.dispatch('list/loadLists')
@@ -134,6 +135,21 @@ export default {
         name: updatedProject.name
       })
       await this.$store.dispatch('list/loadLists')
+      await this.$store.dispatch('project/getProjects')
+    },
+
+    async onProjectDeleted (project) {
+      const projectIdToDelete = project.id
+      await this.$store.dispatch('task/updateTask', {
+        id: this.id,
+        name: this.name,
+        notes: this.notes,
+        projectIds: this.projects
+          .filter(project => project.id != projectIdToDelete)
+          .map(project => project.id)
+      })
+      await this.$store.dispatch('list/loadLists')
+      await this.$store.dispatch('project/deleteProject', projectIdToDelete)
       await this.$store.dispatch('project/getProjects')
     }
   }

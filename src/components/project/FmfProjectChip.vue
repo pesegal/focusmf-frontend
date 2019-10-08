@@ -9,7 +9,7 @@
       >
         <span
           class="text-truncate FmfProjectChip__chip-text white--text"
-        >{{ projectName.charAt(0) }}</span>
+        >{{ projectName }}</span>
       </v-chip>
     </template>
     <v-card>
@@ -30,6 +30,9 @@
         </v-container>
       </v-card-text>
       <v-card-actions>
+        <v-btn text color="red" @click="onDeleteProject">
+          Delete
+        </v-btn>
         <v-spacer />
         <v-btn text @click="showDialog = false">
           Cancel
@@ -82,6 +85,11 @@ export default {
       this.$emit('project:updated', {
         name: this.project.name
       })
+    },
+
+    async onDeleteProject () {
+      this.showDialog = false
+      this.$emit('project:deleted')
     }
   }
 }
