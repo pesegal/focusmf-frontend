@@ -1,14 +1,11 @@
 <template>
   <v-container class="FmfListContainer">
-    <v-layout
-      class="FmfListContainer__layout"
-      row
-      fill-height
+    <v-row
+      class="FmfListContainer__row flex-nowrap"
     >
-      <v-flex
+      <v-col
         v-for="(list, index) in lists"
         :key="list.id"
-        shrink
       >
         <fmf-list
           :list="list"
@@ -20,15 +17,15 @@
           @list-move-left="onListMoveLeft"
           @list-move-right="onListMoveRight"
         />
-      </v-flex>
-      <v-flex shrink>
+      </v-col>
+      <v-col>
         <div class="FmfListContainer__add-list-button-container">
           <v-btn @click="createList">
             + Add list
           </v-btn>
         </div>
-      </v-flex>
-    </v-layout>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -106,10 +103,14 @@ export default {
   margin-right: 0;
 
   &__add-list-button-container {
-    width: 150px;
+    width: 272px;
+    height: 100%;
+    padding-top: 25px;
+    text-align: center;
+    border: 2px dashed lightgrey;
   }
 
-  .FmfListContainer__layout.row.layout {
+  &__row.row {
     height: 100%;
     padding-bottom: 60px;
   }

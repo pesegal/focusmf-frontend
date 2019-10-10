@@ -1,102 +1,63 @@
 <template>
-  <v-card class="FmfListItem mr-3 ml-3 mt-2 mb-1">
-    <v-layout class="FmfListItem__container-layout" column align-content-space-between>
-      <v-flex shrink>
-        <v-card-title primary-title class="text-truncate">
-          <v-layout column>
-            <v-flex>
-              <v-layout row>
-                <v-flex align-self-center>
-                  <div class="subheading text-truncate ml-1 FmfListItem__name">
-                    {{ name }}
-                  </div>
-                </v-flex>
-                <v-flex shrink align-content-end>
-                  <v-menu v-model="contextMenuIsOpen" bottom left offset-y>
-                    <template v-slot:activator="{ on }">
-                      <v-btn icon class="mr-0 mb-0 mt-1" v-on="on">
-                        <v-icon small>
-                          more_vert
-                        </v-icon>
-                      </v-btn>
-                    </template>
+  <v-card class="FmfListTask mr-3 ml-3 mt-2 mb-1">
+    <v-list>
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title>
+            {{ name }}
+          </v-list-item-title>
+          <v-list-item-subtitle>{{ notes }}</v-list-item-subtitle>
+          <v-list-item-subtitle>
+            <template v-for="project in displayableProjects">
+              <fmf-project-chip
+                :key="project.id"
+                :project-name="project.name"
+                :project-color="project.color.hex"
+                @project:updated="onProjectUpdated(project, $event)"
+              />
+            </template>
+          </v-list-item-subtitle>
+        </v-list-item-content>
+        <v-list-item-action>
+          <v-menu
+            v-model="contextMenuIsOpen"
+            bottom
+            left
+            offset-y
+          >
+            <template v-slot:activator="{ on }">
+              <v-btn icon class="mr-0 mb-0 mt-1 FmfListTask__action-menu" v-on="on">
+                <v-icon small>
+                  more_vert
+                </v-icon>
+              </v-btn>
+            </template>
 
-                    <v-list>
-                      <v-list-item @click.stop="editDialogIsOpen = true; contextMenuIsOpen = false">
-                        <v-list-item-title>
-                          <v-icon small>
-                            edit
-                          </v-icon>
-                          <fmf-list-update-task-dialog
-                            :dialog-open="editDialogIsOpen"
-                            :task-to-edit="taskValues"
-                            @close-dialog="editDialogIsOpen = false"
-                          />
-                        </v-list-item-title>
-                      </v-list-item>
-                      <v-list-item @click="onClickDelete">
-                        <v-list-item-title>
-                          <v-icon small>
-                            delete
-                          </v-icon>
-                        </v-list-item-title>
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
-                </v-flex>
-              </v-layout>
-            </v-flex>
-            <v-flex>
-              <v-layout column>
-                <v-flex>
-                  <div
-                    class="FmfListItem__note grey--text font-weight-regular text-truncate ml-1 mb-1"
-                  >
-                    {{ notes }}
-                  </div>
-                </v-flex>
-                <v-flex class="FmfListItem__project-chip-container" shrink>
-                  <template v-for="project in displayableProjects">
-                    <fmf-project-chip
-                      :key="project.id"
-                      :project-name="project.name"
-                      :project-color="project.color.hex"
-                      @project:updated="onProjectUpdated(project, $event)"
-                    />
-                  </template>
-                  <v-tooltip bottom light>
-                    <template v-slot:activator="{ on }">
-                      <v-chip
-                        v-if="projects.length > 2"
-                        outlined
-                        color="accent"
-                        disabled
-                        small
-                        class="caption font-weight-medium FmfListItem__project-chip-more text-truncate"
-                        v-on="on"
-                      >
-                        +{{ projects.length - 2 }}
-                      </v-chip>
-                    </template>
-                    <v-chip
-                      v-for="project in overflowProjects"
-                      :key="project.id"
-                      class="caption font-weight-medium FmfListItem__project-chip text-truncate"
-                      :color="`#${project.color.hex}`"
-                      text-color="white"
-                      disabled
-                      small
-                    >
-                      {{ project.name }}
-                    </v-chip>
-                  </v-tooltip>
-                </v-flex>
-              </v-layout>
-            </v-flex>
-          </v-layout>
-        </v-card-title>
-      </v-flex>
-    </v-layout>
+            <v-list>
+              <v-list-item @click.stop="editDialogIsOpen = true; contextMenuIsOpen = false">
+                <v-list-item-title>
+                  <v-icon small>
+                    edit
+                  </v-icon>
+                  <fmf-list-update-task-dialog
+                    :dialog-open="editDialogIsOpen"
+                    :task-to-edit="taskValues"
+                    @close-dialog="editDialogIsOpen = false"
+                  />
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="onClickDelete">
+                <v-list-item-title>
+                  <v-icon small>
+                    delete
+                  </v-icon>
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-list-item-action>
+      </v-list-item>
+    </v-list>
   </v-card>
 </template>
 
@@ -143,7 +104,7 @@ export default {
   },
   computed: {
     displayableProjects() {
-      return this.projects.slice(0, 2)
+      return this.projects
     },
 
     overflowProjects() {
@@ -180,7 +141,7 @@ export default {
 </script>
 
 <style lang="scss">
-.FmfListItem {
+.FmfListTask {
   &__name {
     max-width: 150px;
   }
@@ -189,12 +150,18 @@ export default {
     max-width: 150px;
   }
 
-  &__project-chip {
-    max-width: 80px;
+  .FmfProjectChip__chip {
+    max-width: 50px;
 
-    &__text {
-      max-width: 55px;
+    .FmfProjectChip__chip-text {
+      max-width: 30px;
     }
+  }
+
+
+  &__action-menu {
+    position: absolute;
+    top: 0;
   }
 
   .v-card__title.text-truncate.v-card__title--primary {

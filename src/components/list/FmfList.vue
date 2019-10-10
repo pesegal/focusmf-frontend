@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import Component from 'vue-class-component'
 import FmfListTask from './FmfListTask.vue'
 import FmfListCreateTaskDialog from './FmfListCreateTaskDialog.vue'
 import FmfListHeaderToolbar from './FmfListHeaderToolbar.vue'
@@ -106,7 +105,7 @@ export default {
 <style lang="scss">
 .FmfList {
   width: 272px;
-  margin: 0 15px;
+  margin: 0 5px;
   height: 100%;
   box-sizing: border-box;
   display: inline-block;
