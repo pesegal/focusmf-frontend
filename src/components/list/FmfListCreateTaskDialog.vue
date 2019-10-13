@@ -24,6 +24,7 @@
             <v-flex xs12>
               <v-text-field
                 v-model="task.name"
+                class="FmfListCreateTaskDialog__name"
                 label="Title"
                 autofocus
               />
@@ -31,6 +32,7 @@
             <v-flex xs12>
               <v-textarea
                 v-model="task.notes"
+                class="FmfListCreateTaskDialog__notes"
                 label="Notes"
               />
             </v-flex>
@@ -39,6 +41,7 @@
             >
               <v-combobox
                 v-model="selectedProjects"
+                class="FmfListCreateTaskDialog__projects"
                 :items="availableProjects"
                 :search-input.sync="projectSearchTerm"
                 return-object
@@ -74,6 +77,7 @@
           Cancel
         </v-btn>
         <v-btn
+          class="FmfListCreateTaskDialog__save"
           color="primary"
           text
           @click="onSave"
