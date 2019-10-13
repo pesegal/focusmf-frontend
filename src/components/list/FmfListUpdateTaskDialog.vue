@@ -30,6 +30,7 @@
             >
               <v-combobox
                 v-model="selectedProjects"
+                class="FmfListUpdateTaskDialog__project-picker"
                 :items="availableProjects"
                 :search-input.sync="projectSearchTerm"
                 return-object
@@ -41,6 +42,7 @@
                 clearable
                 solo
                 multiple
+                deletable-chips
               >
                 <template v-slot:selection="data">
                   <v-chip
