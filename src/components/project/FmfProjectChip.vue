@@ -30,8 +30,8 @@
         </v-container>
       </v-card-text>
       <v-card-actions>
-        <v-btn text color="red" @click="onDeleteProject">
-          Delete
+        <v-btn class="FmfProjectChip__remove" text color="red" @click="onDeleteProject">
+          Remove
         </v-btn>
         <v-spacer />
         <v-btn text @click="showDialog = false">
