@@ -12,7 +12,7 @@
           @list-move-right="onListMoveRight"
         />
       </v-flex>
-      <v-flex class="FmfList__task-flex-container">
+      <v-flex class="FmfList__task-flex-container pb-2">
         <v-layout column>
           <v-flex v-for="task in tasks" :key="task.id">
             <fmf-list-task

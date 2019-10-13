@@ -2,6 +2,7 @@ import { apolloClient } from '../../plugins/vue-apollo'
 const getProjects = require('@/graphql/getProjects.gql')
 const createProject = require('@/graphql/createProject.gql')
 const updateProject = require('@/graphql/updateProject.gql')
+const deleteProject = require('@/graphql/deleteProject.gql')
 
 export default {
   namespaced: true,
@@ -47,6 +48,16 @@ export default {
         variables: {
           id: project.id,
           name: project.name
+        },
+        fetchPolicy: 'no-cache'
+      })
+    },
+
+    deleteProject (context, projectId) {
+      return apolloClient.mutate({
+        mutation: deleteProject,
+        variables: {
+          id: projectId
         },
         fetchPolicy: 'no-cache'
       })

@@ -39,8 +39,6 @@
 </template>
 
 <script>
-import Component from 'vue-class-component'
-import Vue from 'vue'
 const loginUser = require('@/graphql/loginUser.gql')
 
 export default {

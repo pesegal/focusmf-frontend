@@ -51,6 +51,9 @@
                     <span>{{ data.item.name }}</span>
                   </v-chip>
                 </template>
+                <template v-slot:no-data>
+                  <span class="subtitle-1 grey--text ml-3">No Projects</span>
+                </template>
               </v-combobox>
             </v-flex>
           </v-layout>
@@ -106,7 +109,7 @@ export default {
   },
   watch: {
     async selectedProjects (newValue, previousValue) {
-      if (newValue.length == previousValue.length) {
+      if (!this.dialogOpen || newValue.length == previousValue.length) {
         return
       }
 
@@ -119,8 +122,19 @@ export default {
         })
       }))
       this.selectedProjects = this.selectedProjects.concat(newProjects)
-
       this.task.projectIds = this.selectedProjects.map(project => project.id)
+    },
+
+    async dialogOpen (newValue, previousValue) {
+      if (newValue == previousValue) {
+        return
+      }
+
+      if (newValue) {
+        await this.$store.dispatch('project/getProjects')
+        this.task.projectIds = (this.taskToEdit.projects || []).map(project => project.id)
+        this.selectedProjects = this.taskToEdit.projects || []
+      }
     }
   },
   mounted () {
