@@ -35,7 +35,7 @@
             </template>
 
             <v-list>
-              <v-list-item @click.stop="editDialogIsOpen = true; contextMenuIsOpen = false">
+              <v-list-item class="FmfListTask__edit" @click.stop="editDialogIsOpen = true; contextMenuIsOpen = false">
                 <v-list-item-title>
                   <v-icon small>
                     edit
@@ -47,7 +47,7 @@
                   />
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item @click="onClickDelete">
+              <v-list-item class="FmfListTask__delete" @click="onClickDelete">
                 <v-list-item-title>
                   <v-icon small>
                     delete
@@ -149,8 +149,6 @@ export default {
           .map(project => project.id)
       })
       await this.$store.dispatch('list/loadLists')
-      await this.$store.dispatch('project/deleteProject', projectIdToDelete)
-      await this.$store.dispatch('project/getProjects')
     }
   }
 }
