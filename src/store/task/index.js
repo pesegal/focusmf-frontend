@@ -25,7 +25,9 @@ export default {
           id: task.id,
           name: task.name,
           notes: task.notes,
-          projectIds: task.projectIds
+          projectIds: task.projectIds,
+          columnPos: task.columnPos,
+          listId: task.listId
         },
         fetchPolicy: 'no-cache'
       })
