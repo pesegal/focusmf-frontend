@@ -6,6 +6,7 @@
       <v-col
         v-for="(list, index) in lists"
         :key="list.id"
+        class="flex-grow-0"
       >
         <fmf-list
           :list="list"
@@ -18,7 +19,7 @@
           @list-move-right="onListMoveRight"
         />
       </v-col>
-      <v-col>
+      <v-col class="flex-grow-0">
         <div class="FmfListContainer__add-list-button-container">
           <v-btn @click="createList">
             + Add list
