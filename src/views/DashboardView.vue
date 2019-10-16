@@ -43,6 +43,7 @@ export default {
 
     onToggleTheme(isDark) {
       this.isDark = isDark
+      this.$vuetify.theme.dark = isDark
     }
   }
 }
