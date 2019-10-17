@@ -14,16 +14,22 @@
       </v-flex>
       <v-flex class="FmfList__task-flex-container pb-2">
         <v-layout column>
-          <v-flex v-for="task in tasks" :key="task.id">
-            <fmf-list-task
-              :id="task.id"
-              :name="task.name"
-              :notes="task.notes"
-              :column-pos="task.columnPos"
-              :projects="task.projects"
-              :list-id="list.id"
-            />
-          </v-flex>
+          <draggable
+            v-model="tasks"
+            ghost-class="ghost-class"
+            group="fmf-lists"
+          >
+            <v-flex v-for="task in tasks" :key="task.id">
+              <fmf-list-task
+                :id="task.id"
+                :name="task.name"
+                :notes="task.notes"
+                :column-pos="task.columnPos"
+                :projects="task.projects"
+                :list-id="list.id"
+              />
+            </v-flex>
+          </draggable>
         </v-layout>
       </v-flex>
       <v-flex shrink>
@@ -39,12 +45,15 @@
 import FmfListTask from './FmfListTask.vue'
 import FmfListCreateTaskDialog from './FmfListCreateTaskDialog.vue'
 import FmfListHeaderToolbar from './FmfListHeaderToolbar.vue'
+import draggable from 'vuedraggable'
+import _ from 'lodash'
 
 export default {
   components: {
     FmfListTask,
     FmfListCreateTaskDialog,
-    FmfListHeaderToolbar
+    FmfListHeaderToolbar,
+    draggable
   },
   props: {
     list: {
@@ -74,8 +83,34 @@ export default {
     name () {
       return this.list.name
     },
-    tasks () {
-      return this.list.tasks
+    tasks: {
+      get () {
+        return _.orderBy(this.list.tasks, 'columnPos')
+      },
+
+      set(tasks) {
+        let promises = []
+        let newTasks = []
+        tasks.forEach((task, index) => {
+          promises.push(this.$store.dispatch('task/updateTask', {
+            id: task.id,
+            name: task.name,
+            notes: task.notes,
+            projectIds: task.projectIds,
+            columnPos: index,
+            listId: this.list.id
+          }))
+          newTasks.push({
+            ...task,
+            columnPos: index
+          })
+        })
+        this.$store.commit('list/updateTasksForList', {
+          id: this.list.id,
+          tasks: newTasks
+        })
+        Promise.all(promises)
+      }
     }
   },
   methods: {
@@ -112,11 +147,26 @@ export default {
   vertical-align: top;
   white-space: nowrap;
 
+  .ghost-class {
+    opacity: 0.45;
+
+    .FmfListTask__list-container {
+      border: 2px dashed gray;
+    }
+  }
+
   &__task-flex-container {
     background-color: #f5f5f5;
     height: 100%;
     overflow: auto !important;
     position: relative !important;
+
+    & > div.layout.column {
+      height: 100%;
+      & > div {
+        height: 100%;
+      }
+    }
   }
 
   &__v-list.v-list {

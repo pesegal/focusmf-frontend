@@ -2,13 +2,17 @@ mutation updateTask (
   $id: String!,
   $name: String!,
   $notes: String!,
-  $projectIds: [ID!]
+  $projectIds: [ID!],
+  $columnPos: Float,
+  $listId: String
 ) {
   updateTask(updateInput: {
     id: $id,
     name: $name,
     notes: $notes,
-    projectIds: $projectIds
+    projectIds: $projectIds,
+    columnPos: $columnPos,
+    listId: $listId
   }) {
     id,
     name,
@@ -16,6 +20,7 @@ mutation updateTask (
     projects {
       id,
       name
-    }
+    },
+    columnPos
   }
 }

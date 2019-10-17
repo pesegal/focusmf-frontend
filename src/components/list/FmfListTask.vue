@@ -1,6 +1,6 @@
 <template>
   <v-card class="FmfListTask mr-3 ml-3 mt-2 mb-1">
-    <v-list>
+    <v-list class="FmfListTask__list-container">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title>
@@ -156,6 +156,11 @@ export default {
 
 <style lang="scss">
 .FmfListTask {
+  &__list-container {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
   &__name {
     max-width: 150px;
   }

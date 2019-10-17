@@ -12,6 +12,14 @@ export default {
   mutations: {
     setLists (state, lists) {
       state.lists = lists
+    },
+
+    updateTasksForList (state, { id, tasks }) {
+      state.lists.forEach(list => {
+        if (list.id == id) {
+          list.tasks = tasks
+        }
+      })
     }
   },
   actions:  {
