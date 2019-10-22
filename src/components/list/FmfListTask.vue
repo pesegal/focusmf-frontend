@@ -47,6 +47,13 @@
                   />
                 </v-list-item-title>
               </v-list-item>
+              <v-list-item class="FmfListTask__work" @click="setCurrentWorkingTask">
+                <v-list-item-title>
+                  <v-icon small>
+                    timer
+                  </v-icon>
+                </v-list-item-title>
+              </v-list-item>
               <v-list-item class="FmfListTask__delete" @click="onClickDelete">
                 <v-list-item-title>
                   <v-icon small>
@@ -122,6 +129,11 @@ export default {
         projects: this.projects,
         listId: this.listId
       }
+    },
+
+    setCurrentWorkingTask() {
+      this.$store.commit('task/setWorkingTask', { id: this.id,  name: this.name })
+      this.$router.push('timer')
     },
 
     async onClickDelete() {

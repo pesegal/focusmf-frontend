@@ -5,7 +5,15 @@ const deleteTask = require('@/graphql/deleteTask.gql')
 
 export default {
   namespaced: true,
-  state: {},
+  state: {
+    currentWorkingTask: { id: null, name: null }
+  },
+  mutations: {
+    setWorkingTask(state, currentTask) {
+      state.currentWorkingTask = currentTask
+    }
+  },
+
   actions: {
     async createTask (context, task) {
       const response = await apolloClient.mutate({
@@ -17,7 +25,6 @@ export default {
       })
       return response.data.createTask
     },
-
     async updateTask (context, task) {
       const response = await apolloClient.mutate({
         mutation: updateTask,
@@ -31,7 +38,6 @@ export default {
       })
       return response.data.updateTask
     },
-
     async deleteTask (context, taskId) {
       const response = await apolloClient.mutate({
         mutation: deleteTask,

@@ -11,6 +11,9 @@
       <v-btn @click="setDuration(15)">
         Long Break
       </v-btn>
+      <div class="display-1">
+        {{ currentTask }}
+      </div>
       <fmf-countdown-timer :time="timeDisplay" />
       <v-btn @click="toggleTimer">
         {{ timerStatus }}
@@ -42,7 +45,15 @@ export default {
   },
 
   computed: {
-    timerStatus() { return this.timerIsStarted ? 'Pause' : 'Start' }
+    timerStatus() { return this.timerIsStarted ? 'Pause' : 'Start' },
+    currentTask() { 
+      const currentWorkingTask = this.$store.state.task.currentWorkingTask
+      if (!currentWorkingTask || currentWorkingTask.name === null) {
+        return 'Select a task to work!'
+      } else {
+        return `Focus on '${currentWorkingTask.name}' for..`
+      }
+    }
   },
 
   methods: {
