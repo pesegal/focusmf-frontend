@@ -2,13 +2,13 @@
   <div class="TimerView">
     <v-container>
       <h1>Timer</h1>
-      <v-btn @click="setDuration(25)">
+      <v-btn @click="setActionType(taskActionTypes.pomo)">
         Pomo
       </v-btn>
-      <v-btn @click="setDuration(5)">
+      <v-btn @click="setActionType(taskActionTypes.shortBreak)">
         Short Break
       </v-btn>
-      <v-btn @click="setDuration(15)">
+      <v-btn @click="setActionType(taskActionTypes.longBreak)">
         Long Break
       </v-btn>
       <div class="display-1">
@@ -40,7 +40,18 @@ export default {
       currentDuration: null,
       timeDisplay: { minutes: '0', seconds: '0' },
       countdownId: null,
-      timerIsStarted: false
+      timerIsStarted: false,
+      taskActionTaskId: null,
+      taskActionStart: null,
+      taskActionEnd: null,
+      currentActionType: null,
+      lastSelectedActionType: null,
+      taskActionTypes: {
+        pomo: { type: 'pomodoro', duration: 25 },
+        shortBreak: { type: 'short_break', duration: 5 },
+        longBreak: { type: 'long_break', duration: 15 }
+      }
+
     }
   },
 
@@ -62,6 +73,7 @@ export default {
         this.startTimer()
       } else {
         this.timerIsStarted = false
+        // TODO: need to record pauses
         clearInterval(this.countdownId)
       }
     },
@@ -70,7 +82,8 @@ export default {
       if(this.timerIsStarted) {
         this.timerIsStarted = false
         clearInterval(this.countdownId)
-        this.setDuration(this.selectedTime)
+        this.completeTaskAction()
+        this.setActionType(this.lastSelectedActionType)
         this.updateTimeDisplay(this.currentDuration)
       }
     },
@@ -82,21 +95,40 @@ export default {
 
     startTimer() {
       this.timerIsStarted = true
+      this.taskActionStart = new Date()
+      // Note: change this line if we should record non selected task pomos
+      if (this.$store.state.task.currentWorkingTask) this.taskActionTaskId = this.$store.state.task.currentWorkingTask.id
       this.countdownId = setInterval(() => {
         this.updateTimeDisplay(this.currentDuration)
         if (this.currentDuration.asSeconds() === 0) {
           this.timerIsStarted = false
+          this.completeTaskAction()
           return clearInterval(this.countdownId)
         }
         this.currentDuration.subtract(1, 'seconds')
       }, 1000)
     },
 
-    setDuration(minutes) {
+    setActionType(actionType) {
       if (!this.timerIsStarted) {
-        this.selectedTime = minutes
-        this.currentDuration = moment.duration(minutes, 'm')
+        this.lastSelectedActionType = actionType
+        this.selectedTime = actionType.duration
+        this.currentActionType = actionType.type
+        this.currentDuration = moment.duration(this.selectedTime, 'm')
         this.updateTimeDisplay(this.currentDuration)
+      }
+    },
+
+    completeTaskAction() {
+      this.taskActionEnd = new Date()
+      if (this.taskActionTaskId !== null && this.taskActionStart !== null && this.taskActionEnd !== null && this.currentActionType !== null) {
+        this.$store.dispatch('task/createTaskAction', {
+          id: this.taskActionTaskId,
+          start: this.taskActionStart,
+          end: this.taskActionEnd,
+          action: this.currentActionType
+        })
+        this.taskActionTaskId = this.taskActionStart = this.taskActionEnd = this.currentActionType = null
       }
     }
   }

@@ -2,6 +2,7 @@ import { apolloClient } from '../../plugins/vue-apollo'
 const createTask = require('@/graphql/createTask.gql')
 const updateTask = require('@/graphql/updateTask.gql')
 const deleteTask = require('@/graphql/deleteTask.gql')
+const createTaskAction = require('@/graphql/createTaskAction.gql')
 
 export default {
   namespaced: true,
@@ -48,5 +49,19 @@ export default {
       })
       return response.data.deleteTask
     },
+
+    async createTaskAction (context, { id, start, end, action }) {
+      const response = await apolloClient.mutate({
+        mutation: createTaskAction,
+        variables: {
+          id: id,
+          start: start,
+          end: end,
+          action: action
+        },
+        fetchPolicy: 'no-cache'
+      })
+      return response.data.createTaskAction
+    }
   }
 }
