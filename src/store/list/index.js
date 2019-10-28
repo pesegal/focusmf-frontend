@@ -20,6 +20,14 @@ export default {
           list.tasks = tasks
         }
       })
+    },
+
+    updateList (state, newList) {
+      state.lists.forEach(list => {
+        if (list.id === newList.id) {
+          Object.assign(list, newList)
+        }
+      })
     }
   },
   actions:  {

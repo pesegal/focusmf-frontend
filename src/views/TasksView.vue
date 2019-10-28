@@ -73,7 +73,7 @@ export default {
 
     async onListNameChange (list) {
       await this.$store.dispatch('list/updateList', list)
-      this.loadLists()
+      this.$store.commit('list/updateList', list)
     }
   }
 }

@@ -19,12 +19,6 @@
       </template>
 
       <v-list>
-        <v-list-item v-show="!disableMoveLeft" @click="onListMoveLeft">
-          <v-list-item-title><v-icon>chevron_left</v-icon></v-list-item-title>
-        </v-list-item>
-        <v-list-item v-show="!disableMoveRight" @click="onListMoveRight">
-          <v-list-item-title><v-icon>chevron_right</v-icon></v-list-item-title>
-        </v-list-item>
         <v-list-item class="FmfListHeaderToolbar__delete" @click="onListDelete">
           <v-list-item-title><v-icon>delete</v-icon></v-list-item-title>
         </v-list-item>
@@ -62,14 +56,6 @@ export default {
 
     onListNameChange () {
       this.$emit('list-name-change', this.listNameModel)
-    },
-
-    onListMoveLeft () {
-      this.$emit('list-move-left')
-    },
-
-    onListMoveRight () {
-      this.$emit('list-move-right')
     }
   }
 }
