@@ -1,26 +1,45 @@
 <template>
   <div class="TimerView">
     <v-container>
-      <h1>Timer</h1>
-      <v-btn @click="setActionType(taskActionTypes.pomo)">
-        Pomo
-      </v-btn>
-      <v-btn @click="setActionType(taskActionTypes.shortBreak)">
-        Short Break
-      </v-btn>
-      <v-btn @click="setActionType(taskActionTypes.longBreak)">
-        Long Break
-      </v-btn>
-      <div class="display-1">
-        {{ currentTask }}
-      </div>
-      <fmf-countdown-timer :time="timeDisplay" />
-      <v-btn @click="toggleTimer">
-        {{ timerStatus }}
-      </v-btn>
-      <v-btn @click="resetTimer">
-        Reset
-      </v-btn>
+      <v-row class="TimerView__status-message" align="center" justify="center">
+        <h1 class="status">
+          <span v-if="hasCurrentTask">
+            {{ currentWorkingTask.name }}
+          </span>
+          <span v-else>
+            No task selected.
+            <a class="select-one-here" href="/dashboard/tasks">Select one here.</a>
+          </span>
+        </h1>
+      </v-row>
+      <v-row class="TimerView__action-type-group" align="center" justify="center">
+        <v-btn-toggle
+          v-model="selectedTaskActionTypeAsIndex"
+          mandatory
+          color="accent"
+        >
+          <v-btn @click="setActionType(taskActionTypes.pomo)">
+            Pomo
+          </v-btn>
+          <v-btn @click="setActionType(taskActionTypes.shortBreak)">
+            Short Break
+          </v-btn>
+          <v-btn @click="setActionType(taskActionTypes.longBreak)">
+            Long Break
+          </v-btn>
+        </v-btn-toggle>
+      </v-row>
+      <v-row class="TimerView__timer-container" align="center" justify="center">
+        <fmf-countdown-timer :time="timeDisplay" />
+      </v-row>
+      <v-row class="TimerView__timer-controls-container" align="center" justify="center">
+        <v-btn color="primary" @click="toggleTimer">
+          {{ timerStatus }}
+        </v-btn>
+        <v-btn text @click="resetTimer">
+          Reset
+        </v-btn>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -50,20 +69,18 @@ export default {
         pomo: { type: 'pomodoro', duration: 25 },
         shortBreak: { type: 'short_break', duration: 5 },
         longBreak: { type: 'long_break', duration: 15 }
-      }
-
+      },
+      selectedTaskActionTypeAsIndex: 0
     }
   },
 
   computed: {
     timerStatus() { return this.timerIsStarted ? 'Pause' : 'Start' },
-    currentTask() { 
-      const currentWorkingTask = this.$store.state.task.currentWorkingTask
-      if (!currentWorkingTask || currentWorkingTask.name === null) {
-        return 'Select a task to work!'
-      } else {
-        return `Focus on '${currentWorkingTask.name}' for..`
-      }
+    currentWorkingTask () {
+      return this.$store.state.task.currentWorkingTask
+    },
+    hasCurrentTask () {
+      return this.currentWorkingTask && (typeof this.currentWorkingTask.name == 'string')
     }
   },
 
@@ -134,3 +151,32 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.TimerView {
+  .select-one-here {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .status {
+    text-align: center;
+  }
+
+  .TimerView__status-message {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .TimerView__action-type-group {
+    margin-bottom: 10px;
+  }
+
+  .TimerView__timer-container {
+    margin-top: 25px;
+    margin-bottom: 15px;
+  }
+}
+</style>
