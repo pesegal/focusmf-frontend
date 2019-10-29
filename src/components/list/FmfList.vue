@@ -8,16 +8,14 @@
           :disable-move-right="isLastPosition"
           @list-name-change="onListNameChange"
           @list-deleted="onListDeleted"
-          @list-move-left="onListMoveLeft"
-          @list-move-right="onListMoveRight"
         />
       </v-flex>
       <v-flex class="FmfList__task-flex-container pb-2">
         <v-layout column>
           <draggable
             v-model="tasks"
-            ghost-class="ghost-class"
-            group="fmf-lists"
+            ghost-class="ghost-class-fmf-tasks"
+            group="fmf-tasks"
           >
             <v-flex v-for="task in tasks" :key="task.id">
               <fmf-list-task
@@ -124,14 +122,6 @@ export default {
 
     onListDeleted () {
       this.$emit('list-deleted', this.list.id)
-    },
-
-    onListMoveLeft () {
-      this.$emit('list-move-left', this.list.id)
-    },
-
-    onListMoveRight () {
-      this.$emit('list-move-right', this.list.id)
     }
   }
 }
@@ -147,7 +137,7 @@ export default {
   vertical-align: top;
   white-space: nowrap;
 
-  .ghost-class {
+  .ghost-class-fmf-tasks {
     opacity: 0.45;
 
     .FmfListTask__list-container {

@@ -1,46 +1,68 @@
 <template>
-  <v-container class="FmfListContainer">
-    <v-row
-      class="FmfListContainer__row flex-nowrap"
+  <div class="FmfListContainer">
+    <draggable
+      v-model="internalLists"
+      class="FmfListContainer__draggable"
+      ghost-class="ghost-class-fmf-lists"
+      group="fmf-lists"
     >
-      <v-col
-        v-for="(list, index) in lists"
+      <fmf-list
+        v-for="(list, index) in internalLists"
         :key="list.id"
-        class="flex-grow-0"
-      >
-        <fmf-list
-          :list="list"
-          :delete-disabled="lists.length == 1"
-          :is-first-position="index == 0"
-          :is-last-position="index == (lists.length - 1)"
-          @list-name-change="onListNameChange"
-          @list-deleted="onListDeleted"
-          @list-move-left="onListMoveLeft"
-          @list-move-right="onListMoveRight"
-        />
-      </v-col>
-      <v-col class="flex-grow-0">
-        <div class="FmfListContainer__add-list-button-container">
-          <v-btn @click="createList">
-            + Add list
-          </v-btn>
-        </div>
-      </v-col>
-    </v-row>
-  </v-container>
+        :list="list"
+        :delete-disabled="internalLists.length == 1"
+        :is-first-position="index == 0"
+        :is-last-position="index == (internalLists.length - 1)"
+        @list-name-change="onListNameChange"
+        @list-deleted="onListDeleted"
+      />
+    </draggable>
+    <div class="FmfListContainer__add-list-button-container">
+      <v-btn @click="createList">
+        + Add list
+      </v-btn>
+    </div>
+  </div>
 </template>
 
 <script>
 import FmfList from './FmfList.vue'
+import draggable from 'vuedraggable'
+import Vue from 'vue'
+import Vuetify from 'vuetify'
+
+Vue.use(Vuetify)
 
 export default {
   components: {
-    FmfList
+    FmfList,
+    draggable
   },
   props: {
     lists: {
       default () { return [] },
       type: Array
+    }
+  },
+  computed: {
+    internalLists: {
+      get () {
+        return this.lists
+      },
+      set (lists) {
+        let newLists = []
+        let updateAllLists = []
+        lists.forEach((list, index) => {
+          const newList = {
+            ...list,
+            position: index
+          }
+          updateAllLists.push(this.$store.dispatch('list/updateList', newList))
+          newLists.push(newList)
+        })
+        this.$store.commit('list/setLists', newLists)
+        Promise.all(updateAllLists)
+      }
     }
   },
   methods: {
@@ -54,44 +76,6 @@ export default {
 
     onListNameChange (list) {
       this.$emit('list-name-change', list)
-    },
-
-    async onListMoveLeft (id) {
-      let lists = [].concat(this.lists)
-      const index = this.lists.findIndex(list => list.id == id);
-      [lists[index], lists[index - 1]] = [lists[index - 1], lists[index]]
-
-      let updateAllLists = []
-      lists.forEach((list, index) => {
-        updateAllLists.push(
-          this.$store.dispatch('list/updateList', {
-            id: list.id,
-            name: list.name,
-            position: index
-          })
-        )
-      })
-      await Promise.all(updateAllLists)
-      await this.$store.dispatch('list/loadLists')
-    },
-
-    async onListMoveRight (id) {
-      let lists = [].concat(this.lists)
-      const index = this.lists.findIndex(list => list.id == id);
-      [lists[index], lists[index + 1]] = [lists[index + 1], lists[index]]
-
-      let updateAllLists = []
-      lists.forEach((list, index) => {
-        updateAllLists.push(
-          this.$store.dispatch('list/updateList', {
-            id: list.id,
-            name: list.name,
-            position: index
-          })
-        )
-      })
-      await Promise.all(updateAllLists)
-      await this.$store.dispatch('list/loadLists')
     }
   }
 }
@@ -99,9 +83,19 @@ export default {
 
 <style lang="scss">
 .FmfListContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
   height: 100%;
   margin-left: 0;
-  margin-right: 0;
+  margin-right: 10px;
+  padding: 15px 10px 10px 10px;
+
+  .FmfList {
+    flex: 0 0 auto;
+  }
 
   &__add-list-button-container {
     width: 272px;
@@ -109,6 +103,13 @@ export default {
     padding-top: 25px;
     text-align: center;
     border: 2px dashed lightgrey;
+    flex: 0 0 auto;
+    margin-left: 10px;
+  }
+
+  .ghost-class-fmf-lists {
+    opacity: 0.35;
+    border: 3px dashed gray !important;
   }
 
   &__row.row {
