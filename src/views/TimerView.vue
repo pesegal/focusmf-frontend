@@ -8,7 +8,7 @@
           </span>
           <span v-else>
             No task selected.
-            <a class="select-one-here" href="/dashboard/tasks">Select one here.</a>
+            <router-link class="select-one-here" to="/dashboard/tasks">Select one here.</router-link>
           </span>
         </h1>
       </v-row>
