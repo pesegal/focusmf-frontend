@@ -1,0 +1,10 @@
+mutation createTaskAction ($id: String!, $start: DateTime!, $end: DateTime!, $action: String!) {
+  createTaskAction(taskAction: {
+      taskId: $id,
+      start: $start,
+      end: $end,
+      actionType: $action
+  }) {
+    id
+}
+}
