@@ -36,7 +36,7 @@
         <v-btn color="primary" @click="toggleTimer">
           {{ timerStatus }}
         </v-btn>
-        <v-btn text @click="resetTimer">
+        <v-btn v-show="timerIsStarted" text @click="resetTimer">
           Reset
         </v-btn>
       </v-row>
@@ -62,7 +62,6 @@ export default {
       timerIsStarted: false,
       taskActionTaskId: null,
       taskActionStart: null,
-      taskActionEnd: null,
       currentActionType: null,
       lastSelectedActionType: null,
       taskActionTypes: {
@@ -84,14 +83,16 @@ export default {
     }
   },
 
+  mounted () {
+    this.setActionType(this.taskActionTypes.pomo)
+  },
+
   methods: {
     toggleTimer() {
       if(!this.timerIsStarted) {
         this.startTimer()
       } else {
-        this.timerIsStarted = false
-        // TODO: need to record pauses
-        clearInterval(this.countdownId)
+        this.pauseTimer()
       }
     },
 
@@ -126,6 +127,12 @@ export default {
       }, 1000)
     },
 
+    pauseTimer() {
+      this.timerIsStarted = false
+      clearInterval(this.countdownId)
+      this.recordTaskAction()
+    },
+
     setActionType(actionType) {
       if (!this.timerIsStarted) {
         this.lastSelectedActionType = actionType
@@ -137,16 +144,17 @@ export default {
     },
 
     completeTaskAction() {
-      this.taskActionEnd = new Date()
-      if (this.taskActionTaskId !== null && this.taskActionStart !== null && this.taskActionEnd !== null && this.currentActionType !== null) {
-        this.$store.dispatch('task/createTaskAction', {
-          id: this.taskActionTaskId,
-          start: this.taskActionStart,
-          end: this.taskActionEnd,
-          action: this.currentActionType
-        })
-        this.taskActionTaskId = this.taskActionStart = this.taskActionEnd = this.currentActionType = null
-      }
+      this.recordTaskAction()
+      this.taskActionTaskId = this.taskActionStart = this.currentActionType = null
+    },
+
+    recordTaskAction() {
+      this.$store.dispatch('task/createTaskAction', {
+        id: this.taskActionTaskId,
+        start: this.taskActionStart,
+        end: new Date(),
+        action: this.currentActionType
+      })
     }
   }
 }
