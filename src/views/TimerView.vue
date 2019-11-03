@@ -47,6 +47,7 @@
 <script>
 import FmfCountdownTimer from '@/components/timer/FmfCountdownTimer.vue'
 import moment from 'moment'
+import notification from '@/service/notification'
 
 export default {
   components: {
@@ -88,6 +89,10 @@ export default {
   },
 
   methods: {
+    triggerNotification(message) {
+      notification.notify(message)
+    },
+
     toggleTimer() {
       if(!this.timerIsStarted) {
         this.startTimer()
@@ -145,6 +150,7 @@ export default {
 
     completeTaskAction() {
       this.recordTaskAction()
+      this.triggerNotification("Timer Complete")
       this.taskActionTaskId = this.taskActionStart = this.currentActionType = null
     },
 
