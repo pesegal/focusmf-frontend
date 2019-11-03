@@ -1,4 +1,5 @@
 # focusmf-frontend
+[![CircleCI](https://circleci.com/gh/pesegal/focusmf-frontend/tree/master.svg?style=svg&circle-token=49acbf95d39dd4c4b6321743339edab6753947bc)](https://circleci.com/gh/pesegal/focusmf-frontend/tree/master)
 
 ## Prerequisites
 * NodeJS v10.x (install with nvm)
