@@ -1,15 +1,15 @@
 <template>
   <v-container>
-    <v-layout
-      align-center
-      justify-center
-      row
-      fill-height
-    >
-      <v-flex
-        xs12
-        sm6
-      >
+    <v-row>
+      <v-img
+        :src="require('../assets/logo.svg')"
+        class="my-3"
+        contain
+        height="100"
+      />
+    </v-row>
+    <v-row justify="center">
+      <v-col sm="6" cols="10">
         <v-form ref="loginForm" @submit.prevent="login">
           <v-text-field
             id="username-input-field"
@@ -33,8 +33,8 @@
             Login
           </v-btn>
         </v-form>
-      </v-flex>
-    </v-layout>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
