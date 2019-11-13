@@ -150,7 +150,7 @@ export default {
 
     completeTaskAction() {
       this.recordTaskAction()
-      this.triggerNotification("Timer Complete")
+      this.triggerNotification('Timer Complete')
       this.taskActionTaskId = this.taskActionStart = this.currentActionType = null
     },
 
