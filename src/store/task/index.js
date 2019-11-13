@@ -6,15 +6,6 @@ const createTaskAction = require('@/graphql/createTaskAction.gql')
 
 export default {
   namespaced: true,
-  state: {
-    currentWorkingTask: { id: null, name: null }
-  },
-  mutations: {
-    setWorkingTask(state, currentTask) {
-      state.currentWorkingTask = currentTask
-    }
-  },
-
   actions: {
     async createTask (context, task) {
       const response = await apolloClient.mutate({

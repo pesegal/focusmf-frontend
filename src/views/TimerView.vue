@@ -3,7 +3,7 @@
     <v-container>
       <v-row class="TimerView__status-message" align="center" justify="center">
         <h1 class="status">
-          <span v-if="hasCurrentTask">
+          <span v-if="hasCurrentWorkingTask">
             {{ currentWorkingTask.name }}
           </span>
           <span v-else>
@@ -12,29 +12,47 @@
           </span>
         </h1>
       </v-row>
-      <v-row class="TimerView__action-type-group" align="center" justify="center">
+      <v-row
+        v-if="hasCurrentWorkingTask"
+        class="TimerView__action-type-group"
+        align="center"
+        justify="center"
+      >
         <v-btn-toggle
-          v-model="selectedTaskActionTypeAsIndex"
+          v-model="currentActionIndex"
           mandatory
           color="accent"
         >
-          <v-btn @click="setActionType(taskActionTypes.pomo)">
+          <v-btn :disabled="timerIsStarted" @click="setAction(taskActions.pomo)">
             Pomo
           </v-btn>
-          <v-btn @click="setActionType(taskActionTypes.shortBreak)">
+          <v-btn :disabled="timerIsStarted" @click="setAction(taskActions.shortBreak)">
             Short Break
           </v-btn>
-          <v-btn @click="setActionType(taskActionTypes.longBreak)">
+          <v-btn :disabled="timerIsStarted" @click="setAction(taskActions.longBreak)">
             Long Break
           </v-btn>
         </v-btn-toggle>
       </v-row>
-      <v-row class="TimerView__timer-container" align="center" justify="center">
-        <fmf-countdown-timer :time="timeDisplay" />
+      <v-row
+        v-if="hasCurrentWorkingTask"
+        class="TimerView__timer-container"
+        align="center"
+        justify="center"
+      >
+        <fmf-countdown-timer :time="minutesAndSecondsRemaining" />
       </v-row>
-      <v-row class="TimerView__timer-controls-container" align="center" justify="center">
-        <v-btn color="primary" @click="toggleTimer">
-          {{ timerStatus }}
+      <v-row
+        v-if="hasCurrentWorkingTask"
+        class="TimerView__timer-controls-container"
+        align="center"
+        justify="center"
+      >
+        <v-btn v-if="timerIsStarted" color="primary" @click="pauseTimer">
+          Pause
+        </v-btn>
+        <v-btn v-else color="primary" @click="startTimer">
+          Start
         </v-btn>
         <v-btn v-show="timerIsStarted" text @click="resetTimer">
           Reset
@@ -48,6 +66,7 @@
 import FmfCountdownTimer from '@/components/timer/FmfCountdownTimer.vue'
 import moment from 'moment'
 import notification from '@/service/notification'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -56,111 +75,84 @@ export default {
 
   data() {
     return {
-      selectedTime: 25,
-      currentDuration: null,
-      timeDisplay: { minutes: '0', seconds: '0' },
-      countdownId: null,
-      timerIsStarted: false,
-      taskActionTaskId: null,
-      taskActionStart: null,
-      currentActionType: null,
-      lastSelectedActionType: null,
-      taskActionTypes: {
-        pomo: { type: 'pomodoro', duration: 25 },
-        shortBreak: { type: 'short_break', duration: 5 },
-        longBreak: { type: 'long_break', duration: 15 }
-      },
-      selectedTaskActionTypeAsIndex: 0
+      currentActionIndex: 0
     }
   },
 
   computed: {
-    timerStatus() { return this.timerIsStarted ? 'Pause' : 'Start' },
-    currentWorkingTask () {
-      return this.$store.state.task.currentWorkingTask
-    },
-    hasCurrentTask () {
-      return this.currentWorkingTask && (typeof this.currentWorkingTask.name == 'string')
-    }
+    ...mapState('timer', [
+      'currentWorkingTask',
+      'taskActionStart',
+      'timerIsStarted',
+      'currentAction',
+      'taskActions'
+    ]),
+    ...mapGetters('timer', [
+      'currentWorkingTaskId',
+      'hasCurrentWorkingTask',
+      'minutesAndSecondsRemaining'
+    ])
   },
 
   mounted () {
-    this.setActionType(this.taskActionTypes.pomo)
+    if (!this.currentAction) {
+      this.setAction(this.taskActions.pomo)
+    }
+    this.currentActionIndex = this.currentAction.index
   },
 
   methods: {
-    triggerNotification(message) {
-      notification.notify(message)
-    },
+    ...mapMutations('timer', [
+      'setTaskActionStart',
+      'setCurrentAction',
+      'setCurrentDuration'
+    ]),
 
-    toggleTimer() {
-      if(!this.timerIsStarted) {
-        this.startTimer()
-      } else {
-        this.pauseTimer()
-      }
-    },
-
-    resetTimer() {
-      if(this.timerIsStarted) {
-        this.timerIsStarted = false
-        clearInterval(this.countdownId)
-        this.completeTaskAction()
-        this.setActionType(this.lastSelectedActionType)
-        this.updateTimeDisplay(this.currentDuration)
-      }
-    },
-
-    updateTimeDisplay(currentDuration) {
-      this.timeDisplay.minutes = currentDuration.minutes()
-      this.timeDisplay.seconds = currentDuration.seconds()
-    },
+    ...mapActions('timer', [
+      'startCountingDown',
+      'stopCountingDown'
+    ]),
 
     startTimer() {
-      this.timerIsStarted = true
-      this.taskActionStart = new Date()
-      // Note: change this line if we should record non selected task pomos
-      if (this.$store.state.task.currentWorkingTask) this.taskActionTaskId = this.$store.state.task.currentWorkingTask.id
-      this.countdownId = setInterval(() => {
-        this.updateTimeDisplay(this.currentDuration)
-        if (this.currentDuration.asSeconds() === 0) {
-          this.timerIsStarted = false
-          this.completeTaskAction()
-          return clearInterval(this.countdownId)
-        }
-        this.currentDuration.subtract(1, 'seconds')
-      }, 1000)
+      this.setTaskActionStart(new Date())
+      this.startCountingDown(() => {
+        this.recordTaskAction()
+        this.triggerNotification(`Your ${this.currentAction.human} is complete.`)
+        this.setTaskActionStart(null)
+        this.setAction(this.currentAction)
+      })
     },
 
     pauseTimer() {
-      this.timerIsStarted = false
-      clearInterval(this.countdownId)
+      this.stopCountingDown()
       this.recordTaskAction()
+      this.setTaskActionStart(new Date())
     },
 
-    setActionType(actionType) {
-      if (!this.timerIsStarted) {
-        this.lastSelectedActionType = actionType
-        this.selectedTime = actionType.duration
-        this.currentActionType = actionType.type
-        this.currentDuration = moment.duration(this.selectedTime, 'm')
-        this.updateTimeDisplay(this.currentDuration)
-      }
+    resetTimer() {
+      this.stopCountingDown()
+      this.recordTaskAction()
+      this.setTaskActionStart(null)
+      this.setAction(this.currentAction)
     },
 
-    completeTaskAction() {
-      this.recordTaskAction()
-      this.triggerNotification('Timer Complete')
-      this.taskActionTaskId = this.taskActionStart = this.currentActionType = null
+    setAction(action) {
+      this.setCurrentAction(action)
+      this.setCurrentDuration(moment.duration(action.duration, 's'))
+      this.currentActionIndex = this.currentAction.index
     },
 
     recordTaskAction() {
       this.$store.dispatch('task/createTaskAction', {
-        id: this.taskActionTaskId,
+        id: this.currentWorkingTaskId,
         start: this.taskActionStart,
         end: new Date(),
-        action: this.currentActionType
+        action: this.currentAction.type
       })
+    },
+
+    triggerNotification(message) {
+      notification.notify(message)
     }
   }
 }
