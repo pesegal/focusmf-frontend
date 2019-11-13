@@ -9,7 +9,7 @@
       />
     </v-row>
     <v-row justify="center">
-      <v-col sm="6" cols="10">
+      <v-col lg="3" md="5" sm="6" cols="10">
         <v-form ref="loginForm" @submit.prevent="login">
           <v-text-field
             id="username-input-field"
