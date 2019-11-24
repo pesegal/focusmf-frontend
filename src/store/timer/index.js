@@ -10,9 +10,9 @@ export default {
     currentDuration: null,
     currentAction: null,
     taskActions: {
-      pomo: { type: 'pomodoro', duration: 5, index: 0, human: 'Pomodoro' },
-      shortBreak: { type: 'short_break', duration: 3, index: 1, human: 'Short Break' },
-      longBreak: { type: 'long_break', duration: 4, index: 2, human: 'Long Break' }
+      pomo: { type: 'pomodoro', duration: 1500, index: 0, human: 'Pomodoro' },
+      shortBreak: { type: 'short_break', duration: 300, index: 1, human: 'Short Break' },
+      longBreak: { type: 'long_break', duration: 900, index: 2, human: 'Long Break' }
     }
   },
   getters: {
