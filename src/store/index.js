@@ -5,6 +5,7 @@ import ListStore from './list/index'
 import TaskStore from './task/index'
 import ProjectStore from './project/index'
 import VuexPersistence from 'vuex-persist'
+import TimerStore from './timer/index'
 
 Vue.use(Vuex)
 
@@ -19,7 +20,8 @@ export const store = new Vuex.Store({
     auth: AuthStore,
     list: ListStore,
     task: TaskStore,
-    project: ProjectStore
+    project: ProjectStore,
+    timer: TimerStore
   },
   plugins: [vuexLocal.plugin]
 })

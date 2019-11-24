@@ -132,7 +132,7 @@ export default {
     },
 
     setCurrentWorkingTask() {
-      this.$store.commit('task/setWorkingTask', { id: this.id,  name: this.name })
+      this.$store.commit('timer/setCurrentWorkingTask', { id: this.id,  name: this.name })
       this.$router.push('timer')
     },
 
